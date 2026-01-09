@@ -1,12 +1,22 @@
+using AgentSaaS.AgentRunner.Plugins;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Plugins.AddFromType<SystemPlugin>();
 
 var app = builder.Build();
 
+OpenAIPromptExecutionSettings settings = new()
+{
+    ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions
+};
+
+var result = await chatService.GetChatMessageContentAsync(history, settings, kernel);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

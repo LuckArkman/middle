@@ -17,7 +17,7 @@ public class ContainerService
         var hostConfig = new HostConfig
         {
             Memory = 512 * 1024 * 1024, // Limite de 512MB RAM por agente
-            CpuQuota = 50000,           // 0.5 CPU
+            CPUQuota = 50000,           // 0.5 CPU
         };
 
         var response = await _client.Containers.CreateContainerAsync(new CreateContainerParameters

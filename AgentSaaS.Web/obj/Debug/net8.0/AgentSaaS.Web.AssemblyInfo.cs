@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AgentSaaS.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9de5b66a9940bc9186b2c35f3ff6ed5f18d7921c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+119884880ddfb4fe42ffb97c764ab3c35161ed5d")]
 [assembly: System.Reflection.AssemblyProductAttribute("AgentSaaS.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AgentSaaS.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

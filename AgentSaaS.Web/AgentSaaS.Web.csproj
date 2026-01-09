@@ -21,4 +21,8 @@
       <ProjectReference Include="..\AgentSaaS.Infrastructure\AgentSaaS.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Views\Agents\" />
+    </ItemGroup>
+
 </Project>
