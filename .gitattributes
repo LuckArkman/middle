@@ -1,7 +1,0 @@
-.vsidx filter=lfs diff=lfs merge=lfs -text
-*.vsidx filter=lfs diff=lfs merge=lfs -text
-.vs/Solution/FileContentIndex/11d2540f-f894-424f-9d98-8cdb379dfcb8.vsidx filter=lfs diff=lfs merge=lfs -text
-.vs/Solution/FileContentIndex/2c87564a-c26f-4511-a7f9-2a8924554a48.vsidx filter=lfs diff=lfs merge=lfs -text
-.vs/Solution/FileContentIndex/4fafb12a-eccc-4266-b839-7f41f0d0bf3e.vsidx filter=lfs diff=lfs merge=lfs -text
-.vs/Solution/FileContentIndex/69d1c8d9-1c85-416b-8ee8-c38e84afa034.vsidx filter=lfs diff=lfs merge=lfs -text
-.vs/Solution/FileContentIndex/b7cb3cef-5b17-465d-bfa4-a7f7be548d31.vsidx filter=lfs diff=lfs merge=lfs -text
