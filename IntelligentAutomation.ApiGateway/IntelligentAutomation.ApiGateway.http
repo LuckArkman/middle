@@ -1,0 +1,6 @@
+@IntelligentAutomation.ApiGateway_HostAddress = http://localhost:5228
+
+GET {{IntelligentAutomation.ApiGateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
