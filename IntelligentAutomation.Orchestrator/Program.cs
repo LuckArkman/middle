@@ -1,7 +1,23 @@
+using IntelligentAutomation.Application.Services;
+using IntelligentAutomation.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// 1. Adicionar conexão com o Banco de Dados
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+builder.Services.AddHttpClient<IContainerManagerService, ContainerManagerService>(client =>
+{
+    // O endereço base é o do API Gateway, mas em desenvolvimento podemos apontar direto
+    // Em um ambiente de produção/kubernetes, isso seria o nome do serviço (ex: http://container-manager)
+    client.BaseAddress = new Uri(builder.Configuration["Services:ContainerManagerUrl"] 
+                                 ?? "http://localhost:5002"); // Porta padrão do ContainerManager
+});
+// 2. Adicionar serviços de API
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -16,29 +32,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseAuthorization();
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+// ... (código existente do Program.cs)
+
+// Adicione esta linha ANTES de 'builder.Services.AddControllers();'
+// Configura o IHttpClientFactory para o ContainerManager
+
+// 2. Adicionar serviços de API
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

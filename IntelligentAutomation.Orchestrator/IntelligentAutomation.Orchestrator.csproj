@@ -15,8 +15,17 @@
         </PackageReference>
         <PackageReference Include="MongoDB.Bson" Version="3.5.2" />
         <PackageReference Include="MongoDB.Driver" Version="3.5.2" />
+        <PackageReference Include="Npgsql" Version="10.0.1" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+        <PackageReference Include="OpenTelemetry" Version="1.14.0" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
         <PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\IntelligentAutomation.Application\IntelligentAutomation.Application.csproj" />
+      <ProjectReference Include="..\IntelligentAutomation.Infrastructure\IntelligentAutomation.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

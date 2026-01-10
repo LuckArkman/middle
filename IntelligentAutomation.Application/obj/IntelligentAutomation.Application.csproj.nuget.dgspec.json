@@ -69,6 +69,22 @@
               "target": "Package",
               "version": "[3.5.2, )"
             },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[10.0.1, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "OpenTelemetry": {
+              "target": "Package",
+              "version": "[1.14.0, )"
+            },
+            "OpenTelemetry.Instrumentation.AspNetCore": {
+              "target": "Package",
+              "version": "[1.14.0, )"
+            },
             "Yarp.ReverseProxy": {
               "target": "Package",
               "version": "[2.3.0, )"

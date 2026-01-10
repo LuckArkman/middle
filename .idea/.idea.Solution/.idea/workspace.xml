@@ -10,6 +10,8 @@
     <projectFile profileName="IIS Express">IntelligentAutomation.Orchestrator/IntelligentAutomation.Orchestrator.csproj</projectFile>
     <projectFile profileName="http">IntelligentAutomation.Orchestrator/IntelligentAutomation.Orchestrator.csproj</projectFile>
     <projectFile profileName="https">IntelligentAutomation.Orchestrator/IntelligentAutomation.Orchestrator.csproj</projectFile>
+    <projectFile>IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.Client/IntelligentAutomation.WebApp.Client.csproj</projectFile>
+    <projectFile profileName="IIS Express">IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj</projectFile>
     <projectFile profileName="http">IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj</projectFile>
     <projectFile profileName="https">IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj</projectFile>
   </component>
@@ -18,6 +20,140 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34bbbc06-0da4-4d66-a839-df01cf783b84" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/Controllers/ContainersController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/Dtos/CreateAgentDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/Dtos/ProvisionAgentRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/Interfaces/IContainerManagerService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/Services/ContainerManagerService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Enums/TriggerType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Workflow/BaseNode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Workflow/Connection.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Workflow/ModuleNode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Workflow/TriggerNode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Workflow/WorkflowDefinition.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/Persistence/ApplicationDbContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/Controllers/AgentsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/AgentBuilder.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Dashboard.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/IntelligentAutomation.ApiGateway.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/IntelligentAutomation.ApiGateway.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/IntelligentAutomation.ApiGateway.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/IntelligentAutomation.ApiGateway.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/IntelligentAutomation.ApiGateway.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/IntelligentAutomation.ApiGateway.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/Class1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/IntelligentAutomation.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/IntelligentAutomation.Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/IntelligentAutomation.Application.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/IntelligentAutomation.Application.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/IntelligentAutomation.Application.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/IntelligentAutomation.Application.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/IntelligentAutomation.ContainerManager.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/IntelligentAutomation.ContainerManager.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/IntelligentAutomation.ContainerManager.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/IntelligentAutomation.ContainerManager.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/IntelligentAutomation.ContainerManager.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/IntelligentAutomation.ContainerManager.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/Entities/AgentStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Entities/AgentStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/Entities/BaseEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Entities/BaseEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/IntelligentAutomation.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/IntelligentAutomation.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/IntelligentAutomation.Domain.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/IntelligentAutomation.Domain.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/IntelligentAutomation.Domain.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/IntelligentAutomation.Domain.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/Class1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/IntelligentAutomation.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/IntelligentAutomation.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/IntelligentAutomation.Infrastructure.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/IntelligentAutomation.Infrastructure.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/IntelligentAutomation.Infrastructure.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/IntelligentAutomation.Infrastructure.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/IntelligentAutomation.Infrastructure.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/IntelligentAutomation.Infrastructure.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/IntelligentAutomation.Orchestrator.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/IntelligentAutomation.Orchestrator.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/IntelligentAutomation.Orchestrator.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/IntelligentAutomation.Orchestrator.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/IntelligentAutomation.Orchestrator.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/IntelligentAutomation.Orchestrator.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/IntelligentAutomation.Orchestrator.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/IntelligentAutomation.Orchestrator.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/.idea/.idea.IntelligentAutomation.WebApp/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/.idea/.idea.IntelligentAutomation.WebApp/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/.idea/.idea.IntelligentAutomation.WebApp/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/.idea/.idea.IntelligentAutomation.WebApp/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/App.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Layout/MainLayout.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Layout/MainLayout.razor.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Layout/ReconnectModal.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Layout/ReconnectModal.razor.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Layout/ReconnectModal.razor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Pages/Error.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Pages/Home.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Pages/NotFound.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/Routes.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Components/_Imports.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/Properties/launchSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/.NETCoreApp,Version=v10.0.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/EmbeddedAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/IntelligentAutomation.WebApp.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/IntelligentAutomation.WebApp.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/IntelligentAutomation.WebApp.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/IntelligentAutomation.WebApp.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/IntelligentAutomation.WebApp.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/IntelligentAutomation.WebApp.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/Debug/net10.0/ValidatableTypeAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/IntelligentAutomation.WebApp.csproj.nuget.dgspec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/IntelligentAutomation.WebApp.csproj.nuget.g.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/IntelligentAutomation.WebApp.csproj.nuget.g.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/project.assets.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/project.nuget.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/project.packagespec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/rider.project.model.nuget.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/obj/rider.project.restore.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/wwwroot/app.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Solution.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Solution.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,8 +161,14 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/595e4f2361fd31cb66c7e9303f46cf8f2fe77d96eea9d0e42c17cae783aa74/ServiceCollection.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="Toolset" />
@@ -35,25 +177,48 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="384V9gIr3xO6Nb6L5ybvXHD5K6h" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;10-01-2026&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;AndroidSettingsPageId&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.IntelligentAutomation.Orchestrator: https.executor": "Debug",
+    ".NET Launch Settings Profile.IntelligentAutomation.WebApp: IIS Express.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "10-01-2026",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "AndroidSettingsPageId",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.IntelligentAutomation.ApiGateway: IIS Express">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.IntelligentAutomation.WebApp: https">
+    <configuration name="IntelligentAutomation.WebApp.Client" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.Client/IntelligentAutomation.WebApp.Client.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="IntelligentAutomation.ApiGateway: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/IntelligentAutomation.ApiGateway.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
@@ -189,6 +354,21 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="IntelligentAutomation.WebApp: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="IntelligentAutomation.WebApp: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net10.0" />
@@ -229,6 +409,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768058681647</updated>
       <workItem from="1768058681998" duration="1322000" />
+      <workItem from="1768060031568" duration="6709000" />
     </task>
     <servers />
   </component>

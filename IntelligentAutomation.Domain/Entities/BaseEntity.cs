@@ -1,4 +1,4 @@
-namespace IntelligentAutomationSaaS.Domain.Entities;
+namespace IntelligentAutomation.Domain.Entities;
 
 public abstract class BaseEntity
 {

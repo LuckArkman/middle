@@ -1,0 +1,44 @@
+@page "/dashboard"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+<PageTitle>Dashboard</PageTitle>
+
+<h3>Dashboard de Agentes</h3>
+
+<button class="btn btn-primary" @onclick="LoadAgents">Carregar Agentes</button>
+
+@if (_agents is null)
+{
+    <p><em>Carregando...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var agent in _agents)
+        {
+            <li>@agent.Name - Status: @agent.Status</li>
+        }
+    </ul>
+}
+
+@code {
+    // Mock de dados por enquanto
+    private AgentDto[]? _agents;
+
+    private void LoadAgents()
+    {
+        _agents = new[]
+        {
+            new AgentDto { Name = "Agente de Faturamento", Status = "Running" },
+            new AgentDto { Name = "Agente de Relatórios", Status = "Stopped" },
+            new AgentDto { Name = "Agente de Onboarding", Status = "Error" }
+        };
+    }
+
+    // DTO para representar o agente no frontend
+    public class AgentDto
+    {
+        public string Name { get; set; }
+        public string Status { get; set; }
+    }
+}

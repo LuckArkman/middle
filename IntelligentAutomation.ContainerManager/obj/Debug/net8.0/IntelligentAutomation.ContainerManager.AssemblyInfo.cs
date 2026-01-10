@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IntelligentAutomation.ContainerManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e17d1e65e7a4ac923e6ffb3fa72daacaed2f2c6e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74042a8343a34b2fba6abc5168c19c7a4f7bf57b")]
 [assembly: System.Reflection.AssemblyProductAttribute("IntelligentAutomation.ContainerManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IntelligentAutomation.ContainerManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
