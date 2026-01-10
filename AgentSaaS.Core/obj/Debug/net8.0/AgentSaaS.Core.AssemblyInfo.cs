@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AgentSaaS.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9de5b66a9940bc9186b2c35f3ff6ed5f18d7921c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d82a2d8a03a91e33df616b07a7cc00dea2748b4")]
 [assembly: System.Reflection.AssemblyProductAttribute("AgentSaaS.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AgentSaaS.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

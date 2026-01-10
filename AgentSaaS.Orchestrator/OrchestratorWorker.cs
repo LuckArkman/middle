@@ -1,61 +1,85 @@
-﻿using AgentSaaS.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AgentSaaS.Infrastructure.Data;
+﻿using AgentSaaS.Infrastructure.Data;
+using AgentSaaS.Core.Entities;
+using AgentSaaS.Core.Enums;
+using AgentSaaS.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 
-namespace AgentSaaS.Orchestrator
+namespace AgentSaaS.Orchestrator;
+
+public class OrchestratorWorker : BackgroundService
 {
-    public class OrchestratorWorker : BackgroundService
+    private readonly IServiceProvider _serviceProvider;
+    private readonly DockerService _dockerService;
+    private readonly ILogger<OrchestratorWorker> _logger;
+
+    public OrchestratorWorker(IServiceProvider serviceProvider, DockerService dockerService, ILogger<OrchestratorWorker> logger)
     {
-        private readonly IServiceProvider _serviceProvider;
-        private readonly ContainerService _containerService;
+        _serviceProvider = serviceProvider;
+        _dockerService = dockerService;
+        _logger = logger;
+    }
 
-        public OrchestratorWorker(IServiceProvider serviceProvider, ContainerService containerService)
-        {
-            _serviceProvider = serviceProvider;
-            _containerService = containerService;
-        }
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        _logger.LogInformation("Orchestrator iniciado. Monitorando agentes...");
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        while (!stoppingToken.IsCancellationRequested)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            try
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    var encryption = scope.ServiceProvider.GetRequiredService<EncryptionService>(); // Fase 13
 
-                    // 1. Busca agentes marcados para iniciar mas sem container
-                    var agentsToStart = db.Agents
+                    // === LÓGICA DE START ===
+                    // Busca agentes que deveriam estar rodando (Status = Executando) mas não têm ContainerId
+                    var agentsToStart = await context.Agents
                         .Where(a => a.Status == AgentStatus.Executando && a.ContainerId == null)
-                        .ToList();
+                        .ToListAsync(stoppingToken);
 
                     foreach (var agent in agentsToStart)
                     {
-                        // Inicia container isolado
-                        var containerId = await _containerService.StartAgentContainerAsync(agent.Id, "key_segura", agent.SystemPrompt);
+                        // Descriptografa a chave (Segurança)
+                        var realKey = encryption.Decrypt(agent.OpenAiApiKey);
+                        
+                        // Inicia o container
+                        var containerId = await _dockerService.StartAgentAsync(
+                            agent.Id, 
+                            agent.TenantId, 
+                            realKey, 
+                            agent.SystemPrompt, 
+                            new List<string> { "WhatsApp", "Memory" } // Exemplo: viria do plano
+                        );
 
+                        // Atualiza DB
                         agent.ContainerId = containerId;
-                        await db.SaveChangesAsync();
+                        agent.LastActivity = DateTime.UtcNow;
+                        await context.SaveChangesAsync(stoppingToken);
                     }
 
-                    // 2. Busca agentes marcados para parar
-                    var agentsToStop = db.Agents
+                    // === LÓGICA DE STOP ===
+                    // Busca agentes que o usuário mandou parar (Status = Parado) mas ainda têm ContainerId
+                    var agentsToStop = await context.Agents
                         .Where(a => a.Status == AgentStatus.Parado && a.ContainerId != null)
-                        .ToList();
+                        .ToListAsync(stoppingToken);
 
                     foreach (var agent in agentsToStop)
                     {
-                        await _containerService.StopContainerAsync(agent.ContainerId);
+                        await _dockerService.StopAgentAsync(agent.ContainerId);
+                        
                         agent.ContainerId = null;
-                        await db.SaveChangesAsync();
+                        await context.SaveChangesAsync(stoppingToken);
                     }
                 }
-
-                await Task.Delay(5000, stoppingToken); // Loop de verificação
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro no ciclo do Orchestrator.");
+            }
+
+            // Aguarda 5 segundos antes do próximo ciclo (Polling)
+            await Task.Delay(5000, stoppingToken);
         }
     }
 }

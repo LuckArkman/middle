@@ -7,12 +7,28 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Cronos" Version="0.11.1" />
       <PackageReference Include="Docker.DotNet" Version="3.125.15" />
+      <PackageReference Include="Google.Events.Protobuf" Version="1.8.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.9" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.9" />
       <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.12" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Compliance.Abstractions" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Compliance.Redaction" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.0.0" />
+      <PackageReference Include="Microsoft.FeatureManagement" Version="4.4.0" />
+      <PackageReference Include="Microsoft.OpenApi" Version="1.6.14" />
       <PackageReference Include="Microsoft.SemanticKernel" Version="1.68.0" />
       <PackageReference Include="MongoDB.Driver" Version="3.5.2" />
+      <PackageReference Include="Npgsql" Version="8.0.0" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+      <PackageReference Include="OpenTelemetry" Version="1.14.0" />
+      <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
+      <PackageReference Include="Stripe" Version="1.12.0" />
+      <PackageReference Include="Stripe.net" Version="50.1.0" />
       <PackageReference Include="System.Security.Claims" Version="4.3.0" />
     </ItemGroup>
 
@@ -22,7 +38,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Views\Agents\" />
+      <Folder Include="Filters\" />
     </ItemGroup>
+
+    <Target Name="GenerateNSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+        <Exec Command="dotnet tool run nswag run nswag.json /variables:Configuration=$(Configuration)" />
+    </Target>
+
+
 
 </Project>

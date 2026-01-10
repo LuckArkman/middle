@@ -1,12 +1,105 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\middle\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|d:\\middle\\agentsaas.core\\agentsaas.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|solutionrelative:agentsaas.core\\agentsaas.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|d:\\middle\\agentsaas.core\\entities\\tenantbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|solutionrelative:agentsaas.core\\entities\\tenantbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|d:\\middle\\agentsaas.core\\enums\\agentstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|solutionrelative:agentsaas.core\\enums\\agentstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|d:\\middle\\agentsaas.core\\entities\\agentlogbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|solutionrelative:agentsaas.core\\entities\\agentlogbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|d:\\middle\\agentsaas.core\\entities\\agentbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6BFBE1-F5D6-4C19-8019-D25D74C018CE}|AgentSaaS.Core\\AgentSaaS.Core.csproj|solutionrelative:agentsaas.core\\entities\\agentbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AgentLogBase.cs",
+              "DocumentMoniker": "D:\\middle\\AgentSaaS.Core\\Entities\\AgentLogBase.cs",
+              "RelativeDocumentMoniker": "AgentSaaS.Core\\Entities\\AgentLogBase.cs",
+              "ToolTip": "D:\\middle\\AgentSaaS.Core\\Entities\\AgentLogBase.cs",
+              "RelativeToolTip": "AgentSaaS.Core\\Entities\\AgentLogBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-09T15:35:49.119Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AgentBase.cs",
+              "DocumentMoniker": "D:\\middle\\AgentSaaS.Core\\Entities\\AgentBase.cs",
+              "RelativeDocumentMoniker": "AgentSaaS.Core\\Entities\\AgentBase.cs",
+              "ToolTip": "D:\\middle\\AgentSaaS.Core\\Entities\\AgentBase.cs",
+              "RelativeToolTip": "AgentSaaS.Core\\Entities\\AgentBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwIAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-09T15:35:44.726Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TenantBase.cs",
+              "DocumentMoniker": "D:\\middle\\AgentSaaS.Core\\Entities\\TenantBase.cs",
+              "RelativeDocumentMoniker": "AgentSaaS.Core\\Entities\\TenantBase.cs",
+              "ToolTip": "D:\\middle\\AgentSaaS.Core\\Entities\\TenantBase.cs",
+              "RelativeToolTip": "AgentSaaS.Core\\Entities\\TenantBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-09T15:34:46.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AgentStatus.cs",
+              "DocumentMoniker": "D:\\middle\\AgentSaaS.Core\\Enums\\AgentStatus.cs",
+              "RelativeDocumentMoniker": "AgentSaaS.Core\\Enums\\AgentStatus.cs",
+              "ToolTip": "D:\\middle\\AgentSaaS.Core\\Enums\\AgentStatus.cs",
+              "RelativeToolTip": "AgentSaaS.Core\\Enums\\AgentStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-09T15:33:44.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AgentSaaS.Core",
+              "DocumentMoniker": "D:\\middle\\AgentSaaS.Core\\AgentSaaS.Core.csproj",
+              "RelativeDocumentMoniker": "AgentSaaS.Core\\AgentSaaS.Core.csproj",
+              "ToolTip": "D:\\middle\\AgentSaaS.Core\\AgentSaaS.Core.csproj",
+              "RelativeToolTip": "AgentSaaS.Core\\AgentSaaS.Core.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-09T15:33:39.907Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

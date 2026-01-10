@@ -1,20 +1,37 @@
-using AgentSaaS.Infrastructure.Interfaces;
-using AgentSaaS.Web.Services;
+using AgentSaaS.Web.Extensions;
+using AgentSaaS.Web.Hubs;
+using AgentSaaS.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// === 1. Configuração de Serviços (DI) ===
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ITenantProvider, HttpTenantProvider>();
+builder.Services.AddDatabaseLayer(builder.Configuration); // Nossa extensão
+builder.Services.AddMessagingLayer(builder.Configuration); // Nossa extensão
+builder.Services.AddApplicationServices();                 // Nossa extensão
+
+// Configuração de Observabilidade (OpenTelemetry) - Fase 7
+builder.Logging.AddOpenTelemetry(logging => { /* configs... */ });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+// === 2. Pipeline de Requisição (Middleware) ===
+
+// Auto-Migration em Desenvolvimento (Day 1 Feature)
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        // Aguarda DB subir (Resiliência simples)
+        await db.Database.MigrateAsync();
+        // SeedData.Initialize(scope.ServiceProvider); // Cria usuário Admin padrão
+    }
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -23,10 +40,24 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Importante: Autenticação antes de Autorização
+app.UseAuthentication();
 app.UseAuthorization();
+
+// Middleware customizado de Tenant (se não usar via DI no DbContext)
+// app.UseMiddleware<TenantResolutionMiddleware>(); 
+
+// === 3. Endpoints ===
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseExceptionHandler();
+// Endpoint do SignalR
+app.MapHub<AgentHub>("/agentHub");
 
 app.Run();

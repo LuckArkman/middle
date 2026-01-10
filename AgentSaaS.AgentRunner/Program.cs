@@ -1,54 +1,88 @@
-using AgentSaaS.AgentRunner.Plugins;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.ChatCompletion;
+using StackExchange.Redis;
+using System.Text.Json;
 
-var builder = WebApplication.CreateBuilder(args);
+// 1. Configuração Inicial (Lendo Variáveis de Ambiente injetadas pelo Docker)
+var agentId = Environment.GetEnvironmentVariable("AGENT_ID") ?? throw new Exception("AGENT_ID não definido");
+var tenantId = Environment.GetEnvironmentVariable("TENANT_ID");
+var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? throw new Exception("API Key não definida");
+var redisConnString = Environment.GetEnvironmentVariable("REDIS_CONNECTION") ?? "redis:6379";
+var systemPrompt = Environment.GetEnvironmentVariable("SYSTEM_PROMPT") ?? "Você é um assistente útil.";
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Plugins.AddFromType<SystemPlugin>();
+Console.WriteLine($"[INIT] Iniciando Agente {agentId} (Tenant: {tenantId})...");
 
-var app = builder.Build();
+// 2. Conexão com Redis (Fila de Entrada e Saída)
+var redis = await ConnectionMultiplexer.ConnectAsync(redisConnString);
+var db = redis.GetDatabase();
+var inboxKey = $"inbox:{agentId}";
+var logsChannel = $"logs:{agentId}";
 
-OpenAIPromptExecutionSettings settings = new()
+// 3. Configuração do Semantic Kernel
+var builder = Kernel.CreateBuilder();
+builder.AddOpenAIChatCompletion("gpt-4", apiKey); // Ou gpt-3.5-turbo para testes baratos
+
+// Carregar Plugins (Fase 6.3 - Dinâmico)
+var enabledPlugins = Environment.GetEnvironmentVariable("ENABLED_PLUGINS")?.Split(',') ?? Array.Empty<string>();
+// if (enabledPlugins.Contains("WhatsApp")) builder.Plugins.AddFromType<WhatsAppPlugin>();
+
+var kernel = builder.Build();
+var chatService = kernel.GetRequiredService<IChatCompletionService>();
+
+// 4. Loop Principal de Execução
+Console.WriteLine($"[READY] Agente aguardando mensagens em '{inboxKey}'...");
+
+while (true)
 {
-    ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions
-};
+    try
+    {
+        // Bloqueia e aguarda mensagem (Timeout de 5s para não travar eternamente)
+        var rawMessage = await db.ListLeftPopAsync(inboxKey);
 
-var result = await chatService.GetChatMessageContentAsync(history, settings, kernel);
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        if (rawMessage.HasValue)
+        {
+            Console.WriteLine($"[MSG] Recebida: {rawMessage}");
+            await PublishLogAsync(db, logsChannel, "INFO", "Processando mensagem...");
+
+            // Desserializa mensagem (assumindo JSON simples por enquanto)
+            // Em prod: Use a classe AgentInboxMessage definida anteriormente
+            string userMessage = rawMessage.ToString(); 
+
+            // Configura o Histórico (Stateless por enquanto, ou carregue do DB aqui)
+            var history = new ChatHistory(systemPrompt);
+            history.AddUserMessage(userMessage);
+
+            // Executa a IA
+            var result = await chatService.GetChatMessageContentAsync(history, kernel: kernel);
+
+            Console.WriteLine($"[IA] Resposta: {result.Content}");
+            
+            // Publica resposta no canal de Logs (para o SignalR pegar)
+            await PublishLogAsync(db, logsChannel, "RESPONSE", result.Content);
+            
+            // TODO: Aqui você enviaria para o WhatsApp/Webhook de saída
+        }
+        else
+        {
+            await Task.Delay(1000); // Polling suave
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine($"[ERROR] {ex.Message}");
+        await PublishLogAsync(db, logsChannel, "ERROR", ex.Message);
+        await Task.Delay(5000); // Backoff em caso de erro
+    }
 }
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
+// Helper para enviar logs estruturados para o Redis (SignalR consome isso)
+static async Task PublishLogAsync(IDatabase db, string channel, string level, string message)
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
-
-app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    var logPayload = JsonSerializer.Serialize(new 
+    { 
+        Timestamp = DateTime.UtcNow, 
+        Level = level, 
+        Message = message 
+    });
+    await db.PublishAsync(channel, logPayload);
 }
