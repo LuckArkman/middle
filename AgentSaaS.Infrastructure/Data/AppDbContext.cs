@@ -16,6 +16,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Agent> Agents { get; set; }
     public DbSet<Tenant> Tenants { get; set; }
+    public DbSet<AgentApprovalRequest> AgentApprovalRequests { get; set; }
     // Outros DbSets...
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,7 +42,7 @@ public class AppDbContext : DbContext
             entity.HasQueryFilter(a => a.TenantId == _tenantProvider.GetTenantId());
         });
     }
-    
+
     // Sobrescreve SaveChanges para injetar TenantId automaticamente
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

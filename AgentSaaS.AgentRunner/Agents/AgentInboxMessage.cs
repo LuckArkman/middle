@@ -1,18 +1,21 @@
-﻿namespace AgentSaaS.AgentRunner.Agents;
+﻿using AgentSaaS.AgentRunner.Plugins;
+
+namespace AgentSaaS.AgentRunner.Agents;
 
 // DTO de Mensagem enriquecido
-public class AgentInboxMessage 
-{ 
+public class AgentInboxMessage
+{
     public string Channel { get; set; } // "WhatsApp" ou "Sandbox"
     public string ConnectionId { get; set; } // ID do SignalR (se Sandbox)
     public string FromNumber { get; set; }
     // ...
 }
 
+/* 
 // Na lógica de resposta do Loop Principal
 if (msg.Channel == "WhatsApp")
 {
-    await whatsAppPlugin.SendMessage(msg.FromNumber, result.Content);
+    await WhatsAppPlugin.SendMessage(msg.FromNumber, result.Content);
 }
 else if (msg.Channel == "Sandbox")
 {
@@ -20,3 +23,4 @@ else if (msg.Channel == "Sandbox")
     // O WebApp pega isso e manda via SignalR para o browser
     await apiInternalClient.PostAsJsonAsync($"/api/callbacks/sandbox/{msg.ConnectionId}", new { text = result.Content });
 }
+*/
