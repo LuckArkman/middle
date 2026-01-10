@@ -77,6 +77,10 @@
               "target": "Package",
               "version": "[10.0.1, )",
               "autoReferenced": true
+            },
+            "Yarp.ReverseProxy": {
+              "target": "Package",
+              "version": "[2.3.0, )"
             }
           },
           "imports": [
@@ -444,6 +448,10 @@
             "Microsoft.AspNetCore.Components.WebAssembly.Server": {
               "target": "Package",
               "version": "[10.0.1, )"
+            },
+            "Yarp.ReverseProxy": {
+              "target": "Package",
+              "version": "[2.3.0, )"
             }
           },
           "imports": [

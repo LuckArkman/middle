@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XAhAMuErE2Y=",
+  "dgSpecHash": "lvSUWwiX3NI=",
   "success": true,
   "projectFilePath": "D:\\middle\\IntelligentAutomation.WebApp\\IntelligentAutomation.WebApp\\IntelligentAutomation.WebApp.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,9 @@
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\10.0.1\\microsoft.aspnetcore.components.webassembly.10.0.1.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.server\\10.0.1\\microsoft.aspnetcore.components.webassembly.server.10.0.1.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.dotnet.hotreload.webassembly.browser\\10.0.101\\microsoft.dotnet.hotreload.webassembly.browser.10.0.101.nupkg.sha512",
-    "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.jsinterop.webassembly\\10.0.1\\microsoft.jsinterop.webassembly.10.0.1.nupkg.sha512"
+    "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.jsinterop.webassembly\\10.0.1\\microsoft.jsinterop.webassembly.10.0.1.nupkg.sha512",
+    "C:\\Users\\MPLopes\\.nuget\\packages\\system.io.hashing\\8.0.0\\system.io.hashing.8.0.0.nupkg.sha512",
+    "C:\\Users\\MPLopes\\.nuget\\packages\\yarp.reverseproxy\\2.3.0\\yarp.reverseproxy.2.3.0.nupkg.sha512"
   ],
   "logs": []
 }

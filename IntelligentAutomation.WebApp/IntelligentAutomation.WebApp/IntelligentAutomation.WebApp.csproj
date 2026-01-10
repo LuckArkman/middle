@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
     <ProjectReference Include="..\IntelligentAutomation.WebApp.Client\IntelligentAutomation.WebApp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.1" />
   </ItemGroup>

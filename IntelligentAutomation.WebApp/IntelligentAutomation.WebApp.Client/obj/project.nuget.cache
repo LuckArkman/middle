@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "8gOMcUXDDxU=",
+  "dgSpecHash": "Uvux3jO5HhY=",
   "success": true,
   "projectFilePath": "D:\\middle\\IntelligentAutomation.WebApp\\IntelligentAutomation.WebApp.Client\\IntelligentAutomation.WebApp.Client.csproj",
   "expectedPackageFiles": [
@@ -35,6 +35,8 @@
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.jsinterop.webassembly\\10.0.1\\microsoft.jsinterop.webassembly.10.0.1.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.1\\microsoft.net.illink.tasks.10.0.1.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.net.sdk.webassembly.pack\\10.0.1\\microsoft.net.sdk.webassembly.pack.10.0.1.nupkg.sha512",
+    "C:\\Users\\MPLopes\\.nuget\\packages\\system.io.hashing\\8.0.0\\system.io.hashing.8.0.0.nupkg.sha512",
+    "C:\\Users\\MPLopes\\.nuget\\packages\\yarp.reverseproxy\\2.3.0\\yarp.reverseproxy.2.3.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\10.0.1\\microsoft.netcore.app.runtime.mono.browser-wasm.10.0.1.nupkg.sha512"
   ],
   "logs": []
