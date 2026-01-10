@@ -77,3 +77,16 @@ h1:focus {
     flex-grow: 1; /* Ocupa o resto do espaço */
     position: relative; /* Necessário para Blazor.Diagrams */
 }
+.properties-panel, .properties-panel-placeholder {
+    width: 300px;
+    padding: 10px;
+    border-left: 1px solid #ccc;
+    background-color: #f7f7f7;
+}
+
+.properties-panel-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+}

@@ -26,6 +26,7 @@
     <ItemGroup>
       <ProjectReference Include="..\IntelligentAutomation.Application\IntelligentAutomation.Application.csproj" />
       <ProjectReference Include="..\IntelligentAutomation.Infrastructure\IntelligentAutomation.Infrastructure.csproj" />
+      <ProjectReference Include="..\IntelligentAutomation.WebApp\IntelligentAutomation.WebApp.csproj" />
     </ItemGroup>
 
 </Project>

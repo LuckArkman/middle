@@ -5,18 +5,26 @@ using IntelligentAutomation.WebApp.Components;
 using IntelligentAutomation.WebApp.Components.Account;
 using IntelligentAutomation.WebApp.Data;
 using Blazor.Diagrams.Core;
+using IntelligentAutomation.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddBlazorDiagrams(); 
+builder.Services.AddBlazorDiagrams();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
+// ...
+// Adicione estas linhas junto com os outros 'builder.Services'
+builder.Services.AddHttpClient<ApiClient>(client =>
+{
+    // Este endereço aponta para o nosso API Gateway
+    client.BaseAddress = new Uri("http://localhost:5000"); // Porta padrão do ApiGateway
+});
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;

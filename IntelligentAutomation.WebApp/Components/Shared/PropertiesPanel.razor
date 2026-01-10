@@ -1,0 +1,69 @@
+@using Blazor.Diagrams.Core.Models
+@using IntelligentAutomation.Domain.Workflow
+
+@if (SelectedNode is not null)
+{
+    <div class="properties-panel">
+        <h4>Propriedades do Nó</h4>
+        <hr />
+        
+        <div class="mb-3">
+            <label class="form-label">ID do Nó:</label>
+            <input type="text" class="form-control" value="@SelectedNode.Id" readonly />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Nome do Nó:</label>
+            <input type="text" class="form-control" @bind="SelectedNode.Title" />
+        </div>
+
+        @if (SelectedNode is ModuleNode moduleNode && moduleNode.Parameters is not null)
+        {
+            <hr />
+            <h5>Parâmetros do Módulo</h5>
+            @switch(moduleNode.Parameters)
+            {
+                case HttpRequestModuleParameters httpParams:
+                    <div class="mb-3">
+                        <label class="form-label">URL:</label>
+                        <input type="text" class="form-control" @bind="httpParams.Url" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Método:</label>
+                        <select class="form-select" @bind="httpParams.Method">
+                            <option>GET</option>
+                            <option>POST</option>
+                            <option>PUT</option>
+                            <option>DELETE</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Corpo (JSON):</label>
+                        <textarea class="form-control" rows="3" @bind="httpParams.Body"></textarea>
+                    </div>
+                    break;
+                
+                case SendEmailModuleParameters emailParams:
+                    <div class="mb-3">
+                        <label class="form-label">Para:</label>
+                        <input type="email" class="form-control" @bind="emailParams.To" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Assunto:</label>
+                        <input type="text" class="form-control" @bind="emailParams.Subject" />
+                    </div>
+                    break;
+            }
+        }
+    </div>
+}
+else
+{
+    <div class="properties-panel-placeholder">
+        <p>Selecione um nó para ver suas propriedades.</p>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public BaseNode? SelectedNode { get; set; }
+}

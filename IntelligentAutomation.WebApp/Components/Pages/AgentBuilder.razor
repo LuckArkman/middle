@@ -1,7 +1,15 @@
 @page "/builder/{AgentId}"
 @using Blazor.Diagrams.Core
-@using Blazor.Diagrams.Core.Geometry
 @using Blazor.Diagrams.Core.Models
+@using IntelligentAutomation.Domain.Workflow // Importa o modelo do workflow
+@using IntelligentAutomation.WebApp.Services // Importa o ApiClient
+@using IntelligentAutomation.WebApp.Components.Shared // Importa o painel
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using System.Text.Json.Serialization.Metadata
+@using Blazor.Diagrams.Core.Geometry
+@using Blazor.Diagrams.Core.Models.Base
+@inject ApiClient ApiClient
 @inject Diagram Diagram
 
 <PageTitle>Construtor de Agente</PageTitle>
@@ -17,6 +25,7 @@
         <div class="draggable-module" draggable="true" @ondragstart="@(() => OnDragStart("SendEmail"))">
             Enviar E-mail
         </div>
+        <button class="btn btn-success mt-4 w-100" @onclick="SaveChanges">Salvar</button>
     </div>
 
     <div class="canvas-container" 
@@ -26,6 +35,8 @@
             <DiagramCanvas />
         </CascadingValue>
     </div>
+    
+    <PropertiesPanel SelectedNode="@_selectedNode" />
 </div>
 
 @code {
@@ -33,16 +44,46 @@
     public string AgentId { get; set; }
 
     private string? _draggedModuleType;
+    private BaseNode? _selectedNode;
+
+    private static JsonSerializerOptions _jsonOptions = new() 
+    {
+        // Habilita a escrita de propriedades aninhadas de forma legível
+        WriteIndented = true, 
+        // Adiciona um discriminador de tipo para que o deserializador saiba qual classe concreta usar
+        Converters = { new JsonStringEnumConverter() },
+        TypeInfoResolver = new PolymorphicTypeResolver() 
+    };
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        // Lógica futura: Carregar a definição do agente do backend.
-        // Por enquanto, começamos com um gatilho padrão.
-        var triggerNode = new NodeModel(new Point(50, 50));
-        triggerNode.Title = "Gatilho Agendado";
-        triggerNode.AddPort(PortAlignment.Right);
-        Diagram.Nodes.Add(triggerNode);
+
+        Diagram.SelectionChanged += OnSelectionChanged;
+
+        var triggerNode = new TriggerNode { Name = "Gatilho Agendado", PositionX = 50, PositionY = 50 };
+        var triggerDiagramNode = new NodeModel(new Point(triggerNode.PositionX, triggerNode.PositionY)) 
+        {
+            Title = triggerNode.Name,
+            Id = triggerNode.Id
+        };
+        triggerDiagramNode.AddPort(PortAlignment.Right);
+        Diagram.Nodes.Add(triggerDiagramNode);
+    }
+
+    private void OnSelectionChanged(SelectableModel model)
+    {
+        if (model is NodeModel selectedNode)
+        {
+            // Encontrar o nó correspondente em nosso modelo de dados
+            // Esta lógica precisará ser aprimorada quando carregarmos dados
+            _selectedNode = new ModuleNode { Id = selectedNode.Id, Name = selectedNode.Title }; 
+        }
+        else
+        {
+            _selectedNode = null;
+        }
+        StateHasChanged();
     }
 
     private void OnDragStart(string moduleType)
@@ -55,23 +96,69 @@
         if (string.IsNullOrEmpty(_draggedModuleType))
             return;
 
-        // Converte as coordenadas do evento de drop para as coordenadas do diagrama
         var position = Diagram.GetRelativeMousePoint(e.ClientX, e.ClientY);
-
-        var newNode = new NodeModel(position);
-        newNode.Title = _draggedModuleType switch
+        
+        var moduleNode = new ModuleNode
         {
-            "HttpRequest" => "Requisição HTTP",
-            "SendEmail" => "Enviar E-mail",
-            _ => "Módulo Desconhecido"
+            ModuleType = _draggedModuleType,
+            PositionX = position.X,
+            PositionY = position.Y
         };
         
-        // Adiciona portas para conexão
-        newNode.AddPort(PortAlignment.Left);
-        newNode.AddPort(PortAlignment.Right);
+        // Atribui título e parâmetros com base no tipo
+        switch (_draggedModuleType)
+        {
+            case "HttpRequest":
+                moduleNode.Name = "Requisição HTTP";
+                moduleNode.Parameters = new HttpRequestModuleParameters();
+                break;
+            case "SendEmail":
+                moduleNode.Name = "Enviar E-mail";
+                moduleNode.Parameters = new SendEmailModuleParameters();
+                break;
+        }
 
-        Diagram.Nodes.Add(newNode);
+        var diagramNode = new NodeModel(position)
+        {
+            Title = moduleNode.Name,
+            Id = moduleNode.Id
+        };
+        
+        diagramNode.AddPort(PortAlignment.Left);
+        diagramNode.AddPort(PortAlignment.Right);
+        Diagram.Nodes.Add(diagramNode);
         
         _draggedModuleType = null;
+    }
+    
+    // O método SaveChanges precisa ser atualizado para usar as novas classes
+    // (A lógica de conversão se tornará mais complexa e será implementada na próxima etapa)
+    private async Task SaveChanges() { /* Lógica de salvar será atualizada */ }
+
+    // Adicionar esta classe auxiliar no final do bloco @code
+    public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
+    {
+        public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
+        {
+            JsonTypeInfo jsonTypeInfo = base.GetTypeInfo(type, options);
+
+            Type basePointType = typeof(BaseModuleParameters);
+            if (jsonTypeInfo.Type == basePointType)
+            {
+                jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
+                {
+                    TypeDiscriminatorPropertyName = "$type",
+                    IgnoreUnrecognizedTypeDiscriminators = true,
+                    UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.Fail,
+                    DerivedTypes =
+                    {
+                        new JsonDerivedType(typeof(HttpRequestModuleParameters), "http"),
+                        new JsonDerivedType(typeof(SendEmailModuleParameters), "email")
+                    }
+                };
+            }
+
+            return jsonTypeInfo;
+        }
     }
 }

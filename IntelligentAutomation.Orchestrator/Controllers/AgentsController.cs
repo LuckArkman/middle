@@ -1,11 +1,14 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using IntelligentAutomation.Application.Dtos;
 using IntelligentAutomation.Application.Services;
 using IntelligentAutomation.Domain.Entities;
+using IntelligentAutomation.Domain.Workflow;
 using IntelligentAutomation.Infrastructure.Persistence;
+using IntelligentAutomation.WebApp.Components.Pages;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace IntelligentAutomationSaaS.Orchestrator.Controllers;
+namespace IntelligentAutomation.Orchestrator.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -87,5 +90,28 @@ public class AgentsController : ControllerBase
         _logger.LogInformation("Agente {AgentId} teve seu status alterado para Stopped.", id);
 
         return Ok($"Agente {id} foi parado com sucesso.");
+    }
+    
+    [HttpPut("{id}/definition")]
+    public async Task<IActionResult> UpdateAgentDefinition(Guid id, [FromBody] WorkflowDefinition definition)
+    {
+        var agent = await _context.Agents.FindAsync(id);
+        if (agent == null) return NotFound();
+
+        _logger.LogInformation("Atualizando a definição do Agente ID: {AgentId}", id);
+    
+        var jsonOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Converters = { new JsonStringEnumConverter() },
+            TypeInfoResolver = new AgentBuilder.PolymorphicTypeResolver() // Usa nosso resolvedor
+        };
+
+        agent.DefinitionJson = JsonSerializer.Serialize(definition, jsonOptions);
+        agent.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }
