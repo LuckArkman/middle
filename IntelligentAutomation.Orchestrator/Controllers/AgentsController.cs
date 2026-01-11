@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 // ... (outros usings necessários)
 
-namespace IntelligentAutomationSaaS.Orchestrator.Controllers;
+namespace IntelligentAutomation.Orchestrator.Controllers;
 
 [ApiController]
 [Route("[controller]")]

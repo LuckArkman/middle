@@ -1,12 +1,11 @@
 @page "/builder/{AgentId}"
 @using Blazor.Diagrams.Core
 @using Blazor.Diagrams.Core.Models
-@using IntelligentAutomation.Domain.Workflow // Importa o modelo do workflow
-@using IntelligentAutomation.WebApp.Services // Importa o ApiClient
-@using IntelligentAutomation.WebApp.Components.Shared // Importa o painel
+@using IntelligentAutomation.Domain.Workflow
+@using IntelligentAutomation.WebApp.Services 
+@using IntelligentAutomation.WebApp.Components.Shared
 @using System.Text.Json
 @using System.Text.Json.Serialization
-@using System.Text.Json.Serialization.Metadata
 @using Blazor.Diagrams.Core.Geometry
 @using Blazor.Diagrams.Core.Models.Base
 @using IntelligentAutomation.Application.Services
@@ -20,12 +19,27 @@
 <div class="agent-builder-container">
     <div class="toolbox">
         <h4>Módulos</h4>
-        <div class="draggable-module" draggable="true" @ondragstart="@(() => OnDragStart("HttpRequest"))">
-            Requisição HTTP
-        </div>
-        <div class="draggable-module" draggable="true" @ondragstart="@(() => OnDragStart("SendEmail"))">
-            Enviar E-mail
-        </div>
+        @if (_catalog == null)
+        {
+            <p><em>Carregando catálogo...</em></p>
+        }
+        else
+        {
+            @foreach (var area in _catalog.Keys.OrderBy(k => k))
+            {
+                <details open>
+                    <summary>@area</summary>
+                    <ul>
+                        @foreach (var module in _catalog[area])
+                        {
+                            <li class="draggable-module" draggable="true" @ondragstart="@(() => OnDragStart(module.Type))">
+                                @module.DisplayName
+                            </li>
+                        }
+                    </ul>
+                </details>
+            }
+        }
         <button class="btn btn-success mt-4 w-100" @onclick="SaveChanges">Salvar</button>
     </div>
 

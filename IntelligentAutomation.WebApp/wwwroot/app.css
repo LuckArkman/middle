@@ -90,3 +90,23 @@ h1:focus {
     justify-content: center;
     color: #888;
 }
+.toolbox details {
+    margin-bottom: 0.5rem;
+}
+
+.toolbox summary {
+    font-weight: bold;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.toolbox ul {
+    list-style-type: none;
+    padding-left: 1rem;
+}
+
+.toolbox li.draggable-module {
+    padding: 6px;
+    margin-bottom: 4px;
+    font-size: 0.9em;
+}

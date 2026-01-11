@@ -15,7 +15,7 @@ public class MongoDbContext
         var client = new MongoClient(mongoUrl);
         _database = client.GetDatabase(mongoUrl.DatabaseName);
     }
-
+    public IMongoCollection<ModuleManifest> ModuleManifests => _database.GetCollection<ModuleManifest>("moduleManifests");
     public IMongoCollection<Agent> Agents => _database.GetCollection<Agent>("agents");
     public IMongoCollection<User> Users => _database.GetCollection<User>("users");
     public IMongoCollection<Plan> Plans => _database.GetCollection<Plan>("plans");

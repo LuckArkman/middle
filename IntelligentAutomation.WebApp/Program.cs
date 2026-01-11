@@ -9,6 +9,7 @@ using IntelligentAutomation.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -47,6 +48,10 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    await DbInitializer.Initialize(scope.ServiceProvider);
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

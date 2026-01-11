@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.Conta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.WebApp", "IntelligentAutomation.WebApp\IntelligentAutomation.WebApp.csproj", "{79AB5010-F8E1-485C-88AF-0210857E0C2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.AgentRuntime", "IntelligentAutomation.AgentRuntime\IntelligentAutomation.AgentRuntime.csproj", "{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{79AB5010-F8E1-485C-88AF-0210857E0C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79AB5010-F8E1-485C-88AF-0210857E0C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79AB5010-F8E1-485C-88AF-0210857E0C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
