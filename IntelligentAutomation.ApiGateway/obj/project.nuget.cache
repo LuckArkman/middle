@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "g52eJVY3hNA=",
+  "dgSpecHash": "Awr7l+Ln1OQ=",
   "success": true,
   "projectFilePath": "D:\\middle\\IntelligentAutomation.ApiGateway\\IntelligentAutomation.ApiGateway.csproj",
   "expectedPackageFiles": [
@@ -44,7 +44,6 @@
     "C:\\Users\\MPLopes\\.nuget\\packages\\mongodb.driver\\3.5.2\\mongodb.driver.3.5.2.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\npgsql\\10.0.1\\npgsql.10.0.1.nupkg.sha512",
-    "C:\\Users\\MPLopes\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0\\npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry\\1.14.0\\opentelemetry.1.14.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry.api\\1.14.0\\opentelemetry.api.1.14.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry.api.providerbuilderextensions\\1.14.0\\opentelemetry.api.providerbuilderextensions.1.14.0.nupkg.sha512",

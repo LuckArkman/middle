@@ -1,6 +1,6 @@
 using IntelligentAutomation.Application.Dtos;
 
-namespace IntelligentAutomation.Application.Services;
+namespace IntelligentAutomation.Application.Interfaces;
 
 public interface IContainerManagerService
 {

@@ -32,7 +32,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\middle\\IntelligentAutomation.Domain\\IntelligentAutomation.Domain.csproj": {
+                "projectPath": "D:\\middle\\IntelligentAutomation.Domain\\IntelligentAutomation.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -73,10 +77,6 @@
               "target": "Package",
               "version": "[10.0.1, )"
             },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
             "OpenTelemetry": {
               "target": "Package",
               "version": "[1.14.0, )"
@@ -92,6 +92,10 @@
             "Yarp.ReverseProxy": {
               "target": "Package",
               "version": "[2.3.0, )"
+            },
+            "mercadopago-sdk": {
+              "target": "Package",
+              "version": "[2.11.0, )"
             }
           },
           "imports": [
@@ -183,10 +187,6 @@
               "target": "Package",
               "version": "[10.0.1, )"
             },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
             "OpenTelemetry": {
               "target": "Package",
               "version": "[1.14.0, )"
@@ -202,6 +202,10 @@
             "Yarp.ReverseProxy": {
               "target": "Package",
               "version": "[2.3.0, )"
+            },
+            "mercadopago-sdk": {
+              "target": "Package",
+              "version": "[2.11.0, )"
             }
           },
           "imports": [
@@ -297,10 +301,6 @@
               "target": "Package",
               "version": "[10.0.1, )"
             },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
             "OpenTelemetry": {
               "target": "Package",
               "version": "[1.14.0, )"
@@ -316,6 +316,10 @@
             "Yarp.ReverseProxy": {
               "target": "Package",
               "version": "[2.3.0, )"
+            },
+            "mercadopago-sdk": {
+              "target": "Package",
+              "version": "[2.11.0, )"
             }
           },
           "imports": [
@@ -403,12 +407,6 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
             "MongoDB.Bson": {
               "target": "Package",
               "version": "[3.5.2, )"
@@ -420,10 +418,6 @@
             "Npgsql": {
               "target": "Package",
               "version": "[10.0.1, )"
-            },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[8.0.0, )"
             },
             "OpenTelemetry": {
               "target": "Package",
@@ -440,6 +434,10 @@
             "Yarp.ReverseProxy": {
               "target": "Package",
               "version": "[2.3.0, )"
+            },
+            "mercadopago-sdk": {
+              "target": "Package",
+              "version": "[2.11.0, )"
             }
           },
           "imports": [
@@ -521,27 +519,19 @@
           "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.22, )"
+              "version": "[8.0.0, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.22, )"
+              "version": "[8.0.0, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.22, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "target": "Package",
-              "version": "[8.0.22, )"
+              "version": "[8.0.0, )"
             },
             "Npgsql": {
               "target": "Package",
               "version": "[10.0.1, )"
-            },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[8.0.0, )"
             },
             "OpenTelemetry": {
               "target": "Package",
@@ -562,6 +552,10 @@
             "Z.Blazor.Diagrams.Core": {
               "target": "Package",
               "version": "[3.0.0, )"
+            },
+            "mercadopago-sdk": {
+              "target": "Package",
+              "version": "[2.11.0, )"
             }
           },
           "imports": [

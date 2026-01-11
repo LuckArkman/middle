@@ -9,6 +9,7 @@
 @using System.Text.Json.Serialization.Metadata
 @using Blazor.Diagrams.Core.Geometry
 @using Blazor.Diagrams.Core.Models.Base
+@using IntelligentAutomation.Application.Services
 @inject ApiClient ApiClient
 @inject Diagram Diagram
 
@@ -136,29 +137,4 @@
     private async Task SaveChanges() { /* Lógica de salvar será atualizada */ }
 
     // Adicionar esta classe auxiliar no final do bloco @code
-    public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
-    {
-        public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
-        {
-            JsonTypeInfo jsonTypeInfo = base.GetTypeInfo(type, options);
-
-            Type basePointType = typeof(BaseModuleParameters);
-            if (jsonTypeInfo.Type == basePointType)
-            {
-                jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
-                {
-                    TypeDiscriminatorPropertyName = "$type",
-                    IgnoreUnrecognizedTypeDiscriminators = true,
-                    UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.Fail,
-                    DerivedTypes =
-                    {
-                        new JsonDerivedType(typeof(HttpRequestModuleParameters), "http"),
-                        new JsonDerivedType(typeof(SendEmailModuleParameters), "email")
-                    }
-                };
-            }
-
-            return jsonTypeInfo;
-        }
-    }
 }

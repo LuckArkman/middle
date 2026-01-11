@@ -1,6 +1,7 @@
 // src/Core/IntelligentAutomationSaaS.Application/Services/ContainerManagerService.cs
 using System.Net.Http.Json;
 using IntelligentAutomation.Application.Dtos;
+using IntelligentAutomation.Application.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace IntelligentAutomation.Application.Services;

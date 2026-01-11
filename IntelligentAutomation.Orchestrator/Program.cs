@@ -1,14 +1,32 @@
+using IntelligentAutomation.Application.Interfaces;
 using IntelligentAutomation.Application.Services;
+using IntelligentAutomation.Domain.Entities;
 using IntelligentAutomation.Infrastructure.Persistence;
+using IntelligentAutomation.Orchestrator.Services;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Adicionar conexão com o Banco de Dados
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
 
+// --- Início da Configuração do Quartz.NET ---
+builder.Services.AddQuartz(q =>
+{
+    // O JobStore em memória é bom para desenvolvimento. Em produção, usaríamos um JobStore com banco de dados (JDBC) para persistência.
+    q.UseMicrosoftDependencyInjectionJobFactory();
+});
+
+// Adiciona o serviço hospedado que inicia o agendador Quartz
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+builder.Services.Configure<MercadoPagoSettings>(builder.Configuration.GetSection("MercadoPagoSettings"));
+builder.Services.AddScoped<IPaymentGatewayService, MercadoPagoService>();
+builder.Services.AddSingleton<MongoDbContext>();
+builder.Services.AddScoped<IQuotaService, QuotaService>();
+builder.Services.AddScoped<IAgentSchedulingService, AgentSchedulingService>();
 builder.Services.AddHttpClient<IContainerManagerService, ContainerManagerService>(client =>
 {
     // O endereço base é o do API Gateway, mas em desenvolvimento podemos apontar direto

@@ -1,3 +1,4 @@
+using IntelligentAutomation.Application.Interfaces;
 using IntelligentAutomation.Application.Services;
 using Quartz;
 
