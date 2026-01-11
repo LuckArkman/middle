@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "F7iD12pdDH8=",
+  "dgSpecHash": "N7+7nULxdsI=",
   "success": true,
   "projectFilePath": "D:\\middle\\IntelligentAutomation.ContainerManager\\IntelligentAutomation.ContainerManager.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,8 @@
     "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry\\1.14.0\\opentelemetry.1.14.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry.api\\1.14.0\\opentelemetry.api.1.14.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry.api.providerbuilderextensions\\1.14.0\\opentelemetry.api.providerbuilderextensions.1.14.0.nupkg.sha512",
+    "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry.exporter.console\\1.14.0\\opentelemetry.exporter.console.1.14.0.nupkg.sha512",
+    "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry.extensions.hosting\\1.14.0\\opentelemetry.extensions.hosting.1.14.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\opentelemetry.instrumentation.aspnetcore\\1.14.0\\opentelemetry.instrumentation.aspnetcore.1.14.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\quartz\\3.15.1\\quartz.3.15.1.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\quartz.extensions.dependencyinjection\\3.15.1\\quartz.extensions.dependencyinjection.3.15.1.nupkg.sha512",

@@ -18,7 +18,7 @@ public class ApiClient
 
     // Futuramente: public Task<AgentDto[]> GetAgents() => ...
     
-    public async Task UpdateAgentDefinition(Guid agentId, WorkflowDefinition definition)
+    public async Task UpdateAgentDefinition(string agentId, WorkflowDefinition definition)
     {
         var response = await _httpClient.PutAsJsonAsync($"/orchestrator/agents/{agentId}/definition", definition);
         response.EnsureSuccessStatusCode();

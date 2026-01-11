@@ -13,7 +13,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Nome do Nó:</label>
-            <input type="text" class="form-control" @bind="SelectedNode.Title" />
+            <input type="text" class="form-control" @bind="SelectedNode.Name" />
         </div>
 
         @if (SelectedNode is ModuleNode moduleNode && moduleNode.Parameters is not null)

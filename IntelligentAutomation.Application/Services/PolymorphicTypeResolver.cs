@@ -18,7 +18,7 @@ public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
             {
                 TypeDiscriminatorPropertyName = "$type",
                 IgnoreUnrecognizedTypeDiscriminators = true,
-                UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.Fail,
+                UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization,
                 DerivedTypes =
                 {
                     new JsonDerivedType(typeof(HttpRequestModuleParameters), "http"),

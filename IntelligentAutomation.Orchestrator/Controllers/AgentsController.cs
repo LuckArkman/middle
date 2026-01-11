@@ -1,6 +1,7 @@
 using System.Text.Json;
 using IntelligentAutomation.Application.Dtos;
 using IntelligentAutomation.Domain.Entities;
+using IntelligentAutomation.Domain.Enums;
 using IntelligentAutomation.Domain.Workflow;
 using IntelligentAutomation.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ public class AgentsController : ControllerBase
             Name = dto.Name,
             DefinitionJson = dto.DefinitionJson,
             Status = AgentStatus.Created,
-            UserId = Guid.NewGuid() // Mock
+            UserId = Guid.NewGuid().ToString() // Mock
         };
 
         await _agentsCollection.InsertOneAsync(agent);

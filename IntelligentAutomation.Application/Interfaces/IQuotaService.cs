@@ -4,5 +4,5 @@ namespace IntelligentAutomation.Application.Interfaces;
 
 public interface IQuotaService
 {
-    Task<QuotaCheckResult> CheckAgentCreationQuotaAsync(Guid userId);
+    Task<QuotaCheckResult> CheckAgentCreationQuotaAsync(string userId);
 }

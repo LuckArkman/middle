@@ -1,38 +1,47 @@
-// src/Services/IntelligentAutomationSaaS.Orchestrator/Services/QuotaService.cs
-
 using IntelligentAutomation.Application.Enums;
 using IntelligentAutomation.Application.Interfaces;
-using IntelligentAutomation.Domain.Enums;
+using IntelligentAutomation.Domain.Entities;
 using IntelligentAutomation.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace IntelligentAutomation.Orchestrator.Services;
 
 public class QuotaService : IQuotaService
 {
-    private readonly ApplicationDbContext _context;
+    private readonly MongoDbContext _context;
 
-    public QuotaService(ApplicationDbContext context)
+    public QuotaService(MongoDbContext context)
     {
         _context = context;
     }
 
-    public async Task<QuotaCheckResult> CheckAgentCreationQuotaAsync(Guid userId)
+    public async Task<QuotaCheckResult> CheckAgentCreationQuotaAsync(string userId)
     {
-        // Encontra a assinatura ativa do usuário e inclui os detalhes do plano
-        var activeSubscription = await _context.Subscriptions
-            .Include(s => s.Plan)
-            .FirstOrDefaultAsync(s => s.UserId == userId && s.Status == SubscriptionStatus.Active);
-
-        if (activeSubscription?.Plan is null)
+        // Encontra o usuário para obter a ID da assinatura ativa
+        var user = await _context.Users.Find(u => u.Id == userId).FirstOrDefaultAsync();
+        if (user?.CurrentSubscriptionId == null)
         {
             return QuotaCheckResult.NoActiveSubscription;
         }
 
-        // Conta quantos agentes o usuário já possui
-        var currentAgentCount = await _context.Agents.CountAsync(a => a.UserId == userId);
+        // Encontra a assinatura ativa e, em seguida, o plano correspondente
+        var activeSubscription = await _context.Subscriptions.Find(s => s.Id == user.CurrentSubscriptionId).FirstOrDefaultAsync();
+        if (activeSubscription?.Status != Domain.Enums.SubscriptionStatus.Active)
+        {
+            return QuotaCheckResult.NoActiveSubscription;
+        }
         
-        if (currentAgentCount >= activeSubscription.Plan.MaxActiveAgents)
+        var plan = await _context.Plans.Find(p => p.Id == activeSubscription.PlanId).FirstOrDefaultAsync();
+        if (plan == null)
+        {
+            // Caso de inconsistência de dados, tratar como falta de assinatura
+            return QuotaCheckResult.NoActiveSubscription;
+        }
+
+        // Conta quantos agentes o usuário já possui
+        var currentAgentCount = await _context.Agents.CountDocumentsAsync(a => a.UserId == userId);
+        
+        if (currentAgentCount >= plan.MaxActiveAgents)
         {
             return QuotaCheckResult.MaxAgentsReached;
         }
