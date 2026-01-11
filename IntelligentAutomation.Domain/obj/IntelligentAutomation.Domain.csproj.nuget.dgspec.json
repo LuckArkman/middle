@@ -51,6 +51,18 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Binance.DotNet.Client": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Binance.Net": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Binance.NetCore": {
+              "target": "Package",
+              "version": "[1.6.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.0, )"

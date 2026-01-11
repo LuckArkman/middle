@@ -1,44 +1,44 @@
-var builder = WebApplication.CreateBuilder(args);
+using System.Reflection;
+using System.Text.Json;
+using IntelligentAutomation.AgentRuntime;
+using IntelligentAutomation.AgentRuntime.Interfaces;
+using IntelligentAutomation.AgentRuntime.Modules;
+using IntelligentAutomation.Domain.Workflow;
+using IntelligentAutomation.AgentRuntime;
+using IntelligentAutomation.AgentRuntime.Modules;
+// ...
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
+var host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((context, services) =>
     {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
+        // Adiciona Logging, HttpClientFactory, etc.
+        services.AddHttpClient();
+        
+        // Registra o ModuleRunner
+        services.AddSingleton<IModuleRunner, ModuleRunner>();
+
+        // Registra todas as implementações de IModule
+        var moduleTypes = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract && t.IsAssignableTo(typeof(IModule)));
+        foreach (var type in moduleTypes)
+        {
+            services.AddTransient(type);
+        }
     })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+    .Build();
 
-app.Run();
+Console.WriteLine("Agent Runtime iniciado. Aguardando definição do workflow...");
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+// Em um cenário real, o runtime obteria a definição do workflow
+// de um volume montado no container, de uma variável de ambiente ou de uma API.
+string workflowJson = File.ReadAllText("workflow-definition.json");
+var definition = JsonSerializer.Deserialize<WorkflowDefinition>(workflowJson, GetJsonOptions());
+
+var moduleRunner = host.Services.GetRequiredService<IModuleRunner>();
+var logger = host.Services.GetRequiredService<ILogger<WorkflowEngine>>();
+
+var engine = new WorkflowEngine(definition, moduleRunner, logger);
+await engine.ExecuteAsync(CancellationToken.None);
+
+Console.WriteLine("Agent Runtime encerrado.");
+JsonSerializerOptions GetJsonOptions() { /* ... */ }
