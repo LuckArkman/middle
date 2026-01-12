@@ -9,7 +9,9 @@ public class ApiClient
 {
     private readonly HttpClient _httpClient;
     
-    // --- Métodos de Admin para Planos ---
+    public Task<PagedResult<AgentDto>> GetAgentsAsync(string? searchTerm = null, int page = 1, int pageSize = 10) =>
+        _httpClient.GetFromJsonAsync<PagedResult<AgentDto>>(
+            $"/orchestrator/agents?searchTerm={searchTerm}&page={page}&pageSize={pageSize}");
     public Task<List<Plan>> GetPlansAsync() => 
         _httpClient.GetFromJsonAsync<List<Plan>>("/admin/plans");
 

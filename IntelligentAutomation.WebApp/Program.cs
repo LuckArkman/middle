@@ -15,6 +15,8 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddTransient<AuthHeaderHandler>();
+builder.Services.AddSingleton<LoadingService>();
+builder.Services.AddTransient<LoadingHandler>();
 
 // Modifique o registro do ApiClient para usar o handler
 builder.Services.AddHttpClient<ApiClient>(client =>

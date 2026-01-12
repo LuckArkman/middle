@@ -1,24 +1,27 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
+    @* ... (sidebar) ... *@
     <main>
         <div class="top-row px-4">
             <LoginDisplay />
         </div>
 
         <article class="content px-4">
-            <TokenManager />
-            @Body
+            <ErrorBoundary>
+                <ChildContent>
+                    <TokenManager />
+                    @Body
+                </ChildContent>
+                <ErrorContent>
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Ocorreu um erro!</h4>
+                        <p>Desculpe, algo deu errado nesta parte da aplicação. Por favor, tente recarregar a página.</p>
+                        <hr>
+                        <p class="mb-0">Se o problema persistir, entre em contato com o suporte.</p>
+                    </div>
+                </ErrorContent>
+            </ErrorBoundary>
         </article>
     </main>
-</div>
-
-<div id="blazor-error-ui">
-    Um erro inesperado ocorreu.
-    <a href="" class="reload">Recarregar</a>
-    <a class="dismiss">🗙</a>
 </div>

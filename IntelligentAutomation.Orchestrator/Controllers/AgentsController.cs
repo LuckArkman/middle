@@ -5,6 +5,7 @@ using IntelligentAutomation.Domain.Enums;
 using IntelligentAutomation.Domain.Workflow;
 using IntelligentAutomation.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 // ... (outros usings necessários)
 
@@ -74,5 +75,31 @@ public class AgentsController : ControllerBase
     {
         // Retorna as opções com o PolymorphicTypeResolver, como definido anteriormente
         return new JsonSerializerOptions { /* ... */ };
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAgents(
+        [FromQuery] string? searchTerm, 
+        [FromQuery] int page = 1, 
+        [FromQuery] int pageSize = 10)
+    {
+        var userId = "obter_id_do_token_jwt"; // Obter o UserId real do token
+    
+        var filter = Builders<Agent>.Filter.Eq(a => a.UserId, userId);
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            filter &= Builders<Agent>.Filter.Regex(a => a.Name, new BsonRegularExpression(searchTerm, "i"));
+        }
+
+        var totalCount = await _agentsCollection.CountDocumentsAsync(filter);
+        var agents = await _agentsCollection.Find(filter)
+            .Skip((page - 1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
+        
+        // Mapear para DTOs
+        var agentDtos = agents.Select(a => new AgentDto { /* ... */ }).ToList();
+
+        return Ok(new PagedResult<AgentDto> { Items = agentDtos, TotalCount = (int)totalCount });
     }
 }

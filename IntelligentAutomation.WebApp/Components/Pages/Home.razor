@@ -1,11 +1,11 @@
 ﻿@page "/"
-
-<PageTitle>Bem-vindo</PageTitle>
+@using IntelligentAutomation.WebApp.Components.Layout
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Home> Localizer
+@layout MainLayout
+<PageTitle>@Localizer["WelcomeTitle"]</PageTitle>
 
 <div class="text-center">
-    <h1 class="display-4">Bem-vindo à Plataforma de Automação Inteligente</h1>
-    <p class="lead">Crie, execute e gerencie agentes de automação sob medida sem escrever uma única linha de código.</p>
-    <hr class="my-4">
-    <p>Pronto para começar?</p>
-    <a class="btn btn-primary btn-lg" href="Account/Register" role="button">Crie sua conta gratuitamente</a>
+    <h1 class="display-4">@Localizer["WelcomeTitle"]</h1>
+    <p class="lead">@Localizer["WelcomeSubtitle"]</p>
 </div>

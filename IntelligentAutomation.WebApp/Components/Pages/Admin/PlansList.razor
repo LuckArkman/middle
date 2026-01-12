@@ -22,31 +22,42 @@
 else
 {
     <table class="table">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Preço Mensal</th>
-                <th>Max Agentes</th>
-                <th>Ativo</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
+        @* ... (thead) ... *@
         <tbody>
-            @foreach (var plan in _plans)
-            {
-                <tr>
-                    <td>@plan.Name</td>
-                    <td>@plan.MonthlyPrice.ToString("C")</td>
-                    <td>@plan.MaxActiveAgents</td>
-                    <td><span class="badge @(plan.IsActive ? "bg-success" : "bg-secondary")">@(plan.IsActive ? "Sim" : "Não")</span></td>
-                    <td>
-                        <button class="btn btn-sm btn-secondary" @onclick="() => _selectedPlan = plan">Editar</button>
-                        <button class="btn btn-sm btn-danger" @onclick="() => DeletePlan(plan)">Excluir</button>
-                    </td>
-                </tr>
-            }
+        @foreach (var plan in _plans)
+        {
+            <tr>
+                @* ... (outras colunas) ... *@
+                <td>
+                    <button class="btn btn-sm btn-secondary" 
+                            @onclick="() => _selectedPlan = plan"
+                            aria-label="Editar o plano @plan.Name">Editar</button>
+                    <button class="btn btn-sm btn-danger" 
+                            @onclick="() => DeletePlan(plan)"
+                            aria-label="Excluir o plano @plan.Name">Excluir</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
+
+    @if (_selectedPlan != null)
+    {
+        <div class="modal fade show d-block" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <EditForm Model="_selectedPlan" OnValidSubmit="HandleSave">
+                        @* ... *@
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTitle">@(string.IsNullOrEmpty(_selectedPlan.Id) ? "Novo Plano" : "Editar Plano")</h5>
+                            @* ... *@
+                        </div>
+                        @* ... *@
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    }
 }
 
 @if (_selectedPlan != null)
@@ -97,6 +108,29 @@ else
 @code {
     private List<Plan>? _plans;
     private Plan? _selectedPlan;
+    private bool _isSaving = false;
+    
+    private async Task HandleSave()
+    {
+        if (_selectedPlan == null) return;
+
+        _isSaving = true;
+        try
+        {
+            // ... (lógica de salvar existente) ...
+        }
+        catch(Exception ex)
+        {
+            await Toast.ShowError($"Erro ao salvar plano: {ex.Message}");
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+
+        CloseModal();
+        await LoadPlans();
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -113,32 +147,6 @@ else
         {
             await Toast.ShowError($"Falha ao carregar planos: {ex.Message}");
         }
-    }
-
-    private async Task HandleSave()
-    {
-        if (_selectedPlan == null) return;
-
-        try
-        {
-            if (string.IsNullOrEmpty(_selectedPlan.Id))
-            {
-                await ApiClient.CreatePlanAsync(_selectedPlan);
-                await Toast.ShowSuccess("Plano criado com sucesso!");
-            }
-            else
-            {
-                await ApiClient.UpdatePlanAsync(_selectedPlan);
-                await Toast.ShowSuccess("Plano atualizado com sucesso!");
-            }
-        }
-        catch(Exception ex)
-        {
-            await Toast.ShowError($"Erro ao salvar plano: {ex.Message}");
-        }
-
-        CloseModal();
-        await LoadPlans();
     }
     
     private async Task DeletePlan(Plan plan)
