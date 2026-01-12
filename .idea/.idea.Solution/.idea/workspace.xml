@@ -23,26 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34bbbc06-0da4-4d66-a839-df01cf783b84" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/PersistingRevalidatingAuthenticationStateProvider.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/Services/BillingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/Services/BillingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solution.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Solution.sln.DotSettings.user" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -351,7 +332,7 @@
       <workItem from="1768143594336" duration="4843000" />
       <workItem from="1768168118735" duration="4795000" />
       <workItem from="1768173035464" duration="4135000" />
-      <workItem from="1768189555051" duration="389000" />
+      <workItem from="1768189555051" duration="993000" />
     </task>
     <servers />
   </component>
