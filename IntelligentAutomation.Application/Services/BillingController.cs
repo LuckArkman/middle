@@ -35,13 +35,6 @@ public class BillingController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-
-    [HttpPost("mp-webhook")]
-    public async Task<IActionResult> MercadoPagoWebhook()
-    {
-        // Lógica do Webhook será implementada na próxima etapa
-        return Ok();
-    }
     
     [HttpPost("mp-webhook")]
     public async Task<IActionResult> MercadoPagoWebhook([FromBody] WebhookNotification notification)
