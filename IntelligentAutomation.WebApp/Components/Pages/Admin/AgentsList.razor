@@ -1,0 +1,108 @@
+@page "/agents"
+@using IntelligentAutomation.Application.Dtos
+@using IntelligentAutomation.Domain.Entities
+@using IntelligentAutomation.WebApp.Services
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@inject NavigationManager Navigation
+@inject ApiClient ApiClient
+
+<h3>Meus Agentes</h3>
+
+<button class="btn btn-primary mb-3" @onclick="CreateNewAgent" disabled="@_isLoading">
+    @if (_isLoading)
+    {
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    }
+    else
+    {
+        <span class="bi bi-plus-circle"></span>
+    }
+    Novo Agente
+</button>
+
+@if (_agents == null)
+{
+    <p><em>Carregando agentes...</em></p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Status</th>
+            <th>Última Atividade</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var agent in _agents)
+        {
+            <tr>
+                <td>@agent.Name</td>
+                <td><span class="badge @GetStatusBadgeClass(agent.Status)">@agent.Status</span></td>
+                <td>@(agent.UpdatedAt?.ToString("g") ?? "N/A")</td>
+                <td>
+                    <button class="btn btn-sm btn-info" @onclick='() => Navigation.NavigateTo($"/builder/{agent.Id}")'>Editar</button>
+                    <button class="btn btn-sm btn-danger" @onclick="() => StopAgent(agent.Id)">Parar</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<AgentDto>? _agents;
+    private bool _isLoading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAgents();
+    }
+
+    private async Task LoadAgents()
+    {
+        _agents = await ApiClient.GetAgentsAsync();
+    }
+
+    private async Task CreateNewAgent()
+    {
+        _isLoading = true;
+        try
+        {
+            var newAgentDto = new CreateAgentDto { Name = "Novo Agente Sem Título" };
+            var createdAgent = await ApiClient.CreateAgentAsync(newAgentDto);
+            Navigation.NavigateTo($"/builder/{createdAgent.Id}");
+        }
+        catch (Exception ex)
+        {
+            // Lógica de notificação de erro
+            Console.WriteLine($"Erro ao criar agente: {ex.Message}");
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task StopAgent(string agentId)
+    {
+        // Adicionar confirmação
+        await ApiClient.StopAgentAsync(agentId);
+        await LoadAgents(); // Recarrega a lista para mostrar o novo status
+    }
+
+    private string GetStatusBadgeClass(string status)
+    {
+        return status.ToLower() switch
+        {
+            "running" => "bg-success",
+            "stopped" => "bg-secondary",
+            "error" => "bg-danger",
+            _ => "bg-info"
+        };
+    }
+}

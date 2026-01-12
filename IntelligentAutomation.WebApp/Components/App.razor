@@ -16,7 +16,13 @@
 
 <body>
 <Routes @rendermode="@(new InteractiveServerRenderMode())" />
-<script src="_framework/blazor.web.js"></script>
+<script>
+    function showToast(type, message) {
+        toastr.options.positionClass = "toast-bottom-right";
+        if (type === 'success') toastr.success(message);
+        if (type === 'error') toastr.error(message);
+    }
+</script>
 </body>
 
 </html>

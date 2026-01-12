@@ -12,6 +12,7 @@
 @using IntelligentAutomation.WebApp.Services
 @inject ApiClient ApiClient
 @inject Diagram Diagram
+@inject ToastService Toast
 
 <PageTitle>Construtor de Agente</PageTitle>
 
@@ -58,9 +59,8 @@
 @code {
     [Parameter]
     public string AgentId { get; set; }
-
-    // CORREÇÃO: Variáveis de estado declaradas
     private Dictionary<string, List<ModuleManifest>>? _catalog;
+    private Dictionary<string, ModuleManifest>? _manifestsMap;
     private ModuleManifest? _draggedModule;
     private BaseNode? _selectedNode;
 
@@ -74,6 +74,8 @@
 
         // CORREÇÃO: Carrega o catálogo de módulos da API
         _catalog = await ApiClient.GetModuleCatalog();
+        _manifestsMap = _catalog.SelectMany(kvp => kvp.Value).ToDictionary(m => m.Type, m => m);
+
 
         // Lógica futura: Carregar a definição do agente existente da API.
         // Por enquanto, começamos com um gatilho padrão.
@@ -199,11 +201,11 @@
         try
         {
             await ApiClient.UpdateAgentDefinition(AgentId, definition);
-            Console.WriteLine("Definição do agente salva com sucesso!"); // Substituir por um toast/notificação
+            await Toast.ShowSuccess("Agente salvo com sucesso!");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro ao salvar: {ex.Message}");
+            await Toast.ShowError($"Erro ao salvar: {ex.Message}");
         }
     }
 

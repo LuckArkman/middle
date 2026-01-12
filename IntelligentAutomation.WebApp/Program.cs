@@ -14,6 +14,14 @@ builder.Services.AddRazorComponents()
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
+builder.Services.AddTransient<AuthHeaderHandler>();
+
+// Modifique o registro do ApiClient para usar o handler
+builder.Services.AddHttpClient<ApiClient>(client =>
+    {
+        client.BaseAddress = new Uri("http://localhost:5000");
+    })
+    .AddHttpMessageHandler<AuthHeaderHandler>();
 
 // ---- INÍCIO DA CORREÇÃO ----
 // Substitui a classe antiga pela nova classe do .NET 8 scaffolded Identity

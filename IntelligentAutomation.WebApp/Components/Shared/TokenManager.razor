@@ -14,44 +14,39 @@
     private bool _tokenFetched = false;
 
     [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
 
     protected override async Task OnParametersSetAsync()
     {
         var authState = await AuthenticationStateTask;
         var user = authState.User;
 
-        // Se o usuário está logado e ainda não buscamos o token nesta sessão...
-        if (user.Identity.IsAuthenticated && !_tokenFetched)
+        if (user.Identity is { IsAuthenticated: true } && !_tokenFetched)
         {
+            _tokenFetched = true; // Marca como tentado para evitar loop
+            
             var existingToken = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "authToken");
-            if(string.IsNullOrEmpty(existingToken))
+            if (string.IsNullOrEmpty(existingToken))
             {
                 try
                 {
                     var tokenResponse = await HttpClient.GetFromJsonAsync<TokenResponse>("/api/jwt");
-                    if (tokenResponse?.Token != null)
+                    if (!string.IsNullOrEmpty(tokenResponse?.Token))
                     {
                         await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "authToken", tokenResponse.Token);
-                        _tokenFetched = true;
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Se a busca pelo token falhar (ex: token de cookie expirado), força o logout
                     Console.WriteLine($"Erro ao buscar token JWT: {ex.Message}");
-                    Navigation.NavigateTo("Account/Logout", forceLoad: true);
+                    Navigation.NavigateTo("Account/Logout", forceLoad: true); // Força logout se não conseguir obter token
                 }
-            }
-            else
-            {
-                _tokenFetched = true;
             }
         }
     }
 
     private class TokenResponse
     {
-        public string Token { get; set; }
+        public string? Token { get; set; }
     }
 }

@@ -1,69 +1,92 @@
-@using Blazor.Diagrams.Core.Models
+@using IntelligentAutomation.Domain.Entities
 @using IntelligentAutomation.Domain.Workflow
 
-@if (SelectedNode is not null)
+@if (SelectedNode is ModuleNode moduleNode)
 {
     <div class="properties-panel">
-        <h4>Propriedades do Nó</h4>
+        <h4>Propriedades: @moduleNode.Name</h4>
         <hr />
-        
-        <div class="mb-3">
-            <label class="form-label">ID do Nó:</label>
-            <input type="text" class="form-control" value="@SelectedNode.Id" readonly />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Nome do Nó:</label>
-            <input type="text" class="form-control" @bind="SelectedNode.Name" />
-        </div>
 
-        @if (SelectedNode is ModuleNode moduleNode && moduleNode.Parameters is not null)
+        @if (_manifestForNode != null)
         {
-            <hr />
-            <h5>Parâmetros do Módulo</h5>
-            @switch(moduleNode.Parameters)
-            {
-                case HttpRequestModuleParameters httpParams:
+            <EditForm Model="moduleNode.Parameters">
+                <DataAnnotationsValidator />
+
+                @foreach (var param in _manifestForNode.Parameters)
+                {
                     <div class="mb-3">
-                        <label class="form-label">URL:</label>
-                        <input type="text" class="form-control" @bind="httpParams.Url" />
+                        <label class="form-label">@param.DisplayName</label>
+                        @switch (param.Type)
+                        {
+                            case "string":
+                                <InputText class="form-control" @bind-Value="@(() => GetStringProperty(moduleNode.Parameters, param.Name))" @bind-Value:after="@((v) => SetStringProperty(moduleNode.Parameters, param.Name, v))" />
+                                break;
+                            case "number":
+                                <InputNumber class="form-control" @bind-Value="@(() => GetDecimalProperty(moduleNode.Parameters, param.Name))" @bind-Value:after="@((v) => SetDecimalProperty(moduleNode.Parameters, param.Name, v))" />
+                                break;
+                            case "options":
+                                <InputSelect class="form-select" @bind-Value="@(() => GetStringProperty(moduleNode.Parameters, param.Name))" @bind-Value:after="@((v) => SetStringProperty(moduleNode.Parameters, param.Name, v))">
+                                    @foreach (var option in param.Options)
+                                    {
+                                        <option value="@option">@option</option>
+                                    }
+                                </InputSelect>
+                                break;
+                            // Adicionar outros tipos como 'secret', 'bool', etc.
+                        }
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Método:</label>
-                        <select class="form-select" @bind="httpParams.Method">
-                            <option>GET</option>
-                            <option>POST</option>
-                            <option>PUT</option>
-                            <option>DELETE</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Corpo (JSON):</label>
-                        <textarea class="form-control" rows="3" @bind="httpParams.Body"></textarea>
-                    </div>
-                    break;
-                
-                case SendEmailModuleParameters emailParams:
-                    <div class="mb-3">
-                        <label class="form-label">Para:</label>
-                        <input type="email" class="form-control" @bind="emailParams.To" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Assunto:</label>
-                        <input type="text" class="form-control" @bind="emailParams.Subject" />
-                    </div>
-                    break;
-            }
+                }
+            </EditForm>
         }
     </div>
 }
 else
 {
     <div class="properties-panel-placeholder">
-        <p>Selecione um nó para ver suas propriedades.</p>
+        <p>Selecione um módulo para ver suas propriedades.</p>
     </div>
 }
 
 @code {
     [Parameter]
     public BaseNode? SelectedNode { get; set; }
+
+    [Parameter]
+    public Dictionary<string, ModuleManifest>? ManifestsMap { get; set; }
+
+    private ModuleManifest? _manifestForNode;
+
+    protected override void OnParametersSet()
+    {
+        if (SelectedNode is ModuleNode moduleNode && ManifestsMap != null && ManifestsMap.TryGetValue(moduleNode.ModuleType, out var manifest))
+        {
+            _manifestForNode = manifest;
+        }
+        else
+        {
+            _manifestForNode = null;
+        }
+    }
+
+    // --- Métodos Auxiliares para Binding Dinâmico com Reflection ---
+    private string GetStringProperty(object target, string propName)
+    {
+        return target?.GetType().GetProperty(propName)?.GetValue(target) as string ?? "";
+    }
+
+    private void SetStringProperty(object target, string propName, string value)
+    {
+        target?.GetType().GetProperty(propName)?.SetValue(target, value);
+    }
+
+    private decimal GetDecimalProperty(object target, string propName)
+    {
+        var val = target?.GetType().GetProperty(propName)?.GetValue(target);
+        return val is decimal d ? d : 0;
+    }
+
+    private void SetDecimalProperty(object target, string propName, decimal value)
+    {
+        target?.GetType().GetProperty(propName)?.SetValue(target, value);
+    }
 }
