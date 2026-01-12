@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IntelligentAutomation.Orchestrator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89a8e12787b6130873d5c8253fd507aea4d59222")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+93af838c8229f0144d709a2044c427906f57fef0")]
 [assembly: System.Reflection.AssemblyProductAttribute("IntelligentAutomation.Orchestrator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IntelligentAutomation.Orchestrator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
