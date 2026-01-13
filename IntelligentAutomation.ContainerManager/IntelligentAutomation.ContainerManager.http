@@ -1,0 +1,6 @@
+@IntelligentAutomation.ContainerManager_HostAddress = http://localhost:5198
+
+GET {{IntelligentAutomation.ContainerManager_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

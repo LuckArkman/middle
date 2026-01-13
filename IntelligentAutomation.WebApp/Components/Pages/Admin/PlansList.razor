@@ -1,0 +1,168 @@
+@page "/admin/plans"
+@using IntelligentAutomation.Domain.Entities
+@using IntelligentAutomation.WebApp.Services
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@inject ApiClient ApiClient
+@inject ToastService Toast
+
+<PageTitle>Gerenciar Planos</PageTitle>
+
+<h3>Gerenciar Planos</h3>
+
+<button class="btn btn-primary mb-3" @onclick="() => _selectedPlan = new Plan { IsActive = true }">
+    <span class="bi bi-plus-circle"></span> Novo Plano
+</button>
+
+@if (_plans == null)
+{
+    <p><em>Carregando planos...</em></p>
+}
+else
+{
+    <table class="table">
+        @* ... (thead) ... *@
+        <tbody>
+        @foreach (var plan in _plans)
+        {
+            <tr>
+                @* ... (outras colunas) ... *@
+                <td>
+                    <button class="btn btn-sm btn-secondary" 
+                            @onclick="() => _selectedPlan = plan"
+                            aria-label="Editar o plano @plan.Name">Editar</button>
+                    <button class="btn btn-sm btn-danger" 
+                            @onclick="() => DeletePlan(plan)"
+                            aria-label="Excluir o plano @plan.Name">Excluir</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    @if (_selectedPlan != null)
+    {
+        <div class="modal fade show d-block" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <EditForm Model="_selectedPlan" OnValidSubmit="HandleSave">
+                        @* ... *@
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTitle">@(string.IsNullOrEmpty(_selectedPlan.Id) ? "Novo Plano" : "Editar Plano")</h5>
+                            @* ... *@
+                        </div>
+                        @* ... *@
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@if (_selectedPlan != null)
+{
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <EditForm Model="_selectedPlan" OnValidSubmit="HandleSave">
+                    <DataAnnotationsValidator />
+                    <div class="modal-header">
+                        <h5 class="modal-title">@(string.IsNullOrEmpty(_selectedPlan.Id) ? "Novo Plano" : "Editar Plano")</h5>
+                        <button type-="button" class="btn-close" @onclick="CloseModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Formulário de edição/criação -->
+                        <div class="mb-3">
+                            <label>Nome do Plano:</label>
+                            <InputText class="form-control" @bind-Value="_selectedPlan.Name" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Preço Mensal (ex: 29.90):</label>
+                            <InputNumber class="form-control" @bind-Value="_selectedPlan.MonthlyPrice" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Máximo de Agentes Ativos:</label>
+                            <InputNumber class="form-control" @bind-Value="_selectedPlan.MaxActiveAgents" />
+                        </div>
+                        <div class="mb-3">
+                            <label>ID do Preço no Mercado Pago (opcional):</label>
+                            <InputText class="form-control" @bind-Value="_selectedPlan.StripePriceId" />
+                        </div>
+                        <div class="form-check mb-3">
+                            <InputCheckbox class="form-check-input" @bind-Value="_selectedPlan.IsActive" />
+                            <label class="form-check-label">Plano Ativo</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-light" @onclick="CloseModal">Cancelar</button>
+                         <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+}
+
+@code {
+    private List<Plan>? _plans;
+    private Plan? _selectedPlan;
+    private bool _isSaving = false;
+    
+    private async Task HandleSave()
+    {
+        if (_selectedPlan == null) return;
+
+        _isSaving = true;
+        try
+        {
+            // ... (lógica de salvar existente) ...
+        }
+        catch(Exception ex)
+        {
+            await Toast.ShowError($"Erro ao salvar plano: {ex.Message}");
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+
+        CloseModal();
+        await LoadPlans();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadPlans();
+    }
+
+    private async Task LoadPlans()
+    {
+        try
+        {
+            _plans = await ApiClient.GetPlansAsync();
+        }
+        catch(Exception ex)
+        {
+            await Toast.ShowError($"Falha ao carregar planos: {ex.Message}");
+        }
+    }
+    
+    private async Task DeletePlan(Plan plan)
+    {
+        // Adicionar confirmação em um app real (ex: com um componente de modal de confirmação)
+        try
+        {
+            await ApiClient.DeletePlanAsync(plan.Id);
+            await Toast.ShowSuccess($"Plano '{plan.Name}' excluído com sucesso!");
+            await LoadPlans();
+        }
+        catch(Exception ex)
+        {
+            await Toast.ShowError($"Erro ao excluir plano: {ex.Message}");
+        }
+    }
+    
+    private void CloseModal() => _selectedPlan = null;
+}

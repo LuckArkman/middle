@@ -1,0 +1,127 @@
+:root {
+    --primary-dark: #050a18; /* Fundo do Footer/Pro card */
+    --accent-blue: #0d1b3e;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6c757d;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-primary);
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+/* Hero Section */
+.hero-badge {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+/* Features Cards */
+.feature-card {
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Timeline / Como Funciona */
+.step-icon-box {
+    width: 80px;
+    height: 80px;
+    background-color: #f3f4f6;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: var(--primary-dark);
+}
+
+/* Pricing */
+.pricing-card {
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+.pricing-card.pro {
+    background-color: var(--primary-dark);
+    color: white;
+    border: none;
+    transform: scale(1.05);
+    z-index: 10;
+    position: relative;
+}
+.pricing-card.pro .text-muted {
+    color: #a0aec0 !important;
+}
+.pricing-card.pro ul li i {
+    color: white !important;
+}
+.badge-popular {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #e2e8f0;
+    color: var(--primary-dark);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-dark);
+    color: #9ca3af;
+}
+footer h5 {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+}
+footer a {
+    color: #9ca3af;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.8rem;
+}
+footer a:hover {
+    color: white;
+}
+.social-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: background 0.3s;
+}
+.social-icon:hover {
+    background: rgba(255,255,255,0.2);
+    color: white;
+}

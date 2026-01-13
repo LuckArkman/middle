@@ -1,0 +1,41 @@
+@inherits LayoutComponentBase
+@layout MainLayout
+@using IntelligentAutomation.BlazorApp.Components.Layout
+
+<div>
+    <!-- CORREÇÃO: Um cabeçalho Bootstrap (navbar) fixo no topo -->
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/dashboard">
+            <span class="bi bi-robot"></span> SaaS Automação
+        </a>
+
+        <!-- Botão para menu responsivo em telas pequenas -->
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Conteúdo do cabeçalho (pode ser usado para busca, etc.) -->
+        <div class="navbar-nav w-100"></div>
+
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <LoginDisplay />
+            </div>
+        </div>
+    </header>
+
+    <!-- CORREÇÃO: O conteúdo principal agora ocupa a página inteira, sem colunas -->
+    <main class="container-fluid mt-4">
+        <TokenManager />
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent>
+                <div class="alert alert-danger" role="alert">
+                    Ocorreu um erro neste componente.
+                </div>
+            </ErrorContent>
+        </ErrorBoundary>
+    </main>
+</div>

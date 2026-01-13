@@ -1,0 +1,41 @@
+@page "/dashboard"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@rendermode @(new InteractiveServerRenderMode())
+
+<PageTitle>Dashboard</PageTitle>
+
+<h1>Dashboard</h1>
+<p>Bem-vindo, @context.User.Identity?.Name!</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Agentes Ativos</div>
+            <div class="card-body">
+                <h5 class="card-title">2 / 5</h5>
+                <p class="card-text">Você está usando 2 dos 5 agentes permitidos em seu plano.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Execuções nas Últimas 24h</div>
+            <div class="card-body">
+                <h5 class="card-title">1,254</h5>
+                <p class="card-text">Seus agentes executaram suas tarefas com sucesso.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    private AuthenticationState context;
+
+    protected override async Task OnInitializedAsync()
+    {
+        context = await AuthenticationStateTask;
+    }
+}

@@ -1,0 +1,19 @@
+@page "/billing"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<PageTitle>Assinatura</PageTitle>
+
+<h3>Gerenciamento de Assinatura</h3>
+
+<div class="card">
+    <div class="card-header">
+        Seu Plano Atual
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Plano Intermediário</h5>
+        <p class="card-text">Permite até 5 agentes ativos e 10 módulos por agente.</p>
+        <p>Sua assinatura será renovada em: @DateTime.Now.AddDays(20).ToString("D")</p>
+        <button class="btn btn-secondary">Gerenciar Assinatura no Mercado Pago</button>
+    </div>
+</div>

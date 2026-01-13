@@ -1,0 +1,91 @@
+/* Estilos complementares ao Bootstrap para Home.razor */
+
+/* Fonte padrão para toda a página Home */
+#hero, #how-it-works, #features, #pricing, #contact {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Suavização de scroll para âncoras */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Hero Section - Badge customizado */
+#hero .badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* How It Works - Linha decorativa entre os passos (apenas em telas grandes) */
+@media (min-width: 992px) {
+    #how-it-works .row::before {
+        content: '';
+        position: absolute;
+        top: 36px;
+        left: 12.5%;
+        right: 12.5%;
+        height: 2px;
+        background: linear-gradient(to right, transparent, #e5e7eb 20%, #e5e7eb 80%, transparent);
+        z-index: 0;
+    }
+
+    #how-it-works .col-lg-3 {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Features - Ícones com hover suave */
+#features .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#features .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Pricing - Card destacado com escala maior */
+#pricing .border-primary {
+    border-width: 2px !important;
+}
+
+@media (min-width: 992px) {
+    #pricing .border-primary {
+        transform: scale(1.05);
+        z-index: 1;
+    }
+}
+
+/* Contact - Estilo adicional para o formulário */
+#contact .form-control:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+/* Badge Popular - Ajuste de posicionamento */
+#pricing .badge {
+    top: -12px;
+    font-size: 0.75rem;
+    padding: 0.35rem 1rem;
+    font-weight: 600;
+}
+
+/* Animações suaves para botões */
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Espaçamento consistente para ícones em listas */
+.list-unstyled li i {
+    width: 20px;
+}

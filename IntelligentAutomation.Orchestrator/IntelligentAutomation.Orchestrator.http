@@ -1,0 +1,6 @@
+@IntelligentAutomation.Orchestrator_HostAddress = http://localhost:5076
+
+GET {{IntelligentAutomation.Orchestrator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

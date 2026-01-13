@@ -1,0 +1,52 @@
+@inject HttpClient HttpClient
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            @* Este código só executa quando o usuário está autenticado *@
+        </Authorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+    private bool _tokenFetched = false;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+
+        if (user.Identity is { IsAuthenticated: true } && !_tokenFetched)
+        {
+            _tokenFetched = true; // Marca como tentado para evitar loop
+            
+            var existingToken = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "authToken");
+            if (string.IsNullOrEmpty(existingToken))
+            {
+                try
+                {
+                    var tokenResponse = await HttpClient.GetFromJsonAsync<TokenResponse>("/api/jwt");
+                    if (!string.IsNullOrEmpty(tokenResponse?.Token))
+                    {
+                        await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "authToken", tokenResponse.Token);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao buscar token JWT: {ex.Message}");
+                    Navigation.NavigateTo("Account/Logout", forceLoad: true); // Força logout se não conseguir obter token
+                }
+            }
+        }
+    }
+
+    private class TokenResponse
+    {
+        public string? Token { get; set; }
+    }
+}

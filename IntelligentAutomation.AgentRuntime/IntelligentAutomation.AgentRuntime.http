@@ -1,0 +1,6 @@
+@IntelligentAutomation.AgentRuntime_HostAddress = http://localhost:5046
+
+GET {{IntelligentAutomation.AgentRuntime_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
