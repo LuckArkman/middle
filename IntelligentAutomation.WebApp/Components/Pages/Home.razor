@@ -1,11 +1,204 @@
 ﻿@page "/"
-@using IntelligentAutomation.WebApp.Components.Layout
-@using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Home> Localizer
-@layout MainLayout
-<PageTitle>@Localizer["WelcomeTitle"]</PageTitle>
+@layout PublicLayout
+@* A diretiva @using para Localizer foi removida para eliminar qualquer ponto de falha. *@
 
-<div class="text-center">
-    <h1 class="display-4">@Localizer["WelcomeTitle"]</h1>
-    <p class="lead">@Localizer["WelcomeSubtitle"]</p>
-</div>
+<PageTitle>AutoAgent - Automação Inteligente para Empresas</PageTitle>
+
+<section id="hero" class="hero-section">
+    <div class="container">
+        <span class="tag"><span class="bi bi-lightning-charge-fill"></span> Automação Inteligente para Empresas</span>
+        <h1>Transforme Processos<br>em Agentes Autônomos<br>de Alta Performance</h1>
+        <p class="subtitle">Crie, configure e escale agentes de automação inteligentes com nosso construtor visual. Sem código, com total controle e observabilidade em tempo real.</p>
+        <div class="cta-buttons">
+            <a href="#pricing" class="btn btn-primary btn-lg">Ver Planos</a>
+            <a href="#how-it-works" class="btn btn-secondary btn-lg">Como Funciona</a>
+        </div>
+        <div class="hero-features">
+            <span><span class="bi bi-shield-check"></span> Segurança Enterprise</span>
+            <span><span class="bi bi-bar-chart-line-fill"></span> Métricas em Tempo Real</span>
+            <span><span class="bi bi-gear-wide-connected"></span> Setup em Minutos</span>
+        </div>
+    </div>
+</section>
+
+<section id="how-it-works" class="how-it-works-section">
+    <div class="container">
+        <div class="section-title">
+            <span>PROCESSO SIMPLES</span>
+            <h2>Como Funciona</h2>
+            <p>Da ideia à automação em produção em poucos passos. Nosso processo foi desenhado para máxima eficiência.</p>
+        </div>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-icon"><span class="bi bi-cursor-fill"></span></div>
+                <h5>PASSO 01</h5>
+                <h4>Crie seu Agente</h4>
+                <p>Use nosso construtor visual drag-and-drop para criar agentes personalizados sem escrever uma linha de código.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><span class="bi bi-gear-fill"></span></div>
+                <h5>PASSO 02</h5>
+                <h4>Configure Gatilhos</h4>
+                <p>Defina gatilhos, módulos e regras de negócio para que seu agente execute tarefas automaticamente.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><span class="bi bi-play-fill"></span></div>
+                <h5>PASSO 03</h5>
+                <h4>Execute e Monitore</h4>
+                <p>Coloque seus agentes em produção com observabilidade completa e logs detalhados em tempo real.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><span class="bi bi-graph-up-arrow"></span></div>
+                <h5>PASSO 04</h5>
+                <h4>Escale sem Limites</h4>
+                <p>Aumente a capacidade conforme sua demanda cresce, com infraestrutura elástica e isolamento garantido.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="features-section">
+    <div class="container">
+        <div class="section-title">
+            <span>FUNCIONALIDADES</span>
+            <h2>Tudo que Você Precisa</h2>
+            <p>Uma plataforma completa para criar, gerenciar e escalar seus agentes de automação com confiança.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><span class="bi bi-columns-gap"></span></div>
+                <h4>Construtor Visual</h4>
+                <p>Interface drag-and-drop intuitiva para criar fluxos de automação complexos sem conhecimento técnico.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><span class="bi bi-lock-fill"></span></div>
+                <h4>Isolamento & Segurança</h4>
+                <p>Cada agente roda em ambiente isolado com criptografia end-to-end e em conformidade com a LGPD.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><span class="bi bi-broadcast"></span></div>
+                <h4>Observabilidade Total</h4>
+                <p>Monitore execuções, logs e métricas em tempo real com alertas personalizáveis.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><span class="bi bi-cloud-arrow-up-fill"></span></div>
+                <h4>Escala Automática</h4>
+                <p>Infraestrutura elástica que se adapta automaticamente à demanda dos seus agentes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><span class="bi bi-hdd-stack-fill"></span></div>
+                <h4>APIs & Webhooks</h4>
+                <p>Integre com qualquer sistema através de APIs RESTful e webhooks configuráveis.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><span class="bi bi-calendar2-week-fill"></span></div>
+                <h4>Agendamento Flexível</h4>
+                <p>Programe execuções recorrentes com cron expressions ou triggers baseados em eventos.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="pricing" class="pricing-section">
+    <div class="container">
+        <div class="section-title">
+            <span>PLANOS & PREÇOS</span>
+            <h2>Escolha o Plano Ideal</h2>
+            <p>Planos flexíveis que crescem com seu negócio. Sem surpresas, sem taxas ocultas.</p>
+        </div>
+        <!-- CORREÇÃO: Estrutura HTML validada para garantir que os cards sejam filhos diretos do grid -->
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Básico</h3>
+                <p class="price">R$ 97<span>/mês</span></p>
+                <p class="description">Ideal para começar a automatizar processos simples</p>
+                <ul>
+                    <li><span class="bi bi-check"></span> 2 agentes ativos</li>
+                    <li><span class="bi bi-check"></span> 5 módulos disponíveis</li>
+                    <li><span class="bi bi-check"></span> 1.000 execuções/mês</li>
+                    <li><span class="bi bi-check"></span> Logs por 7 dias</li>
+                    <li><span class="bi bi-check"></span> Suporte por email</li>
+                </ul>
+                <a href="Account/Register" class="btn btn-primary-outline">Começar Agora</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Intermediário</h3>
+                <p class="price">R$ 197<span>/mês</span></p>
+                <p class="description">Para equipes que precisam de mais automações</p>
+                <ul>
+                    <li><span class="bi bi-check"></span> 5 agentes ativos</li>
+                    <li><span class="bi bi-check"></span> 10 módulos disponíveis</li>
+                    <li><span class="bi bi-check"></span> 5.000 execuções/mês</li>
+                    <li><span class="bi bi-check"></span> Logs por 30 dias</li>
+                    <li><span class="bi bi-check"></span> Suporte prioritário</li>
+                    <li><span class="bi bi-check"></span> Webhooks ilimitados</li>
+                </ul>
+                <a href="Account/Register" class="btn btn-primary-outline">Começar Agora</a>
+            </div>
+            <div class="pricing-card highlighted">
+                <span class="popular-tag">MAIS POPULAR</span>
+                <h3>Pro</h3>
+                <p class="price">R$ 397<span>/mês</span></p>
+                <p class="description">Máximo poder para operações em escala</p>
+                <ul>
+                    <li><span class="bi bi-check"></span> 10 agentes ativos</li>
+                    <li><span class="bi bi-check"></span> 15 módulos disponíveis</li>
+                    <li><span class="bi bi-check"></span> 20.000 execuções/mês</li>
+                    <li><span class="bi bi-check"></span> Logs por 90 dias</li>
+                    <li><span class="bi bi-check"></span> Suporte 24/7</li>
+                    <li><span class="bi bi-check"></span> API avançada</li>
+                    <li><span class="bi bi-check"></span> Ambiente dedicado</li>
+                </ul>
+                <a href="Account/Register" class="btn btn-secondary">Escolher Pro</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Empresarial</h3>
+                <p class="price">Sob consulta</p>
+                <p class="description">Soluções personalizadas para grandes empresas</p>
+                <ul>
+                    <li><span class="bi bi-check"></span> 20+ agentes ativos</li>
+                    <li><span class="bi bi-check"></span> Todos os módulos</li>
+                    <li><span class="bi bi-check"></span> Execuções ilimitadas</li>
+                    <li><span class="bi bi-check"></span> Logs ilimitados</li>
+                    <li><span class="bi bi-check"></span> Gerente de sucesso dedicado</li>
+                    <li><span class="bi bi-check"></span> SLA garantido</li>
+                    <li><span class="bi bi-check"></span> Customizações</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary-outline">Falar com Vendas</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="section-title">
+            <span>ENTRE EM CONTATO</span>
+            <h2>Pronto para Começar?</h2>
+            <p>Preencha o formulário abaixo e nossa equipe entrará em contato para entender suas necessidades.</p>
+        </div>
+        <div class="contact-form-wrapper">
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Nome *</label>
+                        <input type="text" id="name" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" placeholder="seu@email.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="company">Empresa (opcional)</label>
+                    <input type="text" id="company" placeholder="Nome da sua empresa">
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensagem (opcional)</label>
+                    <textarea id="message" rows="5" placeholder="Conte-nos sobre suas necessidades de automação..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">Enviar Mensagem <span class="bi bi-send-fill"></span></button>
+            </form>
+        </div>
+    </div>
+</section>

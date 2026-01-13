@@ -1,39 +1,57 @@
 @page "/agents"
+@attribute [Authorize]
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 @using IntelligentAutomation.Application.Dtos
 @using IntelligentAutomation.Domain.Entities
 @using IntelligentAutomation.WebApp.Services
 @using Microsoft.AspNetCore.Authorization
-@attribute [Authorize]
-@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@implements IAsyncDisposable
 @inject NavigationManager Navigation
 @inject ApiClient ApiClient
-@implements IDisposable
-@inject AgentStateService AgentState
+@inject NotificationService NotificationService
+@inject ToastService Toast
 
 <h3>Meus Agentes</h3>
 
-<button class="btn btn-primary mb-3" @onclick="CreateNewAgent" disabled="@_isLoading">
-    @if (_isLoading)
-    {
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    }
-    else
-    {
-        <span class="bi bi-plus-circle"></span>
-    }
-    Novo Agente
-</button>
-
-@else if (_agents.Count == 0)
-{
-<div class="text-center p-5 border rounded">
-    <span class="bi bi-robot" style="font-size: 3rem;"></span>
-    <h4 class="mt-3">Nenhum agente encontrado</h4>
-    <p>Você ainda não criou nenhum agente de automação. Clique no botão abaixo para começar!</p>
-    <button class="btn btn-primary" @onclick="CreateNewAgent">
-        <span class="bi bi-plus-circle"></span> Criar Meu Primeiro Agente
-    </button>
+<div class="row mb-3">
+    <div class="col-md-8">
+        <!-- ---- INÍCIO DA CORREÇÃO ---- -->
+        <!-- O @bind foi removido. Agora usamos a vinculação unidirecional 'value' -->
+        <!-- e um único manipulador de evento '@oninput' que faz todo o trabalho. -->
+        <input type="text" class="form-control" placeholder="Buscar por nome..."
+               value="@_searchTerm"
+               @oninput="OnSearchInput" />
+        <!-- ---- FIM DA CORREÇÃO ---- -->
+    </div>
+    <div class="col-md-4 text-end">
+        <button class="btn btn-primary" @onclick="CreateNewAgent" disabled="@_isLoading">
+            @if (_isLoading)
+            {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            else
+            {
+                <span class="bi bi-plus-circle"></span>
+            }
+            Novo Agente
+        </button>
+    </div>
 </div>
+
+@if (_pagedResult == null)
+{
+    <p><em>Carregando agentes...</em></p>
+}
+else if (_pagedResult.Items.Count == 0)
+{
+    <div class="text-center p-5 border rounded">
+        <span class="bi bi-robot" style="font-size: 3rem;"></span>
+        <h4 class="mt-3">Nenhum agente encontrado</h4>
+        <p>Você ainda não criou nenhum agente de automação. Clique no botão abaixo para começar!</p>
+        <button class="btn btn-primary" @onclick="CreateNewAgent">
+            <span class="bi bi-plus-circle"></span> Criar Meu Primeiro Agente
+        </button>
+    </div>
 }
 else
 {
@@ -47,7 +65,7 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var agent in _agents)
+        @foreach (var agent in _pagedResult.Items)
         {
             <tr>
                 <td>@agent.Name</td>
@@ -61,32 +79,47 @@ else
         }
         </tbody>
     </table>
+
+    @* Adicionar componente de Paginação aqui *@
 }
 
 @code {
-    private List<AgentDto>? _agents;
     private bool _isLoading = false;
     private PagedResult<AgentDto>? _pagedResult;
     private string? _searchTerm;
     private int _currentPage = 1;
     private int _totalPages = 1;
     private const int PageSize = 10;
-    
-    // Timer para evitar chamadas de API a cada tecla digitada na busca
+
     private Timer? _searchTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _searchTimer = new Timer(OnSearchTimerElapsed, null, Timeout.Infinite, Timeout.Infinite);
+        await NotificationService.StartConnectionAsync();
+        NotificationService.OnAgentStatusChanged += HandleAgentStatusChange;
+        await LoadData(_currentPage);
+    }
 
     private async Task LoadData(int page)
     {
         _currentPage = page;
-        _pagedResult = await ApiClient.GetAgentsAsync(_searchTerm, _currentPage, PageSize);
-        _totalPages = (int)Math.Ceiling(_pagedResult.TotalCount / (double)PageSize);
+        try
+        {
+            _pagedResult = await ApiClient.GetAgentsAsync(_searchTerm, _currentPage, PageSize);
+            _totalPages = (int)Math.Ceiling(_pagedResult.TotalCount / (double)PageSize);
+        }
+        catch (Exception ex)
+        {
+            await Toast.ShowError($"Erro ao carregar agentes: {ex.Message}");
+        }
         StateHasChanged();
     }
 
+    // O método OnSearchInput já está correto para esta implementação
     private void OnSearchInput(ChangeEventArgs e)
     {
         _searchTerm = e.Value?.ToString();
-        // Reseta o timer para disparar após 500ms de inatividade
         _searchTimer?.Change(500, Timeout.Infinite);
     }
 
@@ -95,49 +128,28 @@ else
         InvokeAsync(() => LoadData(1));
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        await LoadData(_currentPage);
-        _searchTimer = new Timer(OnSearchTimerElapsed, null, Timeout.Infinite, Timeout.Infinite);
-        await NotificationService.StartConnectionAsync();
-        NotificationService.OnAgentStatusChanged += HandleAgentStatusChange;
-        if (AgentState.Agents == null)
-        {
-            await AgentState.LoadAgentsAsync();
-        }
-    }
-    
     private void HandleAgentStatusChange(string agentId, string newStatus)
     {
-        var agentToUpdate = _agents?.FirstOrDefault(a => a.Id == agentId);
+        var agentToUpdate = _pagedResult?.Items.FirstOrDefault(a => a.Id == agentId);
         if (agentToUpdate != null)
         {
             agentToUpdate.Status = newStatus;
-            InvokeAsync(StateHasChanged); // Força a UI a atualizar de um thread diferente
+            InvokeAsync(StateHasChanged);
         }
-    }
-
-    private async Task LoadAgents()
-    {
-        _agents = await ApiClient.GetAgentsAsync();
     }
 
     private async Task CreateNewAgent()
     {
-        
         _isLoading = true;
         try
         {
             var newAgentDto = new CreateAgentDto { Name = "Novo Agente Sem Título" };
             var createdAgent = await ApiClient.CreateAgentAsync(newAgentDto);
-            await AgentState.CreateAgentAsync(newAgentDto);
             Navigation.NavigateTo($"/builder/{createdAgent.Id}");
         }
         catch (Exception ex)
         {
-            // Lógica de notificação de erro
-            Console.WriteLine($"Erro ao criar agente: {ex.Message}");
+            await Toast.ShowError($"Erro ao criar agente: {ex.Message}");
         }
         finally
         {
@@ -147,20 +159,31 @@ else
 
     private async Task StopAgent(string agentId)
     {
-        // Adicionar confirmação
-        await ApiClient.StopAgentAsync(agentId);
-        await LoadAgents(); // Recarrega a lista para mostrar o novo status
-    }
-    
-    public async ValueTask DisposeAsync()
-    {
-        NotificationService.OnAgentStatusChanged -= HandleAgentStatusChange;
-        await NotificationService.DisposeAsync();
+        try
+        {
+            await ApiClient.StopAgentAsync(agentId);
+            await Toast.ShowSuccess("Comando para parar o agente foi enviado.");
+            await LoadData(_currentPage);
+        }
+        catch(Exception ex)
+        {
+            await Toast.ShowError($"Erro ao parar agente: {ex.Message}");
+        }
     }
 
-    private string GetStatusBadgeClass(string status)
+    public async ValueTask DisposeAsync()
     {
-        return status.ToLower() switch
+        if (NotificationService != null)
+        {
+            NotificationService.OnAgentStatusChanged -= HandleAgentStatusChange;
+            await NotificationService.DisposeAsync();
+        }
+        _searchTimer?.Dispose();
+    }
+
+    private string GetStatusBadgeClass(string? status)
+    {
+        return status?.ToLower() switch
         {
             "running" => "bg-success",
             "stopped" => "bg-secondary",

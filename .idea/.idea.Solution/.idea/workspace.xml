@@ -23,25 +23,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34bbbc06-0da4-4d66-a839-df01cf783b84" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/Entities/PagedResult.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Shared/ConfirmationModal.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Shared/GlobalLoadingIndicator.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/ConfirmationModalTests.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/LoadingHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/LoadingService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/NotificationService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/PublicLayout.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/PublicLayout.razor.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/Controllers/AgentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/Controllers/AgentsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/MainLayout.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/IntelligentAutomation.Orchestrator.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/IntelligentAutomation.Orchestrator.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityComponentsEndpointRouteBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityComponentsEndpointRouteBuilderExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityNoOpEmailSender.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityNoOpEmailSender.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityRedirectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityRedirectManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityRevalidatingAuthenticationStateProvider.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityUserAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityUserAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/PersistingRevalidatingAuthenticationStateProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/PersistingRevalidatingAuthenticationStateProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/App.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/App.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/AgentsList.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/AgentsList.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/PlansList.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/PlansList.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Routes.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Routes.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Shared/PropertiesPanel.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Shared/PropertiesPanel.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/_Imports.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/Migrations/00000000000000_CreateIdentitySchema.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/Migrations/00000000000000_CreateIdentitySchema.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/ApiClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/wwwroot/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/wwwroot/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/NotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/NotificationService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +61,13 @@
   </component>
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -62,7 +80,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eddc51a49dddbdbde4ba2ca25b90ace5a2b5c63fd7d9ea946adb53ab61da735/AuthenticationStateProvider.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="SWEA" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -75,23 +93,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.IntelligentAutomation.Orchestrator: https.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.IntelligentAutomation.WebApp: IIS Express.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;10-01-2026&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;AndroidSettingsPageId&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.IntelligentAutomation.Orchestrator: https.executor": "Debug",
+    ".NET Launch Settings Profile.IntelligentAutomation.WebApp: IIS Express.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "12-01-2026",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "AndroidSettingsPageId",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.IntelligentAutomation.WebApp: https">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.IntelligentAutomation.WebApp: IIS Express">
     <configuration name="IntelligentAutomation.WebApp.Client" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -331,10 +350,29 @@
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <option name="RUNTIME_TYPE" value="coreclr" />
       <method v="2">
         <option name="Build" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.AgentRuntime: http" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.AgentRuntime: https" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.AgentRuntime: IIS Express" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.ApiGateway: http" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.ApiGateway: https" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.ApiGateway: IIS Express" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.ContainerManager: http" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.ContainerManager: https" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.ContainerManager: IIS Express" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.Orchestrator: http" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.Orchestrator: https" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.Orchestrator: IIS Express" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.WebApp: http" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.WebApp: https" />
+      <item itemvalue=".NET Launch Settings Profile.IntelligentAutomation.WebApp: IIS Express" />
+      <item itemvalue=".NET Project.IntelligentAutomation.WebApp.Client" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -352,7 +390,7 @@
       <workItem from="1768173035464" duration="4135000" />
       <workItem from="1768189555051" duration="993000" />
       <workItem from="1768237086366" duration="913000" />
-      <workItem from="1768240478562" duration="5463000" />
+      <workItem from="1768240478562" duration="14612000" />
     </task>
     <servers />
   </component>

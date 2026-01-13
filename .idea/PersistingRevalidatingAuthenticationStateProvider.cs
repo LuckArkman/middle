@@ -10,6 +10,9 @@ using Microsoft.Extensions.Options;
 
 namespace IntelligentAutomation.WebApp.Components.Account;
 
+// Esta é a implementação do AuthenticationStateProvider para a interface do usuário do Identity
+// em um Blazor Web App. Ela lida com a persistência do estado de autenticação
+// da renderização estática do lado do servidor (SSR) para o circuito interativo.
 public sealed class PersistingRevalidatingAuthenticationStateProvider : RevalidatingServerAuthenticationStateProvider
 {
     private readonly IServiceScopeFactory _scopeFactory;
@@ -43,7 +46,10 @@ public sealed class PersistingRevalidatingAuthenticationStateProvider : Revalida
     {
         try
         {
+            // Tenta obter o estado do componente persistido primeiro.
             var isPersistent = _state.TryTakeFromJson<UserInfo>(nameof(UserInfo), out var userInfo);
+
+            // Se não encontrou no estado persistido, ou se o usuário não estava logado, usa a implementação base (que consulta o cookie).
             if (!isPersistent || userInfo is null)
             {
                 return await base.GetAuthenticationStateAsync();
@@ -60,11 +66,13 @@ public sealed class PersistingRevalidatingAuthenticationStateProvider : Revalida
         }
         catch
         {
+            // Se algo der errado, retorna um usuário anônimo.
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
     }
     protected override async Task<bool> ValidateAuthenticationStateAsync(AuthenticationState authenticationState, CancellationToken cancellationToken)
     {
+        // Obtém o UserManager do escopo de dependência para evitar o uso de serviços com escopo de longa duração.
         await using var scope = _scopeFactory.CreateAsyncScope();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         return await ValidateSecurityStampAsync(userManager, authenticationState.User);
@@ -93,8 +101,6 @@ public sealed class PersistingRevalidatingAuthenticationStateProvider : Revalida
     {
         _authenticationStateTask = task;
     }
-
-
 
     private async Task OnPersistingAsync()
     {

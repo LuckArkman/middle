@@ -1,0 +1,143 @@
+.public-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.top-header {
+    background-color: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.top-header nav {
+    display: flex;
+    align-items: center;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.top-header .logo {
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: #111827;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.top-header .nav-links {
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+}
+
+.top-header .nav-links a {
+    color: #6b7280;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.top-header .nav-links a:hover {
+    color: #111827;
+}
+
+.top-header .auth-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.top-header .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.main-footer {
+    background-color: #111827;
+    color: #9ca3af;
+    padding: 4rem 0 2rem;
+    text-align: left;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #374151;
+}
+
+.footer-brand h4 {
+    color: white;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-brand p {
+    max-width: 350px;
+    margin-top: 1rem;
+}
+
+.social-icons {
+    margin-top: 1.5rem;
+}
+
+.social-icons a {
+    color: #9ca3af;
+    margin-right: 1.5rem;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+
+.social-icons a:hover {
+    color: white;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.footer-links h5 {
+    color: white;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.footer-links a {
+    display: block;
+    color: #9ca3af;
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    padding-top: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+}

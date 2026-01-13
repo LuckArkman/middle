@@ -1,7 +1,7 @@
 @using IntelligentAutomation.Domain.Entities
 @using IntelligentAutomation.Domain.Workflow
 
-@if (SelectedNode is ModuleNode moduleNode)
+@if (SelectedNode is ModuleNode moduleNode && moduleNode.Parameters != null)
 {
     <div class="properties-panel">
         <h4>Propriedades: @moduleNode.Name</h4>
@@ -9,30 +9,40 @@
 
         @if (_manifestForNode != null)
         {
-            <EditForm Model="moduleNode.Parameters">
+            <EditForm Model="moduleNode.Parameters" Context="editContext">
                 <DataAnnotationsValidator />
-
+                
                 @foreach (var param in _manifestForNode.Parameters)
                 {
                     <div class="mb-3">
                         <label class="form-label">@param.DisplayName</label>
                         @switch (param.Type)
                         {
+                            // ---- INÍCIO DA CORREÇÃO ----
                             case "string":
-                                <InputText class="form-control" @bind-Value="@(() => GetStringProperty(moduleNode.Parameters, param.Name))" @bind-Value:after="@((v) => SetStringProperty(moduleNode.Parameters, param.Name, v))" />
+                                <InputText class="form-control" 
+                                           Value="@GetStringProperty(moduleNode.Parameters, param.Name)" 
+                                           ValueChanged="@((string value) => SetStringProperty(moduleNode.Parameters, param.Name, value))" />
                                 break;
                             case "number":
-                                <InputNumber class="form-control" @bind-Value="@(() => GetDecimalProperty(moduleNode.Parameters, param.Name))" @bind-Value:after="@((v) => SetDecimalProperty(moduleNode.Parameters, param.Name, v))" />
+                                <InputNumber class="form-control" 
+                                             Value="@GetDecimalProperty(moduleNode.Parameters, param.Name)" 
+                                             ValueChanged="@((decimal value) => SetDecimalProperty(moduleNode.Parameters, param.Name, value))" />
                                 break;
                             case "options":
-                                <InputSelect class="form-select" @bind-Value="@(() => GetStringProperty(moduleNode.Parameters, param.Name))" @bind-Value:after="@((v) => SetStringProperty(moduleNode.Parameters, param.Name, v))">
-                                    @foreach (var option in param.Options)
+                                <InputSelect class="form-select" 
+                                             Value="@GetStringProperty(moduleNode.Parameters, param.Name)" 
+                                             ValueChanged="@((string value) => SetStringProperty(moduleNode.Parameters, param.Name, value))">
+                                    @if (param.Options != null)
                                     {
-                                        <option value="@option">@option</option>
+                                        @foreach (var option in param.Options)
+                                        {
+                                            <option value="@option">@option</option>
+                                        }
                                     }
                                 </InputSelect>
                                 break;
-                            // Adicionar outros tipos como 'secret', 'bool', etc.
+                            // ---- FIM DA CORREÇÃO ----
                         }
                     </div>
                 }
@@ -71,22 +81,22 @@ else
     // --- Métodos Auxiliares para Binding Dinâmico com Reflection ---
     private string GetStringProperty(object target, string propName)
     {
-        return target?.GetType().GetProperty(propName)?.GetValue(target) as string ?? "";
+        return target.GetType().GetProperty(propName)?.GetValue(target) as string ?? "";
     }
 
     private void SetStringProperty(object target, string propName, string value)
     {
-        target?.GetType().GetProperty(propName)?.SetValue(target, value);
+        target.GetType().GetProperty(propName)?.SetValue(target, value);
     }
 
     private decimal GetDecimalProperty(object target, string propName)
     {
-        var val = target?.GetType().GetProperty(propName)?.GetValue(target);
+        var val = target.GetType().GetProperty(propName)?.GetValue(target);
         return val is decimal d ? d : 0;
     }
 
     private void SetDecimalProperty(object target, string propName, decimal value)
     {
-        target?.GetType().GetProperty(propName)?.SetValue(target, value);
+        target.GetType().GetProperty(propName)?.SetValue(target, value);
     }
 }
