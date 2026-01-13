@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+
+@* 
+    CORREÇÃO CRÍTICA: Este layout agora é intencionalmente quase vazio.
+    Ele não contém NENHUM menu de navegação. Ele serve apenas como o container
+    principal para o conteúdo da página (@Body) e a UI de erro.
+*@
+<div class="main-layout-container">
+    @Body
+</div>
+
+<div id="blazor-error-ui">
+    Um erro inesperado ocorreu.
+    <a href="" class="reload">Recarregar</a>
+    <a class="dismiss">🗙</a>
+</div>
