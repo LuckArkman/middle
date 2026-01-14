@@ -69,3 +69,11 @@ O projeto segue os princípios da **Clean Architecture**:
     \\\
 
 ## 🧩 Como adicionar novos módulos
+
+Para estender a plataforma com novos comportamentos:
+1.  **Domain:** Crie uma nova classe herdando de \BaseModuleParameters\ em \IntelligentAutomation.Domain\.
+2.  **Runtime:** Crie uma classe que implemente \IModule\ em \IntelligentAutomation.AgentRuntime.Modules\.
+3.  **WebApp:** Adicione o novo tipo ao \PolymorphicTypeResolver\ no \AgentBuilder.razor\ para suportar a serialização dos parâmetros.
+
+---
+Desenvolvido com ❤️ pelo time **LuckArkman**.
