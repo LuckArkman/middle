@@ -26,98 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34bbbc06-0da4-4d66-a839-df01cf783b84" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/IntelligentAutomation.BlazorApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/IntelligentAutomation.BlazorApp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityComponentsEndpointRouteBuilderExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityNoOpEmailSender.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityRedirectManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/IdentityUserAccessor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/AccessDenied.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/ConfirmEmail.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/ConfirmEmailChange.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/ExternalLogin.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/ForgotPassword.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/ForgotPasswordConfirmation.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/InvalidPasswordReset.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/InvalidUser.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Lockout.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Login.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/LoginWith2fa.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/LoginWithRecoveryCode.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/ChangePassword.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/DeletePersonalData.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/Disable2fa.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/Email.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/EnableAuthenticator.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/ExternalLogins.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/GenerateRecoveryCodes.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/Index.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/PersonalData.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/ResetAuthenticator.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/SetPassword.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/TwoFactorAuthentication.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Manage/_Imports.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/Register.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/RegisterConfirmation.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/ResendEmailConfirmation.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/ResetPassword.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/ResetPasswordConfirmation.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Pages/_Imports.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/PersistingRevalidatingAuthenticationStateProvider.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Shared/AccountLayout.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Shared/ExternalLoginPicker.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Shared/ManageLayout.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Shared/ManageNavMenu.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Shared/RedirectToLogin.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Shared/ShowRecoveryCodes.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Account/Shared/StatusMessage.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/App.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/MainLayout.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/MainLayout.razor.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/AdminDashboard.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/AgentsList.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/Billing.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/Dashboard.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/PlansList.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Admin/UsersList.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/AgentBuilder.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Auth.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Counter.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Error.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/LoginDisplay.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/PublicLayout.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/PublicLayout.razor.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Weather.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Routes.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Shared/ConfirmationModal.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Shared/GlobalLoadingIndicator.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Shared/PropertiesPanel.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Shared/TokenManager.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/_Imports.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/ApplicationDbContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/ApplicationUser.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/DbInitializer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/app.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/IntelligentAutomation.WebApp.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Properties/launchSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/AgentStateService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/ApiClient.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/AuthHeaderHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/LoadingHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/LoadingService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/NotificationService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Services/ToastService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/appsettings.Development.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/wwwroot/app.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/wwwroot/bootstrap/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/wwwroot/bootstrap/bootstrap.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/wwwroot/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solution.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Solution.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,24 +69,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.IntelligentAutomation.BlazorApp: https.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.IntelligentAutomation.Orchestrator: https.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.IntelligentAutomation.WebApp: IIS Express.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;12-01-2026&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;AndroidSettingsPageId&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.IntelligentAutomation.BlazorApp: https.executor": "Debug",
+    ".NET Launch Settings Profile.IntelligentAutomation.Orchestrator: https.executor": "Debug",
+    ".NET Launch Settings Profile.IntelligentAutomation.WebApp: IIS Express.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "14-02-2026",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "AndroidSettingsPageId",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.IntelligentAutomation.BlazorApp: https">
     <configuration name="IntelligentAutomation.WebApp.Client" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -512,7 +421,7 @@
       <workItem from="1768341313872" duration="3273000" />
       <workItem from="1768360441374" duration="624000" />
       <workItem from="1768396825247" duration="2015000" />
-      <workItem from="1768407800008" duration="2762000" />
+      <workItem from="1768407800008" duration="3132000" />
     </task>
     <servers />
   </component>
