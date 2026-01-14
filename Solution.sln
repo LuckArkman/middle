@@ -12,8 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.Orche
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.ContainerManager", "IntelligentAutomation.ContainerManager\IntelligentAutomation.ContainerManager.csproj", "{9DC18ED4-772C-4506-84C0-8E1F9A2907A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.WebApp", "IntelligentAutomation.WebApp\IntelligentAutomation.WebApp.csproj", "{79AB5010-F8E1-485C-88AF-0210857E0C2F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.AgentRuntime", "IntelligentAutomation.AgentRuntime\IntelligentAutomation.AgentRuntime.csproj", "{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.BlazorApp", "IntelligentAutomation.BlazorApp\IntelligentAutomation.BlazorApp.csproj", "{9D12E9BF-B61E-47C3-A642-7AE420361EC9}"
@@ -48,10 +46,6 @@ Global
 		{9DC18ED4-772C-4506-84C0-8E1F9A2907A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DC18ED4-772C-4506-84C0-8E1F9A2907A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DC18ED4-772C-4506-84C0-8E1F9A2907A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79AB5010-F8E1-485C-88AF-0210857E0C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79AB5010-F8E1-485C-88AF-0210857E0C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79AB5010-F8E1-485C-88AF-0210857E0C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79AB5010-F8E1-485C-88AF-0210857E0C2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{988CAD64-A223-48C1-B2D3-9BDCF2F962FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
