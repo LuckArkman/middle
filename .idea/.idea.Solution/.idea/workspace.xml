@@ -25,7 +25,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34bbbc06-0da4-4d66-a839-df01cf783b84" name="Changes" comment="" />
+    <list default="true" id="34bbbc06-0da4-4d66-a839-df01cf783b84" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -417,6 +431,8 @@
       <workItem from="1768318951311" duration="9090000" />
       <workItem from="1768338532093" duration="1885000" />
       <workItem from="1768341313872" duration="3273000" />
+      <workItem from="1768360441374" duration="624000" />
+      <workItem from="1768396825247" duration="2015000" />
     </task>
     <servers />
   </component>

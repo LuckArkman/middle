@@ -1,0 +1,123 @@
+@page "/Account/Register"
+@layout AccountLayout
+
+@using System.ComponentModel.DataAnnotations
+@using IntelligentAutomation.BlazorApp.Components.Account
+@using IntelligentAutomation.BlazorApp.Components.Shared
+@using IntelligentAutomation.BlazorApp.Data
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IUserStore<ApplicationUser> UserStore
+@inject IEmailSender<ApplicationUser> EmailSender
+@inject NavigationManager NavigationManager
+@inject IdentityRedirectManager RedirectManager
+
+<PageTitle>Criar Conta</PageTitle>
+
+<div class="account-card">
+    <div class="card-header-icon">
+        <span class="bi bi-person-plus-fill"></span>
+    </div>
+    
+    <h3>Criar Conta</h3>
+    <p class="subtitle">Crie sua conta para começar a automatizar</p>
+
+    <EditForm Model="Input" Method="post" OnValidSubmit="RegisterUser" FormName="register">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+
+        @* O campo "Nome completo" não existe no Identity padrão, então o omitimos por enquanto para focar na funcionalidade.
+           Poderíamos adicioná-lo customizando a classe ApplicationUser. *@
+
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <InputText id="email" @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="seu@email.com" />
+            <ValidationMessage For="() => Input.Email" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <InputText id="password" @bind-Value="Input.Password" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="********" />
+            <ValidationMessage For="() => Input.Password" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Confirmar senha</label>
+            <InputText id="confirm-password" @bind-Value="Input.ConfirmPassword" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="********" />
+            <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+        </div>
+        <button type="submit" class="w-100 btn btn-primary">Criar conta</button>
+    </EditForm>
+    
+    <div class="card-footer-link">
+        Já tem uma conta? <a href="Account/Login">Entrar</a>
+    </div>
+</div>
+
+
+@code {
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    private string? ErrorMessage { get; set; }
+    private IEnumerable<AuthenticationScheme>? ExternalLogins { get; set; }
+    private string? ReturnUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        ReturnUrl ??= NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+    }
+
+    private async Task RegisterUser()
+    {
+        var user = new ApplicationUser();
+        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+        var emailStore = (IUserEmailStore<ApplicationUser>)UserStore;
+        await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+        var result = await UserManager.CreateAsync(user, Input.Password);
+
+        if (result.Succeeded)
+        {
+            var userId = await UserManager.GetUserIdAsync(user);
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+            code = System.Web.HttpUtility.UrlEncode(code);
+            var callbackUrl = NavigationManager.ToAbsoluteUri($"Account/ConfirmEmail?userId={userId}&code={code}&returnUrl={ReturnUrl}");
+
+            await EmailSender.SendConfirmationLinkAsync(user, Input.Email, callbackUrl.ToString());
+
+            if (UserManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                RedirectManager.RedirectTo("Account/RegisterConfirmation", new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
+            }
+            else
+            {
+                await SignInManager.SignInAsync(user, isPersistent: false);
+                RedirectManager.RedirectTo(ReturnUrl);
+            }
+        }
+        else
+        {
+            ErrorMessage = string.Join(", ", result.Errors.Select(e => e.Description));
+            // Em uma aplicação real, você mapearia os erros para um <ValidationSummary />
+        }
+    }
+    
+    private sealed class InputModel
+    {
+        [Required(ErrorMessage = "O E-mail é obrigatório.")]
+        [EmailAddress(ErrorMessage = "O E-mail não é um endereço válido.")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "A Senha é obrigatória.")]
+        [DataType(DataType.Password)]
+        [StringLength(100, ErrorMessage = "A senha deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+        public string Password { get; set; } = "";
+        
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "A senha e a confirmação de senha não correspondem.")]
+        public string ConfirmPassword { get; set; } = "";
+    }
+
+}
