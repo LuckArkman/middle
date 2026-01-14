@@ -26,16 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34bbbc06-0da4-4d66-a839-df01cf783b84" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Components/Layout/AuthenticatedLayout.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Components/Layout/NavMenu.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Components/Layout/NavMenu.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Components/Pages/PublicLayout.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Components/Pages/PublicLayout.razor.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ApiGateway/obj/Debug/net8.0/IntelligentAutomation.ApiGateway.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Application/obj/Debug/net8.0/IntelligentAutomation.Application.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Components/Layout/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Components/Layout/MainLayout.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.ContainerManager/obj/Debug/net8.0/IntelligentAutomation.ContainerManager.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Domain/obj/Debug/net8.0/IntelligentAutomation.Domain.AssemblyInfo.cs" afterDir="false" />
@@ -44,17 +40,6 @@
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Infrastructure/obj/Debug/net8.0/IntelligentAutomation.Infrastructure.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.Orchestrator/obj/Debug/net8.0/IntelligentAutomation.Orchestrator.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/App.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/App.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/MainLayout.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/Home.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/PublicLayout.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Pages/PublicLayout.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/app.db-shm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/Data/app.db-wal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntelligentAutomation.WebApp/wwwroot/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/IntelligentAutomation.WebApp/wwwroot/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solution.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Solution.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +66,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b046c966f166d12263bfa9a0f88fb04f7245ea1851c5e95fec02b96632d2df1/IMongoCollection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eddc51a49dddbdbde4ba2ca25b90ace5a2b5c63fd7d9ea946adb53ab61da735/AuthenticationStateProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/IntelligentAutomation.BlazorApp/Components/Routes.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IntelligentAutomation.WebApp/Components/Layout/NavMenu.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -445,6 +431,7 @@
       <workItem from="1768240478562" duration="16642000" />
       <workItem from="1768318951311" duration="9090000" />
       <workItem from="1768338532093" duration="1885000" />
+      <workItem from="1768341313872" duration="2640000" />
     </task>
     <servers />
   </component>

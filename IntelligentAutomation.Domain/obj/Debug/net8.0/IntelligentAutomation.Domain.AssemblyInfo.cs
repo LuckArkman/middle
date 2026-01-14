@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IntelligentAutomation.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3adbb5042c42ed67a0c69bb6a415fd5001e15659")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+110588e899947f99d22afe408b06ada042dbfdea")]
 [assembly: System.Reflection.AssemblyProductAttribute("IntelligentAutomation.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IntelligentAutomation.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
