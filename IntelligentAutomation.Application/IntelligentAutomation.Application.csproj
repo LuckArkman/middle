@@ -27,6 +27,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\IntelligentAutomation.Domain\IntelligentAutomation.Domain.csproj" />
+      <ProjectReference Include="..\IntelligentAutomation.Dtos\IntelligentAutomation.Dtos.csproj" />
+      <ProjectReference Include="..\IntelligentAutomation.Interfaces\IntelligentAutomation.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

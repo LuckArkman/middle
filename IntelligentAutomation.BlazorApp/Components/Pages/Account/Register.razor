@@ -1,0 +1,171 @@
+@page "/Account/Register"
+@layout AccountLayout
+@rendermode @(new InteractiveServerRenderMode())
+@using System.ComponentModel.DataAnnotations
+@using IntelligentAutomation.BlazorApp.Services
+
+@using IntelligentAutomation.BlazorApp.Components.Shared
+@inject ApiClient ApiClient
+@inject NavigationManager NavigationManager
+
+<PageTitle>Criar Conta</PageTitle>
+
+<div class="account-card">
+    <div class="card-header-icon">
+        <span class="bi bi-person-plus-fill"></span>
+    </div>
+
+    <h3>Criar Conta</h3>
+    <p class="subtitle">Crie sua conta para começar a automatizar</p>
+
+    <EditForm Model="Input" OnValidSubmit="HandleRegister" FormName="register">
+        <DataAnnotationsValidator />
+        @if (!string.IsNullOrEmpty(ErrorMessage)) { <div class="alert alert-danger">@ErrorMessage</div> }
+
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <InputText id="email" @bind-Value="Input.Email" class="form-control" placeholder="seu@email.com" />
+            <ValidationMessage For="() => Input.Email" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <InputText id="password" @bind-Value="Input.Password" type="password" class="form-control" placeholder="********" />
+            <ValidationMessage For="() => Input.Password" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Confirmar senha</label>
+            <InputText id="confirm-password" @bind-Value="Input.ConfirmPassword" type="password" class="form-control" placeholder="********" />
+            <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+        </div>
+        <button type="submit" class="w-100 btn btn-primary-custom">Criar conta</button>
+    </EditForm>
+
+    <div class="card-footer-link">
+        Já tem uma conta? <a href="Account/Login">Entrar</a>
+    </div>
+</div>
+
+<!-- ---- INÍCIO DA CORREÇÃO DEFINITIVA ---- -->
+<!-- Estilos embutidos para garantir a aplicação, ignorando falhas do CSS isolado -->
+<style>
+    .account-card {
+        background-color: white;
+        padding: 2.5rem 3rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        width: 100%;
+        max-width: 450px;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+    }
+
+    .card-header-icon {
+        width: 48px;
+        height: 48px;
+        background-color: #eef2ff;
+        color: #4f46e5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        margin: 0 auto 1.5rem;
+    }
+
+    .account-card h3 {
+        font-weight: 800;
+        color: #111827;
+        margin: 0;
+    }
+
+    .subtitle {
+        color: #6b7280;
+        margin-top: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #374151;
+    }
+
+    .form-group .form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .btn-primary-custom {
+        background-color: #111827 !important;
+        border-color: #111827 !important;
+        color: white !important;
+        padding: 0.8rem;
+        font-weight: 500;
+        margin-top: 1rem;
+        width: 100%;
+        border-radius: 0.5rem;
+    }
+
+    .card-footer-link {
+        margin-top: 2rem;
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    .card-footer-link a {
+        color: #4f46e5;
+        font-weight: 500;
+        text-decoration: none;
+    }
+</style>
+<!-- ---- FIM DA CORREÇÃO DEFINITIVA ---- -->
+
+
+@code {
+    private InputModel Input { get; set; } = new();
+    private string? ErrorMessage { get; set; }
+
+    private async Task HandleRegister()
+    {
+        ErrorMessage = null;
+        try
+        {
+            var request = new RegisterRequestDto
+            {
+                Email = Input.Email,
+                Password = Input.Password
+            };
+            await ApiClient.RegisterAsync(request);
+            NavigationManager.NavigateTo("Account/Login?message=RegistrationSuccessful");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [Required(ErrorMessage = "O E-mail é obrigatório.")]
+        [EmailAddress(ErrorMessage = "O E-mail não é um endereço válido.")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "A Senha é obrigatória.")]
+        [DataType(DataType.Password)]
+        [StringLength(100, ErrorMessage = "A senha deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+        public string Password { get; set; } = "";
+
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "A senha e a confirmação de senha não correspondem.")]
+        public string ConfirmPassword { get; set; } = "";
+    }
+}
