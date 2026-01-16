@@ -1,16 +1,17 @@
-@page "/Account/Register"
+@page "/Account/Login"
 @layout AccountLayout
-@rendermode @(new InteractiveServerRenderMode())
+@rendermode @(new InteractiveServerRenderMode(true))
 @using System.ComponentModel.DataAnnotations
 @using IntelligentAutomation.BlazorApp.Services
 @using IntelligentAutomation.BlazorApp.Components.Shared
+@inject IJSRuntime JSRuntime
 @inject ApiClient ApiClient
 @inject NavigationManager NavigationManager
 
-<PageTitle>Criar Conta</PageTitle>
+<PageTitle>Entrar</PageTitle>
 
-<div class="register-container">
-    <div class="register-card">
+<div class="login-container">
+    <div class="login-card">
         <div class="back-link">
             <a href="/" class="text-decoration-none text-muted d-flex align-items-center">
                 <i class="bi bi-arrow-left me-2"></i>
@@ -18,11 +19,11 @@
             </a>
         </div>
 
-        <div class="register-content">
-            <h1 class="register-title">Criar Conta</h1>
-            <p class="register-subtitle">Crie sua conta para gerenciar leads</p>
+        <div class="login-content">
+            <h1 class="login-title">Entrar</h1>
+            <p class="login-subtitle">Acesse sua conta para gerenciar leads</p>
 
-            <EditForm Model="Input" OnValidSubmit="HandleRegister" FormName="register" class="register-form">
+            <EditForm Model="Input" OnValidSubmit="HandleLogin" FormName="login" class="login-form">
                 <DataAnnotationsValidator />
 
                 @if (!string.IsNullOrEmpty(ErrorMessage))
@@ -32,16 +33,6 @@
                         <div>@ErrorMessage</div>
                     </div>
                 }
-
-                <div class="mb-4">
-                    <label for="fullname" class="form-label">Nome completo</label>
-                    <InputText id="fullname"
-                               @bind-Value="Input.FullName"
-                               class="form-control form-control-lg"
-                               placeholder="Seu nome"
-                               autocomplete="name" />
-                    <ValidationMessage For="() => Input.FullName" class="text-danger small mt-1" />
-                </div>
 
                 <div class="mb-4">
                     <label for="email" class="form-label">E-mail</label>
@@ -60,40 +51,35 @@
                                type="password"
                                class="form-control form-control-lg"
                                placeholder="••••••••"
-                               autocomplete="new-password" />
+                               autocomplete="current-password" />
                     <ValidationMessage For="() => Input.Password" class="text-danger small mt-1" />
                 </div>
 
-                <div class="mb-4">
-                    <label for="confirm-password" class="form-label">Confirmar senha</label>
-                    <InputText id="confirm-password"
-                               @bind-Value="Input.ConfirmPassword"
-                               type="password"
-                               class="form-control form-control-lg"
-                               placeholder="••••••••"
-                               autocomplete="new-password" />
-                    <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger small mt-1" />
-                </div>
-
-                <button type="submit" class="btn btn-dark btn-lg w-100 register-button" disabled="@_isRegistering">
-                    @if (_isRegistering)
+                <button type="submit" class="btn btn-dark btn-lg w-100 login-button" disabled="@_isLoggingIn">
+                    @if (_isLoggingIn)
                     {
                         <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                        <span>Criando conta...</span>
+                        <span>Entrando...</span>
                     }
                     else
                     {
-                        <span>Criar conta</span>
+                        <span>Entrar</span>
                     }
                 </button>
             </EditForm>
 
-            <div class="login-link">
-                Já tem uma conta? <a href="Account/Login" class="fw-semibold">Entrar</a>
+            <div class="register-link">
+                Não tem uma conta? <a href="Account/Register" class="fw-semibold">Criar conta</a>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Formulário oculto para postar o token e criar a sessão de cookie -->
+<form @ref="_signInForm" action="/auth/client-login" method="post" style="display: none;">
+    <input name="token" value="@_jwtToken" />
+    <input name="returnUrl" value="@ReturnUrl" />
+</form>
 
 <style>
     body {
@@ -101,7 +87,7 @@
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
 
-    .register-container {
+    .login-container {
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -110,7 +96,7 @@
         background-color: #f8f9fa;
     }
 
-    .register-card {
+    .login-card {
         width: 100%;
         max-width: 440px;
         background: white;
@@ -145,11 +131,11 @@
         color: #495057 !important;
     }
 
-    .register-content {
+    .login-content {
         padding: 32px 48px 48px 48px;
     }
 
-    .register-title {
+    .login-title {
         font-size: 32px;
         font-weight: 600;
         color: #212529;
@@ -157,14 +143,14 @@
         text-align: center;
     }
 
-    .register-subtitle {
+    .login-subtitle {
         font-size: 15px;
         color: #6c757d;
         margin-bottom: 32px;
         text-align: center;
     }
 
-    .register-form {
+    .login-form {
         margin-bottom: 24px;
     }
 
@@ -193,7 +179,7 @@
         color: #adb5bd;
     }
 
-    .register-button {
+    .login-button {
         border-radius: 8px;
         padding: 12px;
         font-size: 15px;
@@ -204,35 +190,35 @@
         transition: all 0.2s;
     }
 
-    .register-button:hover:not(:disabled) {
+    .login-button:hover:not(:disabled) {
         background-color: #000000;
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    .register-button:active:not(:disabled) {
+    .login-button:active:not(:disabled) {
         transform: translateY(0);
     }
 
-    .register-button:disabled {
+    .login-button:disabled {
         background-color: #212529;
         opacity: 0.7;
         cursor: not-allowed;
     }
 
-    .login-link {
+    .register-link {
         text-align: center;
         font-size: 14px;
         color: #6c757d;
     }
 
-    .login-link a {
+    .register-link a {
         color: #212529;
         text-decoration: none;
         transition: color 0.2s;
     }
 
-    .login-link a:hover {
+    .register-link a:hover {
         color: #000000;
         text-decoration: underline;
     }
@@ -257,64 +243,61 @@
 
     /* Responsividade */
     @@media (max-width: 576px) {
-    .register-content {
+    .login-content {
         padding: 24px 24px 32px 24px;
     }
 
-    .register-title {
+    .login-title {
         font-size: 28px;
     }
 
-    .register-subtitle {
+    .login-subtitle {
         font-size: 14px;
     }
     }
 </style>
 
 @code {
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
     private InputModel Input { get; set; } = new();
     private string? ErrorMessage { get; set; }
-    private bool _isRegistering = false;
+    private bool _isLoggingIn = false;
 
-    private async Task HandleRegister()
+    private ElementReference _signInForm;
+    private string? _jwtToken;
+
+    private async Task HandleLogin()
     {
-        _isRegistering = true;
+        _isLoggingIn = true;
         ErrorMessage = null;
         try
         {
-            var request = new RegisterRequestDto
+            var request = new LoginRequestDto { Email = Input.Email, Password = Input.Password };
+            var result = await ApiClient.LoginAsync(request);
+
+            if (!string.IsNullOrEmpty(result?.Token))
             {
-                Email = Input.Email,
-                Password = Input.Password
-            };
-            await ApiClient.RegisterAsync(request);
-            NavigationManager.NavigateTo("Account/Login?message=RegistrationSuccessful");
+                _jwtToken = result.Token;
+                StateHasChanged();
+                await JSRuntime.InvokeVoidAsync("eval", $"document.querySelector('form[action=\"/auth/client-login\"]').submit()");
+            }
         }
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
-            _isRegistering = false;
+            _isLoggingIn = false;
         }
     }
 
     private sealed class InputModel
     {
-        [Required(ErrorMessage = "O Nome completo é obrigatório.")]
-        [StringLength(100, ErrorMessage = "O nome deve ter no máximo {1} caracteres.")]
-        public string FullName { get; set; } = "";
-
         [Required(ErrorMessage = "O E-mail é obrigatório.")]
         [EmailAddress(ErrorMessage = "O E-mail não é um endereço válido.")]
         public string Email { get; set; } = "";
 
         [Required(ErrorMessage = "A Senha é obrigatória.")]
-        [DataType(DataType.Password)]
-        [StringLength(100, ErrorMessage = "A senha deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
         public string Password { get; set; } = "";
-
-        [Required(ErrorMessage = "A Confirmação de senha é obrigatória.")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "A senha e a confirmação de senha não correspondem.")]
-        public string ConfirmPassword { get; set; } = "";
     }
 }

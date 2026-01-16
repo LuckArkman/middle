@@ -2,7 +2,6 @@ using IntelligentAutomation.Interfaces;
 using IntelligentAutomation.Services;
 using IntelligentAutomation.Domain.Entities;
 using IntelligentAutomation.Infrastructure.Persistence;
-using IntelligentAutomation.Core.Controllers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson;

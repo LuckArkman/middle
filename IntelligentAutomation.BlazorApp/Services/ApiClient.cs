@@ -55,7 +55,7 @@ public class ApiClient
 
     public async Task RegisterAsync(RegisterRequestDto request)
     {
-        var response = await _httpClient.PostAsJsonAsync("https://localhost:7248/auth/register", request);
+        var response = await _httpClient.PostAsJsonAsync("/auth/register", request);
         if (!response.IsSuccessStatusCode)
         {
             // Tenta ler a mensagem de erro da API e a lança como uma exceção
@@ -68,5 +68,16 @@ public class ApiClient
     private class ErrorResponse
     {
         public string? Message { get; set; }
+    }
+
+    public async Task<LoginResponseDto?> LoginAsync(LoginRequestDto request)
+    {
+        var response = await _httpClient.PostAsJsonAsync("/auth/login", request);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+            throw new Exception(errorContent?.Message ?? "Erro desconhecido durante o login.");
+        }
+        return await response.Content.ReadFromJsonAsync<LoginResponseDto>();
     }
 }

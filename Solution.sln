@@ -26,8 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.Enums
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelligentAutomation.Services", "IntelligentAutomation.Services\IntelligentAutomation.Services.csproj", "{7E403E01-11D7-4584-8145-4A13C6A49EA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{720EBFE9-F038-4F07-A574-8C81DF76DD60}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,9 +84,5 @@ Global
 		{7E403E01-11D7-4584-8145-4A13C6A49EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E403E01-11D7-4584-8145-4A13C6A49EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E403E01-11D7-4584-8145-4A13C6A49EA5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{720EBFE9-F038-4F07-A574-8C81DF76DD60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{720EBFE9-F038-4F07-A574-8C81DF76DD60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{720EBFE9-F038-4F07-A574-8C81DF76DD60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{720EBFE9-F038-4F07-A574-8C81DF76DD60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

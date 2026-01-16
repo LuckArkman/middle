@@ -4,6 +4,8 @@ using System.Text;
 using IntelligentAutomation.Interfaces;
 using IntelligentAutomation.Domain.Entities;
 using IntelligentAutomation.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
@@ -88,5 +90,29 @@ public class AuthController : ControllerBase
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
+    }
+    
+    [HttpPost("client-login")]
+    public async Task<IActionResult> ClientLogin([FromBody] TokenRequest request)
+    {
+        if (string.IsNullOrEmpty(request.Token))
+        {
+            return BadRequest("Token não fornecido.");
+        }
+
+        var handler = new JwtSecurityTokenHandler();
+        var jwtSecurityToken = handler.ReadJwtToken(request.Token);
+        
+        var claimsIdentity = new ClaimsIdentity(jwtSecurityToken.Claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var authProperties = new AuthenticationProperties { IsPersistent = true };
+
+        // Cria o cookie de autenticação para a sessão do Blazor
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme, 
+            new ClaimsPrincipal(claimsIdentity), 
+            authProperties);
+
+        // Retorna sucesso. O redirecionamento agora é controlado pelo cliente.
+        return Ok();
     }
 }
