@@ -1,0 +1,303 @@
+@page "/Account/Login"
+@layout AccountLayout
+@rendermode @(new InteractiveServerRenderMode(true))
+@using System.ComponentModel.DataAnnotations
+@using IntelligentAutomation.BlazorApp.Services
+@using IntelligentAutomation.BlazorApp.Components.Shared
+@inject IJSRuntime JSRuntime
+@inject ApiClient ApiClient
+@inject NavigationManager NavigationManager
+
+<PageTitle>Entrar</PageTitle>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="back-link">
+            <a href="/" class="text-decoration-none text-muted d-flex align-items-center">
+                <i class="bi bi-arrow-left me-2"></i>
+                Voltar para o site
+            </a>
+        </div>
+
+        <div class="login-content">
+            <h1 class="login-title">Entrar</h1>
+            <p class="login-subtitle">Acesse sua conta para gerenciar leads</p>
+
+            <EditForm Model="Input" OnValidSubmit="HandleLogin" FormName="login" class="login-form">
+                <DataAnnotationsValidator />
+
+                @if (!string.IsNullOrEmpty(ErrorMessage))
+                {
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <div>@ErrorMessage</div>
+                    </div>
+                }
+
+                <div class="mb-4">
+                    <label for="email" class="form-label">E-mail</label>
+                    <InputText id="email"
+                               @bind-Value="Input.Email"
+                               class="form-control form-control-lg"
+                               placeholder="seu@email.com"
+                               autocomplete="email" />
+                    <ValidationMessage For="() => Input.Email" class="text-danger small mt-1" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label">Senha</label>
+                    <InputText id="password"
+                               @bind-Value="Input.Password"
+                               type="password"
+                               class="form-control form-control-lg"
+                               placeholder="••••••••"
+                               autocomplete="current-password" />
+                    <ValidationMessage For="() => Input.Password" class="text-danger small mt-1" />
+                </div>
+
+                <button type="submit" class="btn btn-dark btn-lg w-100 login-button" disabled="@_isLoggingIn">
+                    @if (_isLoggingIn)
+                    {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <span>Entrando...</span>
+                    }
+                    else
+                    {
+                        <span>Entrar</span>
+                    }
+                </button>
+            </EditForm>
+
+            <div class="register-link">
+                Não tem uma conta? <a href="Account/Register" class="fw-semibold">Criar conta</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Formulário oculto para postar o token e criar a sessão de cookie -->
+<form @ref="_signInForm" action="/auth/client-login" method="post" style="display: none;">
+    <input name="token" value="@_jwtToken" />
+    <input name="returnUrl" value="@ReturnUrl" />
+</form>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 440px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        padding: 0;
+        animation: fadeInUp 0.4s ease-out;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .back-link {
+        padding: 24px 24px 0 24px;
+    }
+
+    .back-link a {
+        font-size: 14px;
+        color: #6c757d !important;
+        transition: color 0.2s;
+    }
+
+    .back-link a:hover {
+        color: #495057 !important;
+    }
+
+    .login-content {
+        padding: 32px 48px 48px 48px;
+    }
+
+    .login-title {
+        font-size: 32px;
+        font-weight: 600;
+        color: #212529;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .login-subtitle {
+        font-size: 15px;
+        color: #6c757d;
+        margin-bottom: 32px;
+        text-align: center;
+    }
+
+    .login-form {
+        margin-bottom: 24px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #212529;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 15px;
+        transition: all 0.2s;
+    }
+
+    .form-control:focus {
+        border-color: #212529;
+        box-shadow: 0 0 0 3px rgba(33, 37, 41, 0.1);
+        outline: none;
+    }
+
+    .form-control::placeholder {
+        color: #adb5bd;
+    }
+
+    .login-button {
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 15px;
+        font-weight: 500;
+        margin-top: 8px;
+        background-color: #212529;
+        border: none;
+        transition: all 0.2s;
+    }
+
+    .login-button:hover:not(:disabled) {
+        background-color: #000000;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-button:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    .login-button:disabled {
+        background-color: #212529;
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .register-link {
+        text-align: center;
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    .register-link a {
+        color: #212529;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .register-link a:hover {
+        color: #000000;
+        text-decoration: underline;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+        font-size: 14px;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+    }
+
+    .alert-danger {
+        background-color: #fff5f5;
+        color: #dc3545;
+    }
+
+    .text-danger {
+        font-size: 13px;
+        display: block;
+    }
+
+    /* Responsividade */
+    @@media (max-width: 576px) {
+    .login-content {
+        padding: 24px 24px 32px 24px;
+    }
+
+    .login-title {
+        font-size: 28px;
+    }
+
+    .login-subtitle {
+        font-size: 14px;
+    }
+    }
+</style>
+
+@code {
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    private InputModel Input { get; set; } = new();
+    private string? ErrorMessage { get; set; }
+    private bool _isLoggingIn = false;
+
+    private ElementReference _signInForm;
+    private string? _jwtToken;
+
+    private async Task HandleLogin()
+    {
+        _isLoggingIn = true;
+        ErrorMessage = null;
+        try
+        {
+            var request = new LoginRequestDto { Email = Input.Email, Password = Input.Password };
+            var result = await ApiClient.LoginAsync(request);
+
+            if (!string.IsNullOrEmpty(result?.Token))
+            {
+                _jwtToken = result.Token;
+                StateHasChanged();
+                await JSRuntime.InvokeVoidAsync("eval", $"document.querySelector('form[action=\"/auth/client-login\"]').submit()");
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+            _isLoggingIn = false;
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [Required(ErrorMessage = "O E-mail é obrigatório.")]
+        [EmailAddress(ErrorMessage = "O E-mail não é um endereço válido.")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "A Senha é obrigatória.")]
+        public string Password { get; set; } = "";
+    }
+}

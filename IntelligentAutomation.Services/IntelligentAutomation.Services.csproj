@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\IntelligentAutomation.Domain\IntelligentAutomation.Domain.csproj" />
+      <ProjectReference Include="..\IntelligentAutomation.Enums\IntelligentAutomation.Enums.csproj" />
+      <ProjectReference Include="..\IntelligentAutomation.Infrastructure\IntelligentAutomation.Infrastructure.csproj" />
+      <ProjectReference Include="..\IntelligentAutomation.Interfaces\IntelligentAutomation.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>

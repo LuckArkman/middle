@@ -1682,6 +1682,41 @@
         "runtime": {
           "bin/placeholder/IntelligentAutomation.Domain.dll": {}
         }
+      },
+      "IntelligentAutomation.Dtos/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/IntelligentAutomation.Dtos.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IntelligentAutomation.Dtos.dll": {}
+        }
+      },
+      "IntelligentAutomation.Enums/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/IntelligentAutomation.Enums.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IntelligentAutomation.Enums.dll": {}
+        }
+      },
+      "IntelligentAutomation.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "IntelligentAutomation.Domain": "1.0.0",
+          "IntelligentAutomation.Dtos": "1.0.0",
+          "IntelligentAutomation.Enums": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/IntelligentAutomation.Interfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IntelligentAutomation.Interfaces.dll": {}
+        }
       }
     }
   },
@@ -4207,6 +4242,21 @@
       "type": "project",
       "path": "../IntelligentAutomation.Domain/IntelligentAutomation.Domain.csproj",
       "msbuildProject": "../IntelligentAutomation.Domain/IntelligentAutomation.Domain.csproj"
+    },
+    "IntelligentAutomation.Dtos/1.0.0": {
+      "type": "project",
+      "path": "../IntelligentAutomation.Dtos/IntelligentAutomation.Dtos.csproj",
+      "msbuildProject": "../IntelligentAutomation.Dtos/IntelligentAutomation.Dtos.csproj"
+    },
+    "IntelligentAutomation.Enums/1.0.0": {
+      "type": "project",
+      "path": "../IntelligentAutomation.Enums/IntelligentAutomation.Enums.csproj",
+      "msbuildProject": "../IntelligentAutomation.Enums/IntelligentAutomation.Enums.csproj"
+    },
+    "IntelligentAutomation.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../IntelligentAutomation.Interfaces/IntelligentAutomation.Interfaces.csproj",
+      "msbuildProject": "../IntelligentAutomation.Interfaces/IntelligentAutomation.Interfaces.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4215,6 +4265,8 @@
       "Binance.Net >= 8.0.0",
       "Binance.NetCore >= 1.6.3",
       "IntelligentAutomation.Domain >= 1.0.0",
+      "IntelligentAutomation.Dtos >= 1.0.0",
+      "IntelligentAutomation.Interfaces >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 8.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.0",
       "MongoDB.Bson >= 3.5.2",
@@ -4262,6 +4314,12 @@
           "projectReferences": {
             "D:\\middle\\IntelligentAutomation.Domain\\IntelligentAutomation.Domain.csproj": {
               "projectPath": "D:\\middle\\IntelligentAutomation.Domain\\IntelligentAutomation.Domain.csproj"
+            },
+            "D:\\middle\\IntelligentAutomation.Dtos\\IntelligentAutomation.Dtos.csproj": {
+              "projectPath": "D:\\middle\\IntelligentAutomation.Dtos\\IntelligentAutomation.Dtos.csproj"
+            },
+            "D:\\middle\\IntelligentAutomation.Interfaces\\IntelligentAutomation.Interfaces.csproj": {
+              "projectPath": "D:\\middle\\IntelligentAutomation.Interfaces\\IntelligentAutomation.Interfaces.csproj"
             }
           }
         }

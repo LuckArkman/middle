@@ -1,5 +1,5 @@
-using IntelligentAutomation.Application.Interfaces;
-using IntelligentAutomation.Application.Services;
+using IntelligentAutomation.Interfaces;
+using IntelligentAutomation.Services;
 using Quartz;
 
 namespace IntelligentAutomationSaaS.Orchestrator.Jobs;

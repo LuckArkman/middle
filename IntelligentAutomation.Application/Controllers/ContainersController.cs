@@ -1,4 +1,4 @@
-using IntelligentAutomation.Application.Dtos;
+using IntelligentAutomation.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
