@@ -6,15 +6,13 @@ using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using IntelligentAutomation.Dtos;
 using IntelligentAutomation.Interfaces;
 
 namespace IntelligentAutomation.Core.Controllers;
 
 [ApiController]
-// ---- INÍCIO DA CORREÇÃO DEFINITIVA ----
-// A rota agora é explícita e não depende do nome da classe.
 [Route("auth")]
-// ---- FIM DA CORREÇÃO DEFINITIVA ----
 public class AuthController : ControllerBase
 {
     private readonly IMongoCollection<User> _usersCollection;
@@ -28,7 +26,7 @@ public class AuthController : ControllerBase
         _configuration = configuration;
     }
 
-    [HttpPost("register")] // Rota final será: POST /auth/register
+    [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequestDto request)
     {
         if (await _usersCollection.Find(u => u.Email == request.Email.ToLower()).AnyAsync())
@@ -43,14 +41,14 @@ public class AuthController : ControllerBase
             Email = request.Email.ToLower(),
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt,
-            Roles = { "User" }
+            Roles = new List<string> { "User" }
         };
 
         await _usersCollection.InsertOneAsync(user);
         return Ok(new { message = "Usuário registrado com sucesso." });
     }
 
-    [HttpPost("login")] // Rota final será: POST /auth/login
+    [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequestDto request)
     {
         var user = await _usersCollection.Find(u => u.Email == request.Email.ToLower()).FirstOrDefaultAsync();
@@ -61,27 +59,29 @@ public class AuthController : ControllerBase
         }
 
         var token = CreateToken(user);
-        return Ok(new LoginResponseDto { Token = token });
+        return Ok(new LoginResponseDto { Token = token, Email = user.Email });
     }
 
     private string CreateToken(User user)
     {
         var claims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, user.Id),
-            new(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
         };
 
-        claims.AddRange(user.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        if (user.Roles != null)
+        {
+            claims.AddRange(user.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        }
 
-        var jwtKey = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("Chave JWT não configurada.");
+        var jwtKey = _configuration["Jwt:Key"] ?? "MinhaChaveSuperSecreta123!";
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-        var claimsIdentity = new ClaimsIdentity(claims);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = claimsIdentity,
+            Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddDays(1),
             SigningCredentials = creds,
             Issuer = _configuration["Jwt:Issuer"],

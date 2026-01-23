@@ -20,4 +20,6 @@ public class MongoDbContext
     public IMongoCollection<User> Users => _database.GetCollection<User>("users");
     public IMongoCollection<Plan> Plans => _database.GetCollection<Plan>("plans");
     public IMongoCollection<Subscription> Subscriptions => _database.GetCollection<Subscription>("subscriptions");
+    public IMongoCollection<Tenant> Tenants => _database.GetCollection<Tenant>("tenants");
+    public IMongoCollection<AgentLog> AgentLogs => _database.GetCollection<AgentLog>("agentLogs");
 }

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\IntelligentAutomation.Domain\IntelligentAutomation.Domain.csproj" />
+    <ProjectReference Include="..\IntelligentAutomation.Dtos\IntelligentAutomation.Dtos.csproj" />
+    <ProjectReference Include="..\IntelligentAutomation.Interfaces\IntelligentAutomation.Interfaces.csproj" />
+    <ProjectReference Include="..\IntelligentAutomation.Services\IntelligentAutomation.Services.csproj" />
+    <ProjectReference Include="..\IntelligentAutomation.Infrastructure\IntelligentAutomation.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

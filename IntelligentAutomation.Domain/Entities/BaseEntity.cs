@@ -1,4 +1,3 @@
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace IntelligentAutomation.Domain.Entities;
@@ -6,8 +5,10 @@ namespace IntelligentAutomation.Domain.Entities;
 public abstract class BaseEntity
 {
     [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; } = Guid.NewGuid();
+
+    [BsonElement("tenantId")]
+    public string TenantId { get; set; } = string.Empty;
 
     [BsonElement("createdAt")]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

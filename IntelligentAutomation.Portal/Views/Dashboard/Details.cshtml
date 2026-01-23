@@ -1,0 +1,142 @@
+@model IntelligentAutomation.Domain.Entities.Agent
+@{
+    ViewData["Title"] = $"Agente: {Model.Name}";
+    var logs = ViewBag.Logs as List<IntelligentAutomation.Domain.Entities.AgentLog>;
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a asp-action="Index">Dashboard</a></li>
+    <li class="breadcrumb-item active">@Model.Name</li>
+  </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 border-@(Model.Status == IntelligentAutomation.Domain.Enums.AgentStatus.Running ? "success" : "warning")">
+            <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                <span>Configuração</span>
+                <a asp-action="EditWorkflow" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square me-1"></i>Editar Workflow</a>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><strong>Modelo:</strong> @Model.LlmType</li>
+                    <li class="mb-2"><strong>Memória:</strong> @(Model.EnableContextMemory ? "Ativa" : "Inativa")</li>
+                    <li class="mb-2"><strong>CPU:</strong> @Model.CpuLimit vCPU</li>
+                    <li class="mb-2"><strong>RAM:</strong> @Model.MemoryLimitMb MB</li>
+                    <li class="mb-2 text-secondary small">ID: @Model.Id</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-header fw-bold text-accent d-flex justify-content-between align-items-center">
+                <span>Ações de Controle</span>
+                <span class="badge @(Model.Status == IntelligentAutomation.Domain.Enums.AgentStatus.Running ? "bg-success" : "bg-warning")">@Model.Status</span>
+            </div>
+                @if (Model.Status != IntelligentAutomation.Domain.Enums.AgentStatus.Running)
+                {
+                    <form asp-action="Start" asp-route-id="@Model.Id" method="post" class="d-grid">
+                        <button type="submit" class="btn btn-success"><i class="bi bi-play-fill me-2"></i>Iniciar Agente</button>
+                    </form>
+                }
+                else
+                {
+                    <form asp-action="Stop" asp-route-id="@Model.Id" method="post" class="d-grid">
+                        <button type="submit" class="btn btn-warning text-dark"><i class="bi bi-pause-fill me-2"></i>Pausar Agente</button>
+                    </form>
+                }
+                
+                <hr class="my-2 border-secondary opacity-25">
+                
+                <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-grid" onsubmit="return confirm('Tem certeza que deseja excluir permanentemente este agente?')">
+                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash me-2"></i>Excluir Agente</button>
+                </form>
+            </div>
+        </div>
+
+        @{
+            var definition = ViewBag.Definition as IntelligentAutomation.Domain.Workflow.WorkflowDefinition;
+        }
+
+        @if (definition?.Trigger != null && definition.Trigger.Type == IntelligentAutomation.Domain.Enums.TriggerType.Webhook)
+        {
+            <div class="card shadow-sm mt-4 border-info">
+                <div class="card-header fw-bold text-info"><i class="bi bi-link-45deg me-2"></i>Gatilho Webhook</div>
+                <div class="card-body">
+                    <p class="small text-secondary mb-2">Use este endpoint para disparar o agente externamente (ex: TradingView, GitHub):</p>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control bg-dark border-secondary text-light" value="@($"{ViewBag.WebhookBaseUrl}/webhooks/v1/trigger/{Model.Id}?secret={definition.Trigger.WebhookSecret}")" readonly id="webhookUrl">
+                        <button class="btn btn-outline-secondary" type="button" onclick="copyWebhook()"><i class="bi bi-clipboard"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                function copyWebhook() {
+                    var copyText = document.getElementById("webhookUrl");
+                    copyText.select();
+                    copyText.setSelectionRange(0, 99999);
+                    navigator.clipboard.writeText(copyText.value);
+                    alert("URL copiada!");
+                }
+            </script>
+        }
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom border-secondary border-opacity-25">
+                <span class="fw-bold"><i class="bi bi-terminal me-2"></i>Logs Console</span>
+                <a href="" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-clockwise"></i></a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive" style="max-height: 500px; background-color: #050505;">
+                    <table class="table table-dark table-hover mb-0 small">
+                        <thead>
+                            <tr class="table-secondary text-dark">
+                                <th style="width: 15%">Horário</th>
+                                <th style="width: 15%">Nível</th>
+                                <th>Mensagem</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-monospace">
+                            @if (logs != null && logs.Any())
+                            {
+                                foreach (var log in logs)
+                                {
+                                    <tr>
+                                        <td class="text-secondary small">@log.Timestamp.ToString("HH:mm:ss")</td>
+                                        <td>
+                                            @switch(log.Level) {
+                                                case "Error": <span class="text-danger fw-bold">ERR</span>; break;
+                                                case "Warning": <span class="text-warning fw-bold">WRN</span>; break;
+                                                default: <span class="text-info fw-bold">INF</span>; break;
+                                            }
+                                        </td>
+                                        <td>
+                                            <span class="text-secondary">[@log.Category]</span> @log.Message
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center py-5 text-secondary fst-italic">Aguardando novos logs do sistema...</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

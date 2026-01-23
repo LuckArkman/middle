@@ -8,40 +8,47 @@ namespace IntelligentAutomation.Services;
 
 public class QuotaService : IQuotaService
 {
-    private readonly MongoDbContext _context;
+    private readonly MongoDbContext _db;
 
-    public QuotaService(MongoDbContext context)
+    public QuotaService(MongoDbContext db)
     {
-        _context = context;
+        _db = db;
     }
 
     public async Task<QuotaCheckResult> CheckAgentCreationQuotaAsync(string userId)
     {
-        // Encontra o usuário para obter a ID da assinatura ativa
-        var user = await _context.Users.Find(u => u.Id == userId).FirstOrDefaultAsync();
-        if (user?.CurrentSubscriptionId == null)
+        if (!Guid.TryParse(userId, out var userGuid))
         {
             return QuotaCheckResult.NoActiveSubscription;
         }
 
-        // Encontra a assinatura ativa e, em seguida, o plano correspondente
-        var activeSubscription = await _context.Subscriptions.Find(s => s.Id == user.CurrentSubscriptionId).FirstOrDefaultAsync();
-        if (activeSubscription?.Status != Domain.Enums.SubscriptionStatus.Active)
+        var user = await _db.Users.Find(u => u.Id == userGuid).FirstOrDefaultAsync();
+        if (user == null || string.IsNullOrEmpty(user.CurrentSubscriptionId))
         {
             return QuotaCheckResult.NoActiveSubscription;
         }
-        
-        var plan = await _context.Plans.Find(p => p.Id == activeSubscription.PlanId).FirstOrDefaultAsync();
+
+        if (!Guid.TryParse(user.CurrentSubscriptionId, out var subId))
+        {
+            return QuotaCheckResult.NoActiveSubscription;
+        }
+
+        var activeSubscription = await _db.Subscriptions.Find(s => s.Id == subId).FirstOrDefaultAsync();
+
+        if (activeSubscription == null || activeSubscription.Status != Domain.Enums.SubscriptionStatus.Active)
+        {
+            return QuotaCheckResult.NoActiveSubscription;
+        }
+
+        var plan = await _db.Plans.Find(p => p.Id == activeSubscription.PlanId).FirstOrDefaultAsync();
         if (plan == null)
         {
-            // Caso de inconsistência de dados, tratar como falta de assinatura
             return QuotaCheckResult.NoActiveSubscription;
         }
 
-        // Conta quantos agentes o usuário já possui
-        var currentAgentCount = await _context.Agents.CountDocumentsAsync(a => a.UserId == userId);
-        
-        if (currentAgentCount >= plan.MaxActiveAgents)
+        var currentAgentCount = await _db.Agents.CountDocumentsAsync(a => a.UserId == userId);
+
+        if (currentAgentCount >= plan.MaxAgents)
         {
             return QuotaCheckResult.MaxAgentsReached;
         }

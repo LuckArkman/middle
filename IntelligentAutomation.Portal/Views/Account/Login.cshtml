@@ -1,0 +1,36 @@
+@model IntelligentAutomation.Dtos.LoginRequestDto
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body p-4 text-center">
+                <i class="bi bi-person-lock display-4 text-primary mb-3"></i>
+                <h2 class="h4 mb-4">Acessar Plataforma</h2>
+
+                <form asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <div class="form-floating mb-3 text-dark">
+                        <input asp-for="Email" class="form-control" placeholder="nome@exemplo.com" required />
+                        <label asp-for="Email">E-mail</label>
+                    </div>
+
+                    <div class="form-floating mb-4 text-dark">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Senha" required />
+                        <label asp-for="Password">Senha</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Entrar</button>
+
+                    <p class="small text-secondary">
+                        Não tem conta? <a asp-action="Register" class="text-info">Criar agora</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

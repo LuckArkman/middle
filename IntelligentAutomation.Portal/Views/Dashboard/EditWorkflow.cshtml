@@ -1,0 +1,286 @@
+@model IntelligentAutomation.Domain.Workflow.WorkflowDefinition
+@using System.Text.Json
+@{
+    ViewData["Title"] = $"Editando Workflow: {ViewBag.AgentName}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-diagram-3 me-2"></i>Construtor de Workflow</h1>
+    <div class="gap-2 d-flex">
+        <a asp-action="Details" asp-route-id="@ViewBag.AgentId" class="btn btn-outline-light">Cancelar</a>
+        <button id="btnSave" class="btn btn-primary px-4"><i class="bi bi-save me-2"></i>Salvar Workflow</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white fw-bold">Sequência de Execução</div>
+            <div class="card-body">
+                <div id="nodeList" class="d-flex flex-column gap-3">
+                    <!-- Gatilho (Sempre o primeiro) -->
+                    <div class="node-item trigger p-3 border border-primary rounded bg-primary bg-opacity-10">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 fw-bold"><i class="bi bi-lightning-fill text-primary"></i> Gatilho:
+                                @Model.Trigger?.Type</h6>
+                            @if (Model.Trigger?.Type == IntelligentAutomation.Domain.Enums.TriggerType.Cron)
+                            {
+                                <input type="text" class="form-control form-control-sm w-auto" id="cronExpression"
+                                    value="@Model.Trigger.CronExpression" placeholder="Expresso Cron">
+                            }
+                        </div>
+                    </div>
+
+                    @foreach (var node in Model.Nodes)
+                    {
+                        <div class="node-item p-3 border border-secondary rounded bg-dark" data-id="@node.Id"
+                            data-type="@((node as IntelligentAutomation.Domain.Workflow.ModuleNode)?.ModuleType)">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0 fw-bold text-accent">@node.Name</h6>
+                                <button class="btn btn-sm btn-outline-danger btn-remove"><i
+                                        class="bi bi-trash"></i></button>
+                            </div>
+                            <div class="small text-secondary">ID: @node.Id</div>
+                        </div>
+                    }
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#addNodeModal">
+                        <i class="bi bi-plus-circle me-1"></i>Adicionar Próximo Passo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 bg-info bg-opacity-10">
+            <div class="card-body">
+                <h5 class="fw-bold"><i class="bi bi-info-circle me-2"></i>Como funciona?</h5>
+                <p class="small text-secondary">
+                    Os agentes executam os passos em ordem sequencial de cima para baixo.
+                    Cada passo pode ser um módulo de inteligência, uma ação de mercado ou uma ferramenta externa.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add Node -->
+<div class="modal fade" id="addNodeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title">Novo Passo</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group">
+                    <button
+                        class="list-group-item list-group-item-action bg-dark text-light border-secondary btn-select-module"
+                        data-type="http" data-name="Requisição HTTP">
+                        <i class="bi bi-globe me-2 text-info"></i> Requisição HTTP (API)
+                    </button>
+                    <button
+                        class="list-group-item list-group-item-action bg-dark text-light border-secondary btn-select-module"
+                        data-type="binanceOrder" data-name="Ordem Binance">
+                        <i class="bi bi-graph-up me-2 text-warning"></i> Ordem Binance (Trading)
+                    </button>
+                    <button
+                        class="list-group-item list-group-item-action bg-dark text-light border-secondary btn-select-module"
+                        data-type="delay" data-name="Aguardar">
+                        <i class="bi bi-clock me-2 text-secondary"></i> Delay (Aguardar tempo)
+                    </button>
+                    <button
+                        class="list-group-item list-group-item-action bg-dark text-light border-secondary btn-select-module"
+                        data-type="condition" data-name="Decisão (IF)">
+                        <i class="bi bi-shuffle me-2 text-danger"></i> Decisão (Se... Então)
+                    </button>
+                    <button
+                        class="list-group-item list-group-item-action bg-dark text-light border-secondary btn-select-module"
+                        data-type="llm" data-name="IA (OpenAI)">
+                        <i class="bi bi-cpu me-2 text-success"></i> Inteligência Artificial (GPT)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const agentId = "@ViewBag.AgentId";
+        let nodes = @Html.Raw(JsonSerializer.Serialize(Model.Nodes));
+
+        document.querySelectorAll('.btn-select-module').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const type = this.dataset.type;
+                const name = this.dataset.name;
+                const id = "node_" + Math.random().toString(36).substr(2, 9);
+
+                const newNode = {
+                    Id: id,
+                    Name: name,
+                    ModuleType: type,
+                    Parameters: {} // Simplificado
+                };
+
+                nodes.push(newNode);
+                renderNodes();
+                bootstrap.Modal.getInstance(document.getElementById('addNodeModal')).hide();
+            });
+        });
+
+        function renderNodes() {
+            const list = document.getElementById('nodeList');
+            const triggerHtml = list.querySelector('.trigger').outerHTML;
+            list.innerHTML = triggerHtml;
+
+            nodes.forEach((node, index) => {
+                let configHtml = '';
+                if (node.ModuleType === 'condition') {
+                    let otherNodesOptions = nodes.filter(n => n.Id !== node.Id).map(n => `<option value="${n.Id}" ${node.Parameters?.ElseTargetId === n.Id ? 'selected' : ''}>${n.Name}</option>`).join('');
+                    configHtml = `
+                        <div class="mt-2 p-2 bg-black bg-opacity-25 rounded small">
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <label class="x-small text-secondary">Variável (ID do Nó)</label>
+                                    <input type="text" class="form-control form-control-sm bg-dark text-light border-secondary" 
+                                           placeholder="ex: node_123" value="${node.Parameters?.VariableName || ''}" 
+                                           onchange="updateParam('${node.Id}', 'VariableName', this.value)">
+                                </div>
+                                <div class="col-6">
+                                    <label class="x-small text-secondary">Valor para Comparar</label>
+                                    <input type="text" class="form-control form-control-sm bg-dark text-light border-secondary" 
+                                           value="${node.Parameters?.ComparisonValue || ''}"
+                                           onchange="updateParam('${node.Id}', 'ComparisonValue', this.value)">
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <label class="x-small text-secondary">Caminho "Falso" (Else)</label>
+                                    <select class="form-select form-select-sm bg-dark text-light border-secondary" 
+                                            onchange="updateParam('${node.Id}', 'ElseTargetId', this.value)">
+                                        <option value="">Fim do Fluxo</option>
+                                        ${otherNodesOptions}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (node.ModuleType === 'llm') {
+                    configHtml = `
+                        <div class="mt-2 p-2 bg-black bg-opacity-25 rounded small">
+                            <div class="mb-2">
+                                <label class="x-small text-secondary">Modelo</label>
+                                <select class="form-select form-select-sm bg-dark text-light border-secondary" 
+                                        onchange="updateParam('${node.Id}', 'Model', this.value)">
+                                    <option value="gpt-3.5-turbo" ${(node.Parameters?.Model || 'gpt-3.5-turbo') === 'gpt-3.5-turbo' ? 'selected' : ''}>GPT-3.5 Turbo</option>
+                                    <option value="gpt-4" ${node.Parameters?.Model === 'gpt-4' ? 'selected' : ''}>GPT-4</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="x-small text-secondary">Prompt do Usuário</label>
+                                <textarea class="form-control form-control-sm bg-dark text-light border-secondary" rows="2"
+                                          placeholder="Ex: Resuma o resultado de {{node_id}}"
+                                          onchange="updateParam('${node.Id}', 'UserPromptTemplate', this.value)">${node.Parameters?.UserPromptTemplate || ''}</textarea>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const html = `
+                    <div class="node-item p-3 border border-secondary rounded bg-dark" data-id="${node.Id}">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0 fw-bold text-accent">${node.Name}</h6>
+                            <button class="btn btn-sm btn-outline-danger" onclick="removeNode('${node.Id}')"><i class="bi bi-trash"></i></button>
+                        </div>
+                        <div class="small text-secondary">ID: ${node.Id} | Tipo: ${node.ModuleType || 'Desconhecido'}</div>
+                        ${configHtml}
+                    </div>
+                `;
+                list.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        window.updateParam = (id, key, value) => {
+            const node = nodes.find(n => n.Id === id);
+            if (node) {
+                if (!node.Parameters) node.Parameters = {};
+                node.Parameters[key] = value;
+            }
+        };
+
+        window.removeNode = (id) => {
+            nodes = nodes.filter(n => n.Id !== id);
+            renderNodes();
+        };
+
+        document.getElementById('btnSave').addEventListener('click', async () => {
+            const cronInput = document.getElementById('cronExpression');
+            const definition = {
+                Trigger: {
+                    Type: @((int)(Model.Trigger?.Type ?? IntelligentAutomation.Domain.Enums.TriggerType.Cron)),
+                    CronExpression: cronInput ? cronInput.value : null,
+                    WebhookSecret: "@Model.Trigger?.WebhookSecret",
+                    Id: "@Model.Trigger?.Id"
+                },
+                Nodes: nodes.map(n => ({
+                    Id: n.Id,
+                    Name: n.Name,
+                    ModuleType: n.ModuleType,
+                    Parameters: n.Parameters || {}
+                })),
+                Connections: []
+            };
+
+            // Gera conexões de forma linear por padrão
+            // Mas para decisões, o próximo nó na lista será o "True"
+            // E o nó após esse (se houver) seria o "False" ou continua linear.
+            // NOTA: Para um Sequence Builder simples, manteremos linear, mas o motor usará Label.
+            if (definition.Trigger) {
+                let lastId = definition.Trigger.Id || "trigger";
+                nodes.forEach((node, index) => {
+                    const conn = {
+                        SourceNodeId: lastId,
+                        TargetNodeId: node.Id
+                    };
+
+                    // Se o nó anterior foi uma decisão, este é o caminho "True"
+                    const prevNode = index > 0 ? nodes[index - 1] : null;
+                    if (prevNode && prevNode.ModuleType === 'condition') {
+                        conn.Label = "True";
+                    }
+
+                    definition.Connections.push(conn);
+
+                    // Se este nó for uma decisão e tiver um ElseTargetId, adiciona a conexão "False"
+                    if (node.ModuleType === 'condition' && node.Parameters?.ElseTargetId) {
+                        definition.Connections.push({
+                            SourceNodeId: node.Id,
+                            TargetNodeId: node.Parameters.ElseTargetId,
+                            Label: "False"
+                        });
+                    }
+
+                    lastId = node.Id;
+                });
+            }
+
+            const response = await fetch(`/Dashboard/SaveWorkflow/${agentId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(definition)
+            });
+
+            if (response.ok) {
+                alert('Workflow salvo com sucesso!');
+                window.location.href = `/Dashboard/Details/${agentId}`;
+            } else {
+                alert('Erro ao salvar workflow.');
+            }
+        });
+    </script>
+}

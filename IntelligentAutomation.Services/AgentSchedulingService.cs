@@ -23,7 +23,7 @@ public class AgentSchedulingService : IAgentSchedulingService
         if (await scheduler.CheckExists(jobKey))
         {
             _logger.LogInformation("Job para o Agente {AgentId} já existe. Reagendando...", agentId);
-            await UnscheduleAgentJob(agentId); // Remove o antigo para garantir que o gatilho seja atualizado
+            await UnscheduleAgentJob(agentId);
         }
 
         _logger.LogInformation("Agendando novo job para o Agente {AgentId} com a expressão cron: '{Cron}'", agentId, cronExpression);
@@ -57,8 +57,35 @@ public class AgentSchedulingService : IAgentSchedulingService
 
 public class AgentExecutionJob : IJob
 {
-    public Task Execute(IJobExecutionContext context)
+    private readonly IContainerManagerService _containerManager;
+    private readonly ILogger<AgentExecutionJob> _logger;
+    private readonly IAgentLogService _logService;
+
+    public AgentExecutionJob(IContainerManagerService containerManager, ILogger<AgentExecutionJob> logger, IAgentLogService logService)
     {
-        throw new NotImplementedException();
+        _containerManager = containerManager;
+        _logger = logger;
+        _logService = logService;
+    }
+
+    public async Task Execute(IJobExecutionContext context)
+    {
+        var agentIdStr = context.MergedJobDataMap.GetString("AgentId");
+        if (string.IsNullOrEmpty(agentIdStr)) return;
+
+        var agentId = Guid.Parse(agentIdStr);
+        _logger.LogInformation("Executando Job Agendado para Agente {AgentId}", agentId);
+
+        try
+        {
+            // O provisionamento e início agora são via Container Manager
+            await _containerManager.StartAgentAsync(agentId, context.CancellationToken);
+            await _logService.LogAsync(agentIdStr, "Execução agendada iniciada via Quartz.", "Information", "Scheduling");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Falha ao executar job agendado para o agente {AgentId}", agentId);
+            await _logService.LogAsync(agentIdStr, $"Falha no agendamento: {ex.Message}", "Error", "Scheduling");
+        }
     }
 }

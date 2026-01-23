@@ -1,0 +1,45 @@
+@model IntelligentAutomation.Dtos.RegisterRequestDto
+@{
+    ViewData["Title"] = "Criar Conta";
+}
+
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <i class="bi bi-person-plus display-4 text-primary"></i>
+                    <h2 class="h4 mt-2">Sua jornada começa aqui</h2>
+                    <p class="text-secondary small">Crie sua conta e ganhe um Tenant exclusivo.</p>
+                </div>
+
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label small">E-mail Corporativo</label>
+                        <input asp-for="Email" class="form-control" placeholder="contato@empresa.com" required />
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label small">Senha Forte</label>
+                        <input asp-for="Password" type="password" class="form-control" required />
+                        <div class="form-text small opacity-50">Mínimo de 8 caracteres.</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Registrar e Criar Tenant</button>
+                    
+                    <div class="text-center">
+                        <p class="small text-secondary mb-0">
+                            Já possui conta? <a asp-action="Login" class="text-info">Fazer Login</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="mt-4 p-3 bg-secondary bg-opacity-10 border border-secondary border-opacity-25 rounded small text-secondary">
+             <i class="bi bi-info-circle me-1"></i> Ao se registrar, você concorda com nossos Termos de Uso e Política de Privacidade SaaS.
+        </div>
+    </div>
+</div>

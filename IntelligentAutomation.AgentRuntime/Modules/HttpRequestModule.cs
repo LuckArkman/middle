@@ -4,7 +4,7 @@ using IntelligentAutomation.Domain.Workflow;
 
 namespace IntelligentAutomation.AgentRuntime.Modules;
 
-[Module("HttpRequest")]
+[Module("http")]
 public class HttpRequestModule : IModule
 {
     private readonly IHttpClientFactory _httpClientFactory;
@@ -22,13 +22,13 @@ public class HttpRequestModule : IModule
         {
             throw new ArgumentException("Parâmetros inválidos para o módulo HttpRequest.");
         }
-        
+
         _logger.LogInformation("Executando requisição HTTP para {Url}", httpParams.Url);
         var client = _httpClientFactory.CreateClient();
         var response = await client.GetAsync(httpParams.Url); // Lógica simplificada
-        
+
         response.EnsureSuccessStatusCode();
-        
+
         var content = await response.Content.ReadAsStringAsync();
         return content; // O resultado é o corpo da resposta
     }

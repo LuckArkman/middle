@@ -31,7 +31,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? "SecretKeyVeryLong1234567890")),
             ValidateIssuer = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidateAudience = true,
@@ -48,7 +48,8 @@ builder.Services.AddScoped<IMongoDatabase>(sp =>
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddHttpClient<ApiClient>(client =>
     {
-        client.BaseAddress = new Uri("https://localhost:7012");
+        var apiBaseUrl = builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7012";
+        client.BaseAddress = new Uri(apiBaseUrl);
     })
     .AddHttpMessageHandler<AuthHeaderHandler>();
 
@@ -74,7 +75,7 @@ app.UseAntiforgery(); // Posição correta
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-    
+
 app.MapGet("/logout", async (HttpContext context) =>
 {
     await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

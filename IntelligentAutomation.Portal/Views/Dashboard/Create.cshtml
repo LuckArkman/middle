@@ -1,0 +1,65 @@
+@model IntelligentAutomation.Domain.Entities.Agent
+@{
+    ViewData["Title"] = "Novo Agente";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header fw-bold">Configurar Novo Agente</div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Name" class="form-label">Nome do Agente</label>
+                            <input asp-for="Name" class="form-control" placeholder="Ex: Trader Bitcoin" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="LlmType" class="form-label">Modelo de Inteligência</label>
+                            <select asp-for="LlmType" class="form-select text-dark">
+                                <option value="GPT-4o">GPT-4o (Recomendado)</option>
+                                <option value="GPT-3.5-Turbo">GPT-3.5 Turbo</option>
+                                <option value="Claude-3-Opus">Claude 3 Opus</option>
+                                <option value="Gemini-1.5-Pro">Gemini 1.5 Pro</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MemoryLimitMb" class="form-label">Limite de Memoria (MB)</label>
+                            <input asp-for="MemoryLimitMb" type="number" class="form-control" value="256" />
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check form-switch">
+                                <input asp-for="EnableContextMemory" class="form-check-input" type="checkbox" checked>
+                                <label asp-for="EnableContextMemory" class="form-check-label">Habilitar Memória de
+                                    Contexto Longo</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Gatilho de Execução</label>
+                            <select name="TriggerType" class="form-select text-dark">
+                                <option value="Manual">Manual</option>
+                                <option value="Webhook">Webhook (API Externa)</option>
+                                <option value="Cron">Agendado (Cron)</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <label class="form-label">Configuração MCP (Opcional)</label>
+                            <textarea asp-for="McpConfiguration" class="form-control" rows="3"
+                                placeholder='{"tools": ["web-search", "sqlite"]}'></textarea>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-action="Index" class="btn btn-outline-light">Cancelar</a>
+                        <button type="submit" class="btn btn-primary px-4">Salvar e Provisionar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

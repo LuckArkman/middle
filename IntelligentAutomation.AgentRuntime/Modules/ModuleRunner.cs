@@ -18,15 +18,15 @@ public class ModuleRunner : IModuleRunner
 
     private void RegisterModules()
     {
-        // Escaneia o assembly atual em busca de classes que implementam IModule
         var moduleTypes = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && t.IsAssignableTo(typeof(IModule)));
 
         foreach (var type in moduleTypes)
         {
-            // Mapeia o nome da classe (sem "Module") para o seu tipo. Ex: "HttpRequestModule" -> "HttpRequest"
-            var typeName = type.Name.Replace("Module", string.Empty);
-            _moduleRegistry.Add(typeName, type);
+            var attribute = type.GetCustomAttribute<ModuleAttribute>();
+            var typeName = attribute?.ModuleType ?? type.Name.Replace("Module", string.Empty);
+
+            _moduleRegistry[typeName] = type;
         }
     }
 

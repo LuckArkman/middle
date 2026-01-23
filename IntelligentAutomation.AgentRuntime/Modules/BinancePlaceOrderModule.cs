@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace IntelligentAutomationSaaS.AgentRuntime.Implementations;
 
-[Module("BinancePlaceOrder")]
+[Module("binanceOrder")]
 public class BinancePlaceOrderModule : IModule
 {
     private readonly ILogger<BinancePlaceOrderModule> _logger;
@@ -41,7 +41,7 @@ public class BinancePlaceOrderModule : IModule
         {
             options.ApiCredentials = new ApiCredentials(apiKey, apiSecret);
         });
-        
+
         // Converte os parâmetros de string para os enums corretos da biblioteca
         var side = Enum.Parse<OrderSide>(orderParams.Side, true);
         var type = Enum.Parse<SpotOrderType>(orderParams.OrderType, true);
@@ -64,8 +64,8 @@ public class BinancePlaceOrderModule : IModule
             _logger.LogError(errorMessage);
             throw new Exception(errorMessage);
         }
-        
-        _logger.LogInformation("Ordem para {Symbol} enviada com sucesso. OrderId: {OrderId}", 
+
+        _logger.LogInformation("Ordem para {Symbol} enviada com sucesso. OrderId: {OrderId}",
             orderParams.Symbol, result.Data.Id);
 
         return result.Data; // Retorna o objeto real da resposta da API

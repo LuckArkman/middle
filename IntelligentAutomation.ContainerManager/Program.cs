@@ -26,8 +26,10 @@ builder.Services.AddOpenTelemetry() // Este método agora será encontrado
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
         .AddConsoleExporter()); // E este também
-        
+
 // --- Fim da Configuração do OpenTelemetry ---
+
+builder.Services.AddScoped<IntelligentAutomation.ContainerManager.Interfaces.IDockerService, IntelligentAutomation.ContainerManager.Services.DockerService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

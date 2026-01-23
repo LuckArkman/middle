@@ -38,12 +38,12 @@ O projeto segue os princípios da **Clean Architecture**:
 
 ## ✨ Funcionalidades Principais
 
+- **Multi-tenant SaaS Architecture:** Isolamento total por Tenant via Global Query Filters e Identificação por JWT/Subdomínio.
 - **Visual Agent Builder:** Interface intuitiva para desenhar o comportamento do agente conectando nós de gatilho e ação.
-- **Motor de Execução de Workflows:** Engine resiliente que processa cada passo do fluxo de trabalho, mantendo o contexto entre os módulos.
-- **Catálogo de Módulos:**
-  - **HTTP Request:** Realize chamadas para qualquer API REST externa.
-  - **Binance Trading:** Execute ordens de compra e venda (\Limit\, \Market\) automaticamente.
-- **Gestão SaaS:** Sistema completo de planos, assinaturas e usuários integrado ao Mercado Pago.
+- **Motor de Execução Real:** Integração direta com Docker para subir containers isolados com limites de CPU/Memória.
+- **Gestão de Logs:** Auditoria completa e logs de execução armazenados em MongoDB e visíveis ao usuário.
+- **Binance Trading:** Execute ordens de compra e venda (\Limit\, \Market\) automaticamente.
+- **Gestão SaaS:** Sistema completo de planos, assinaturas e usuários com auto-registro e criação de tenant.
 
 ## 🚀 Como Começar
 

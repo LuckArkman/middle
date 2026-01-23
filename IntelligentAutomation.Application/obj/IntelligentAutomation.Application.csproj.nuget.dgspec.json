@@ -73,16 +73,6 @@
               "target": "Package",
               "version": "[1.6.3, )"
             },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
             "MongoDB.Bson": {
               "target": "Package",
               "version": "[3.5.2, )"
@@ -90,10 +80,6 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.5.2, )"
-            },
-            "Npgsql": {
-              "target": "Package",
-              "version": "[10.0.1, )"
             },
             "OpenTelemetry": {
               "target": "Package",
@@ -195,16 +181,6 @@
               "target": "Package",
               "version": "[1.6.3, )"
             },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
             "MongoDB.Bson": {
               "target": "Package",
               "version": "[3.5.2, )"
@@ -212,10 +188,6 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.5.2, )"
-            },
-            "Npgsql": {
-              "target": "Package",
-              "version": "[10.0.1, )"
             },
             "OpenTelemetry": {
               "target": "Package",

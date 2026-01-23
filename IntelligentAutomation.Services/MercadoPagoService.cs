@@ -17,33 +17,55 @@ public class MercadoPagoService : IPaymentGatewayService
 {
     private readonly ILogger<MercadoPagoService> _logger;
     private readonly MercadoPagoSettings _settings;
-    private readonly IMongoCollection<User> _users;
-    private readonly IMongoCollection<Plan> _plans;
-    private readonly IMongoCollection<Subscription> _subscriptions;
+    private readonly MongoDbContext _db;
 
     public MercadoPagoService(
         IOptions<MercadoPagoSettings> settings,
-        MongoDbContext mongoContext,
-        ILogger<MercadoPagoService> logger) // CORREÇÃO: Logger injetado corretamente
+        MongoDbContext db,
+        ILogger<MercadoPagoService> logger)
     {
         _settings = settings.Value;
-        _users = mongoContext.Users;
-        _plans = mongoContext.Plans;
-        _subscriptions = mongoContext.Subscriptions; // CORREÇÃO: Obtido do contexto
-        _logger = logger; // CORREÇÃO: Logger inicializado
+        _db = db;
+        _logger = logger;
         MercadoPagoConfig.AccessToken = _settings.AccessToken;
     }
 
     public async Task<CreateCheckoutResponse> CreateCheckoutPreference(string userId, string planId, string successUrl, string failureUrl)
     {
-        var user = await _users.Find(u => u.Id == userId).SingleOrDefaultAsync();
-        var plan = await _plans.Find(p => p.Id == planId).SingleOrDefaultAsync();
+        if (!Guid.TryParse(userId, out var userGuid) || !Guid.TryParse(planId, out var planGuid))
+        {
+            throw new Exception("IDs inválidos.");
+        }
+
+        var user = await _db.Users.Find(u => u.Id == userGuid).FirstOrDefaultAsync();
+        var plan = await _db.Plans.Find(p => p.Id == planGuid).FirstOrDefaultAsync();
 
         if (user == null || plan == null)
             throw new Exception("Usuário ou Plano não encontrado.");
 
-        var request = new PreferenceRequest { /* ... (código existente sem alterações) ... */ };
-        
+        var request = new PreferenceRequest
+        {
+            Items = new List<PreferenceItemRequest>
+            {
+                new PreferenceItemRequest
+                {
+                    Id = planId,
+                    Title = $"Assinatura: {plan.Name}",
+                    Quantity = 1,
+                    CurrencyId = "BRL",
+                    UnitPrice = plan.MonthlyPrice
+                }
+            },
+            ExternalReference = userId,
+            BackUrls = new PreferenceBackUrlsRequest
+            {
+                Success = successUrl,
+                Failure = failureUrl,
+                Pending = failureUrl
+            },
+            AutoReturn = "approved"
+        };
+
         var client = new PreferenceClient();
         Preference preference = await client.CreateAsync(request);
 
@@ -67,48 +89,49 @@ public class MercadoPagoService : IPaymentGatewayService
 
             if (payment.Status == "approved")
             {
-                var userId = payment.ExternalReference;
-                // CORREÇÃO: Obter o ID do item do pagamento
-                var planId = payment.AdditionalInfo.Items.FirstOrDefault()?.Id;
-                
-                if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(planId))
+                var userIdStr = payment.ExternalReference;
+                var planIdStr = payment.AdditionalInfo.Items.FirstOrDefault()?.Id;
+
+                if (string.IsNullOrEmpty(userIdStr) || string.IsNullOrEmpty(planIdStr) ||
+                    !Guid.TryParse(userIdStr, out var userId) || !Guid.TryParse(planIdStr, out var planId))
                 {
-                    _logger.LogError("Webhook recebido sem ExternalReference (UserId) ou ItemId (PlanId). PaymentId: {PaymentId}", payment.Id);
+                    _logger.LogError("Webhook inválido. UserId: {UserId}, PlanId: {PlanId}", userIdStr, planIdStr);
                     return;
                 }
 
-                var existingSubscription = await _subscriptions.Find(s => s.StripeSubscriptionId == payment.Id.ToString()).SingleOrDefaultAsync();
+                // Verifica se já existe a assinatura para evitar duplicidade
+                var existingSubscription = await _db.Subscriptions.Find(s => s.ExternalSubscriptionId == payment.Id.ToString()).FirstOrDefaultAsync();
+
                 if (existingSubscription != null)
                 {
                     _logger.LogWarning("Assinatura para o pagamento ID {PaymentId} já processada.", payment.Id);
                     return;
                 }
 
+                var user = await _db.Users.Find(u => u.Id == userId).FirstOrDefaultAsync();
+                if (user == null) return;
+
                 var newSubscription = new Subscription
                 {
-                    UserId = userId, // Agora a conversão é válida (string para string)
-                    PlanId = planId, // Agora a conversão é válida (string para string)
+                    UserId = userId,
+                    PlanId = planId,
                     Status = SubscriptionStatus.Active,
                     CurrentPeriodEnd = DateTime.UtcNow.AddMonths(1),
-                    StripeSubscriptionId = payment.Id.ToString()
+                    ExternalSubscriptionId = payment.Id.ToString(),
+                    TenantId = user.TenantId // Herda o tenant do usuário
                 };
-            
-                await _subscriptions.InsertOneAsync(newSubscription);
-            
-                // CORREÇÃO: O tipo genérico no Set() foi removido para inferência correta
-                var userUpdate = Builders<User>.Update.Set(u => u.CurrentSubscriptionId, newSubscription.Id);
-                await _users.UpdateOneAsync(u => u.Id == userId, userUpdate);
+
+                await _db.Subscriptions.InsertOneAsync(newSubscription);
+
+                var update = Builders<User>.Update.Set(u => u.CurrentSubscriptionId, newSubscription.Id.ToString());
+                await _db.Users.UpdateOneAsync(u => u.Id == userId, update);
 
                 _logger.LogInformation("Assinatura ativada para Usuário {UserId} no Plano {PlanId}", userId, planId);
-            }
-            else
-            {
-                _logger.LogInformation("Status do pagamento: {PaymentStatus}", payment.Status);
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao processar webhook para o pagamento ID: {PaymentId}", notification.Data.Id);
+            _logger.LogError(ex, "Erro ao processar webhook MercadoPago.");
             throw;
         }
     }

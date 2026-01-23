@@ -1,23 +1,22 @@
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Json.Serialization.Metadata;
 using IntelligentAutomation.AgentRuntime;
 using IntelligentAutomation.AgentRuntime.Interfaces;
 using IntelligentAutomation.AgentRuntime.Modules;
-using IntelligentAutomation.Domain.Entities;
 using IntelligentAutomation.Domain.Workflow;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-// --- Configuração do Host e Serviços ---
+// --- Configuração do Host ---
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         services.AddHttpClient();
         services.AddSingleton<IModuleRunner, ModuleRunner>();
 
+        // Registro automático de módulos
         var moduleTypes = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && t.IsAssignableTo(typeof(IModule)));
         foreach (var type in moduleTypes)
@@ -27,60 +26,54 @@ var host = Host.CreateDefaultBuilder(args)
     })
     .Build();
 
-// --- Lógica Principal de Execução do Agente ---
-Console.WriteLine("Agent Runtime iniciado. Aguardando definição do workflow...");
+// --- Variáveis de Ambiente ---
+var agentId = Environment.GetEnvironmentVariable("AGENT_ID");
+var orchestratorUrl = Environment.GetEnvironmentVariable("ORCHESTRATOR_URL") ?? "http://localhost:5001";
 
-string workflowJson = File.ReadAllText("workflow-definition.json");
-var definition = JsonSerializer.Deserialize<WorkflowDefinition>(workflowJson, GetJsonOptions());
-
-if (definition == null)
+if (string.IsNullOrEmpty(agentId))
 {
-    Console.Error.WriteLine("Falha ao desserializar a definição do workflow.");
+    Console.Error.WriteLine("AGENT_ID não configurado.");
     return;
 }
 
+Console.WriteLine($"Agent Runtime iniciado para Agente: {agentId}");
+
+var httpClient = host.Services.GetRequiredService<IHttpClientFactory>().CreateClient();
+
+// --- Busca da Definição ---
+WorkflowDefinition? definition = null;
+try
+{
+    var response = await httpClient.GetAsync($"{orchestratorUrl}/agents/{agentId}/definition");
+    response.EnsureSuccessStatusCode();
+    var json = await response.Content.ReadAsStringAsync();
+
+    var options = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true,
+        Converters = { new JsonStringEnumConverter() },
+        TypeInfoResolver = new PolymorphicTypeResolver()
+    };
+
+    definition = JsonSerializer.Deserialize<WorkflowDefinition>(json, options);
+}
+catch (Exception ex)
+{
+    Console.Error.WriteLine($"Erro ao buscar definição: {ex.Message}");
+    return;
+}
+
+if (definition == null)
+{
+    Console.Error.WriteLine("Definição de workflow inválida ou vazia.");
+    return;
+}
+
+// --- Execução ---
 var moduleRunner = host.Services.GetRequiredService<IModuleRunner>();
-var logger = host.Services.GetRequiredService<ILogger<WorkflowEngine>>();
+var logger = new RemoteLogger(httpClient, orchestratorUrl, agentId);
 
 var engine = new WorkflowEngine(definition, moduleRunner, logger);
 await engine.ExecuteAsync(CancellationToken.None);
 
 Console.WriteLine("Agent Runtime encerrado.");
-
-
-// --- Funções e Classes Auxiliares ---
-
-JsonSerializerOptions GetJsonOptions()
-{
-    return new JsonSerializerOptions
-    {
-        PropertyNameCaseInsensitive = true,
-        WriteIndented = true,
-        Converters = { new JsonStringEnumConverter() },
-        TypeInfoResolver = new PolymorphicTypeResolver()
-    };
-}
-
-// Resolvedor de tipo para desserializar corretamente os parâmetros dos módulos
-public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
-{
-    public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
-    {
-        JsonTypeInfo jsonTypeInfo = base.GetTypeInfo(type, options);
-        if (jsonTypeInfo.Type == typeof(BaseModuleParameters))
-        {
-            jsonTypeInfo.PolymorphismOptions = new JsonPolymorphismOptions
-            {
-                TypeDiscriminatorPropertyName = "$type",
-                IgnoreUnrecognizedTypeDiscriminators = true,
-                UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization, // Este erro agora será resolvido
-                DerivedTypes =
-                {
-                    new JsonDerivedType(typeof(HttpRequestModuleParameters), "http"),
-                    new JsonDerivedType(typeof(BinancePlaceOrderModuleParameters), "binanceOrder")
-                }
-            };
-        }
-        return jsonTypeInfo;
-    }
-}

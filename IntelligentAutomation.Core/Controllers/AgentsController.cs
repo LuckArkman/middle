@@ -44,7 +44,7 @@ public class AgentsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAgentById(string id)
+    public async Task<IActionResult> GetAgentById(Guid id)
     {
         var agent = await _agentsCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
         if (agent == null) return NotFound();
@@ -52,7 +52,7 @@ public class AgentsController : ControllerBase
     }
 
     [HttpPut("{id}/definition")]
-    public async Task<IActionResult> UpdateAgentDefinition(string id, [FromBody] WorkflowDefinition definition)
+    public async Task<IActionResult> UpdateAgentDefinition(Guid id, [FromBody] WorkflowDefinition definition)
     {
         var agent = await _agentsCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
         if (agent == null) return NotFound();
@@ -68,7 +68,7 @@ public class AgentsController : ControllerBase
 
         return NoContent();
     }
-    
+
     // ... (outros métodos como Execute/Stop precisariam de uma refatoração similar)
 
     private JsonSerializerOptions GetJsonOptions()
@@ -76,15 +76,15 @@ public class AgentsController : ControllerBase
         // Retorna as opções com o PolymorphicTypeResolver, como definido anteriormente
         return new JsonSerializerOptions { /* ... */ };
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> GetAgents(
-        [FromQuery] string? searchTerm, 
-        [FromQuery] int page = 1, 
+        [FromQuery] string? searchTerm,
+        [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10)
     {
         var userId = "obter_id_do_token_jwt"; // Obter o UserId real do token
-    
+
         var filter = Builders<Agent>.Filter.Eq(a => a.UserId, userId);
         if (!string.IsNullOrEmpty(searchTerm))
         {
@@ -96,7 +96,7 @@ public class AgentsController : ControllerBase
             .Skip((page - 1) * pageSize)
             .Limit(pageSize)
             .ToListAsync();
-        
+
         // Mapear para DTOs
         var agentDtos = agents.Select(a => new AgentDto { /* ... */ }).ToList();
 

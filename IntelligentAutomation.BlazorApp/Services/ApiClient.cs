@@ -7,38 +7,41 @@ namespace IntelligentAutomation.BlazorApp.Services;
 public class ApiClient
 {
     private readonly HttpClient _httpClient;
-    
-    // --- Métodos de Admin para Planos ---
-    public Task<List<Plan>> GetPlansAsync() => 
-        _httpClient.GetFromJsonAsync<List<Plan>>("/admin/plans");
 
-    public Task CreatePlanAsync(Plan plan) => 
+    // --- Métodos de Admin para Planos ---
+    public async Task<List<Plan>> GetPlansAsync() =>
+        await _httpClient.GetFromJsonAsync<List<Plan>>("/admin/plans") ?? new List<Plan>();
+
+    public Task CreatePlanAsync(Plan plan) =>
         _httpClient.PostAsJsonAsync("/admin/plans", plan);
 
-    public Task UpdatePlanAsync(Plan plan) => 
+    public Task UpdatePlanAsync(Plan plan) =>
         _httpClient.PutAsJsonAsync($"/admin/plans/{plan.Id}", plan);
 
-    public Task DeletePlanAsync(string id) => 
+    public Task DeletePlanAsync(string id) =>
         _httpClient.DeleteAsync($"/admin/plans/{id}");
 
-// --- Métodos de Admin para Módulos ---
-    public Task<List<ModuleManifest>> GetModuleManifestsAsync() =>
-        _httpClient.GetFromJsonAsync<List<ModuleManifest>>("/admin/modules");
+    // --- Métodos de Admin para Módulos ---
+    public async Task<List<ModuleManifest>> GetModuleManifestsAsync() =>
+        await _httpClient.GetFromJsonAsync<List<ModuleManifest>>("/admin/modules") ?? new List<ModuleManifest>();
 
     public Task CreateModuleManifestAsync(ModuleManifest manifest) =>
         _httpClient.PostAsJsonAsync("/admin/modules", manifest);
-    
-    public Task<List<AgentDto>> GetAgentsAsync() =>
-        _httpClient.GetFromJsonAsync<List<AgentDto>>("/orchestrator/agents");
 
-    public Task<AgentDto> CreateAgentAsync(CreateAgentDto agent) =>
-        _httpClient.PostAsJsonAsync<CreateAgentDto>("/orchestrator/agents", agent)
-            .ContinueWith(t => t.Result.Content.ReadFromJsonAsync<AgentDto>()).Unwrap();
+    public async Task<List<AgentDto>> GetAgentsAsync() =>
+        await _httpClient.GetFromJsonAsync<List<AgentDto>>("/orchestrator/agents") ?? new List<AgentDto>();
+
+    public async Task<AgentDto> CreateAgentAsync(CreateAgentDto agent)
+    {
+        var response = await _httpClient.PostAsJsonAsync<CreateAgentDto>("/orchestrator/agents", agent);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<AgentDto>() ?? throw new Exception("Failed to deserialize agent.");
+    }
 
     public Task StopAgentAsync(string agentId) =>
         _httpClient.PostAsync($"/orchestrator/agents/{agentId}/stop", null);
-    public Task<Dictionary<string, List<ModuleManifest>>> GetModuleCatalog() =>
-        _httpClient.GetFromJsonAsync<Dictionary<string, List<ModuleManifest>>>("/modules/catalog");
+    public async Task<Dictionary<string, List<ModuleManifest>>> GetModuleCatalog() =>
+        await _httpClient.GetFromJsonAsync<Dictionary<string, List<ModuleManifest>>>("/modules/catalog") ?? new Dictionary<string, List<ModuleManifest>>();
 
     public ApiClient(HttpClient httpClient)
     {
@@ -46,7 +49,7 @@ public class ApiClient
     }
 
     // Futuramente: public Task<AgentDto[]> GetAgents() => ...
-    
+
     public async Task UpdateAgentDefinition(string agentId, WorkflowDefinition definition)
     {
         var response = await _httpClient.PutAsJsonAsync($"/orchestrator/agents/{agentId}/definition", definition);
@@ -64,7 +67,7 @@ public class ApiClient
         }
     }
 
-// Classe auxiliar para desserializar a resposta de erro
+    // Classe auxiliar para desserializar a resposta de erro
     private class ErrorResponse
     {
         public string? Message { get; set; }

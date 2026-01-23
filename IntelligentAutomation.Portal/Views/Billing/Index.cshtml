@@ -1,0 +1,75 @@
+@model List<IntelligentAutomation.Domain.Entities.Plan>
+@{
+    ViewData["Title"] = "Planos e Preços";
+    var currentSub = ViewBag.CurrentSubscription as IntelligentAutomation.Domain.Entities.Subscription;
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">Escolha o plano ideal para sua escala</h1>
+    <p class="lead text-secondary">Acesse as melhores LLMs, automações ilimitadas e ferramentas profissionais.</p>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger mb-4">@TempData["Error"]</div>
+}
+
+<div class="row row-cols-1 row-cols-md-4 g-4 px-3">
+    @foreach (var plan in Model)
+    {
+        var isCurrent = currentSub != null && currentSub.PlanId == plan.Id;
+        
+        <div class="col">
+            <div class="card h-100 shadow border-0 @(plan.Name == "Pró" ? "border-primary border-2" : "")" style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
+                @if (plan.Name == "Pró")
+                {
+                    <div class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">MAIS POPULAR</div>
+                }
+                
+                <div class="card-body p-4 text-center">
+                    <h3 class="fw-bold mb-3">@plan.Name</h3>
+                    <div class="mb-4">
+                        <span class="display-5 fw-bold text-accent">R$ @plan.MonthlyPrice.ToString("F2")</span>
+                        <span class="text-secondary">/mês</span>
+                    </div>
+                    
+                    <p class="text-secondary small mb-4">@plan.Description</p>
+                    
+                    <hr class="border-secondary opacity-25">
+                    
+                    <ul class="list-unstyled text-start mb-4">
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Até <strong>@plan.MaxAgents</strong> Agentes Ativos</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Monitoramento 24h</li>
+                        <li class="mb-2">
+                            <i class="bi @(plan.EnableAdvancedLLMs ? "bi-check-circle-fill text-success" : "bi-x-circle-fill text-danger") me-2"></i>
+                            LLMs Avançadas (GPT-4)
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi @(plan.EnableCustomIntegrations ? "bi-check-circle-fill text-success" : "bi-x-circle-fill text-danger") me-2"></i>
+                            API Customizadas
+                        </li>
+                    </ul>
+
+                    @if (isCurrent)
+                    {
+                        <button class="btn btn-outline-success w-100 disabled" disabled>Plano Atual</button>
+                    }
+                    else
+                    {
+                        <form asp-action="Subscribe" method="post">
+                            <input type="hidden" name="planId" value="@plan.Id" />
+                            <button type="submit" class="btn @(plan.Name == "Pró" ? "btn-primary" : "btn-outline-light") w-100 py-2 fw-bold">
+                                Escolher Plano
+                            </button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-5 text-center p-5 rounded bg-dark bg-opacity-50">
+    <h4 class="fw-bold mb-3"><i class="bi bi-shield-lock me-2"></i>Pagamento 100% Seguro</h4>
+    <p class="text-secondary mb-0">Utilizamos Mercado Pago para garantir a segurança das suas transações.</p>
+</div>

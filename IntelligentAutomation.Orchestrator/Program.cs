@@ -2,9 +2,8 @@ using IntelligentAutomation.Interfaces;
 using IntelligentAutomation.Services;
 using IntelligentAutomation.Domain.Entities;
 using IntelligentAutomation.Infrastructure.Persistence;
-using IntelligentAutomation.Orchestrator.Controllers;
+using IntelligentAutomation.Orchestrator.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -19,12 +18,23 @@ builder.Services.AddControllers();
 
 // Adiciona o serviço hospedado que inicia o agendador Quartz
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+builder.Services.AddQuartz(q =>
+{
+});
+
 BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+
+// Multi-tenancy
+builder.Services.AddScoped<ITenantService, TenantService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 builder.Services.Configure<MercadoPagoSettings>(builder.Configuration.GetSection("MercadoPagoSettings"));
 builder.Services.AddScoped<IPaymentGatewayService, MercadoPagoService>();
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IQuotaService, QuotaService>();
+builder.Services.AddScoped<IAgentLogService, AgentLogService>();
 builder.Services.AddScoped<IAgentSchedulingService, AgentSchedulingService>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -32,28 +42,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? "MinhaChaveSuperSecreta123!")),
             ValidateIssuer = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidateAudience = true,
             ValidAudience = builder.Configuration["Jwt:Audience"]
         };
     });
+
 builder.Services.AddHttpClient<IContainerManagerService, ContainerManagerService>(client =>
 {
-    // O endereço base é o do API Gateway, mas em desenvolvimento podemos apontar direto
-    // Em um ambiente de produção/kubernetes, isso seria o nome do serviço (ex: http://container-manager)
-    client.BaseAddress = new Uri(builder.Configuration["Services:ContainerManagerUrl"] 
-                                 ?? "http://localhost:5002"); // Porta padrão do ContainerManager
+    client.BaseAddress = new Uri(builder.Configuration["Services:ContainerManagerUrl"] ?? "http://localhost:5002");
 });
 
 builder.Services.AddScoped<IMongoDatabase>(sp =>
 {
-    var client = sp.GetRequiredService<IMongoClient>();
-    var databaseName = new MongoUrl(builder.Configuration.GetConnectionString("MongoDbConnection")).DatabaseName;
-    return client.GetDatabase(databaseName);
+    var mongoUrl = new MongoUrl(builder.Configuration.GetConnectionString("MongoDbConnection"));
+    var client = new MongoClient(mongoUrl);
+    return client.GetDatabase(mongoUrl.DatabaseName);
 });
-builder.Services.AddScoped<IPasswordService, PasswordService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -66,9 +73,17 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Inicialização do Banco de Dados MongoDB
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<MongoDbContext>();
+    await DbInitializer.Initialize(context);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -76,8 +91,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
-app.UseRouting(); // 1. Habilita o roteamento
+app.UseCors("AllowAll");
+
+app.UseMiddleware<TenantMiddleware>();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

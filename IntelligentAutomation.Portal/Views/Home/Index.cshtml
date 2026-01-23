@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Bem-vindo";
+}
+
+<div class="py-5 text-center">
+    <div class="row py-lg-5">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1 class="display-3 fw-bold mb-4">Agentes Inteligentes sob Demanda.</h1>
+            <p class="lead text-secondary mb-5">
+                A primeira plataforma SaaS que permite orquestrar agentes em containers isolados.
+                Escalável, Seguro e 100% sob seu controle.
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-5">Começar
+                    Gratuitamente</a>
+                <a href="#" class="btn btn-outline-light btn-lg px-5">Ver Demonstração</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-5 py-5 border-top border-secondary border-opacity-25 mt-5">
+    <div class="col-md-4 text-center">
+        <div class="bg-primary bg-opacity-10 p-4 rounded-4 mb-3 d-inline-block">
+            <i class="bi bi-box-seam display-5 text-primary"></i>
+        </div>
+        <h4>Isolamento Total</h4>
+        <p class="text-secondary small">Cada agente roda em seu próprio container Docker com recursos dedicados.</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="bg-info bg-opacity-10 p-4 rounded-4 mb-3 d-inline-block">
+            <i class="bi bi-shield-lock display-5 text-info"></i>
+        </div>
+        <h4>Arquitetura SaaS</h4>
+        <p class="text-secondary small">Multi-tenancy nativo. Seus dados e agentes nunca se misturam com os de outros
+            usuários.</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="bg-success bg-opacity-10 p-4 rounded-4 mb-3 d-inline-block">
+            <i class="bi bi-graph-up-arrow display-5 text-success"></i>
+        </div>
+        <h4>Escalabilidade</h4>
+        <p class="text-secondary small">De 1 a 20 agentes por plano. Pronto para crescer com seu negócio.</p>
+    </div>
+</div>
